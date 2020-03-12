@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -23,11 +24,21 @@ public abstract class AUserRepositoryTest {
 
     @Test
     void should_add_new_user_and_returns_new_user_id(){
-        assertThat(userRepository.get().isEmpty());
-        userRepository.add(new User(name));
-        assertThat(userRepository.get().size() == 1);
-        User u = userRepository.get(0);
-        assertThat(u != null);
-        assertThat(name.equals(u.getName()));
+        int id = userRepository.add(new User(name));
+        assertEquals(0, id);
+    }
+
+    @Test
+    void should_get_must_have_1_user_after_adding_1_user(){
+        int id = userRepository.add(new User(name));
+        assertEquals(1, userRepository.get().size());
+    }
+
+    @Test
+    void should_new_user_can_be_returned_by_get(){
+        int id = userRepository.add(new User(name));
+        User u = userRepository.get(id);
+        assertNotNull(u);
+        assertEquals(name, u.getName());
     }
 }
