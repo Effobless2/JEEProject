@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -27,7 +26,7 @@ public abstract class AUserServiceTest {
     @Test
     void should_be_empty_after_init(){
         given(userRepository.get()).willReturn(new ArrayList<>());
-        assertThat(userService.get().isEmpty());
+        assertTrue(userService.get().isEmpty());
     }
 
     @Test
