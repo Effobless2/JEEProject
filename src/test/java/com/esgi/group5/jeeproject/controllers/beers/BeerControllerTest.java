@@ -1,4 +1,4 @@
-package com.esgi.group5.jeeproject.controllers.users;
+package com.esgi.group5.jeeproject.controllers.beers;
 
 import com.esgi.group5.jeeproject.models.Beer;
 import io.restassured.RestAssured;
@@ -45,7 +45,7 @@ public class BeerControllerTest {
     }
 
     @Test
-    void should_create_new_user(){
+    void should_create_new_beer(){
         Beer test = new Beer();
         int testId =
                 given()
