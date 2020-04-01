@@ -2,14 +2,11 @@ package com.esgi.group5.jeeproject.repositories.users;
 
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public abstract class AUserRepositoryTest {
     protected IUserRepository userRepository;
