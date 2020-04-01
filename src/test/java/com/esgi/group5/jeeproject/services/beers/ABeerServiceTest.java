@@ -27,7 +27,7 @@ public abstract class ABeerServiceTest {
     }
 
     @Test
-    void should_add_new_user_and_returns_new_user_id(){
+    void should_add_new_beer_and_returns_new_beer_id(){
         ArrayList<Beer> mockBeer = new ArrayList<>();
         given(beerRepository.get()).willReturn(mockBeer);
         for(int i = 0; i < 10; i++){
