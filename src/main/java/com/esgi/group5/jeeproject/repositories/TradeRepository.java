@@ -2,10 +2,12 @@ package com.esgi.group5.jeeproject.repositories;
 
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TradeRepository implements ITradeRepository {
     private List<Trade> db;
 
