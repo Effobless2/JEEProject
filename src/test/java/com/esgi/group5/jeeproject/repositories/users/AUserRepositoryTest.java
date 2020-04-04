@@ -14,7 +14,7 @@ public abstract class AUserRepositoryTest {
 
     abstract void setup();
 
-    @Test
+    /*@Test
     void should_be_empty_after_init(){
         assertThat(userRepository.get().isEmpty());
     }
@@ -37,5 +37,5 @@ public abstract class AUserRepositoryTest {
         User u = userRepository.get(id);
         assertNotNull(u);
         assertEquals(name, u.getName());
-    }
+    }*/
 }
