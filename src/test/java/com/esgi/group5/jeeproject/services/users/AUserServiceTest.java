@@ -33,7 +33,8 @@ public abstract class AUserServiceTest {
         given(userRepository.get()).willReturn(mockUsers);
         for(int i = 0; i < 10; i++){
             String curName = name + i;
-            User test = new User(curName);
+            User test = new User();
+            test.setName(curName);
             mockUsers.add(test);
 
             given(userRepository.add(test)).willReturn(i);

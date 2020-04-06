@@ -7,7 +7,8 @@ public class UserRepositoryTest extends AUserRepositoryTest {
 
     @Override
     @BeforeEach
-    void setup() {
-        userRepository = new UserRepository();
+    protected void setup() {
+        super.setup();
+        userRepository = new UserRepository(dal);
     }
 }
