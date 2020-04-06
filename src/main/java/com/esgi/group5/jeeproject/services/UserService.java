@@ -3,19 +3,15 @@ package com.esgi.group5.jeeproject.services;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
 import com.esgi.group5.jeeproject.services.contracts.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService {
-    IUserRepository repository;
-
-    @Autowired
-    public UserService(IUserRepository repository) {
-        this.repository = repository;
-    }
+    private final IUserRepository repository;
 
     @Override
     public int add(User user) {

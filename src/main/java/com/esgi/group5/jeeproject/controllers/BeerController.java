@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/beers")
 @RequiredArgsConstructor
 public class BeerController {
-    public final IBeerService service;
+    private final IBeerService service;
 
     @GetMapping
     public List<Beer> get(){

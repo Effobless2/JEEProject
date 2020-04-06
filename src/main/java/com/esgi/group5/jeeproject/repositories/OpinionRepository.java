@@ -2,18 +2,16 @@ package com.esgi.group5.jeeproject.repositories;
 
 import com.esgi.group5.jeeproject.models.Opinion;
 import com.esgi.group5.jeeproject.repositories.contracts.IOpinionRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Component
 public class OpinionRepository implements IOpinionRepository {
-    private List<Opinion> db;
-
-    public OpinionRepository() {
-        db = new ArrayList<>();
-    }
+    private List<Opinion> db = new ArrayList<>();
 
     @Override
     public int add(Opinion opinion) {
