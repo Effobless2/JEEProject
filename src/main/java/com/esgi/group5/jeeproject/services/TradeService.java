@@ -3,19 +3,15 @@ package com.esgi.group5.jeeproject.services;
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TradeService implements ITradeService {
-    public ITradeRepository repository;
-
-    @Autowired
-    public TradeService(ITradeRepository repository) {
-        this.repository = repository;
-    }
+    private final ITradeRepository repository;
 
     @Override
     public int add(Trade trade) {

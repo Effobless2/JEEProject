@@ -2,18 +2,16 @@ package com.esgi.group5.jeeproject.repositories;
 
 import com.esgi.group5.jeeproject.models.Beer;
 import com.esgi.group5.jeeproject.repositories.contracts.IBeerRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Component
 public class BeerRepository implements IBeerRepository {
-    private List<Beer> db;
-
-    public BeerRepository() {
-        db = new ArrayList<>();
-    }
+    private List<Beer> db = new ArrayList<>();
 
     @Override
     public int add(Beer beer) {

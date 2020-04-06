@@ -2,18 +2,16 @@ package com.esgi.group5.jeeproject.repositories;
 
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Component
 public class TradeRepository implements ITradeRepository {
-    private List<Trade> db;
-
-    public TradeRepository() {
-        db = new ArrayList<>();
-    }
+    private List<Trade> db = new ArrayList<>();
 
     @Override
     public int add(Trade trade) {

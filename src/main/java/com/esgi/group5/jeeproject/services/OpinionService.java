@@ -3,20 +3,15 @@ package com.esgi.group5.jeeproject.services;
 import com.esgi.group5.jeeproject.models.Opinion;
 import com.esgi.group5.jeeproject.repositories.contracts.IOpinionRepository;
 import com.esgi.group5.jeeproject.services.contracts.IOpinionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class OpinionService implements IOpinionService {
-    private IOpinionRepository repository;
-
-
-    @Autowired
-    public OpinionService(IOpinionRepository repository) {
-        this.repository = repository;
-    }
+    private final IOpinionRepository repository;
 
     @Override
     public int add(Opinion opinion) {
