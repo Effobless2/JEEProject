@@ -14,7 +14,7 @@ public class UserService implements IUserService {
     private final IUserRepository repository;
 
     @Override
-    public int add(User user) {
+    public long add(User user) {
         return repository.add(user);
     }
 
@@ -24,7 +24,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User get(int id) {
+    public User get(long id) {
         return repository.get(id);
     }
 }

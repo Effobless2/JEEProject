@@ -21,7 +21,7 @@ public abstract class ATradeRepositoryTest {
         for (int i = 0; i < 10; i++) {
             Trade test = new Trade();
 
-            int id = repository.add(test);
+            long id = repository.add(test);
             assertEquals(i, id);
             assertEquals(i + 1, repository.get().size());
 

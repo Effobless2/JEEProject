@@ -5,7 +5,7 @@ import com.esgi.group5.jeeproject.models.Beer;
 import java.util.List;
 
 public interface IBeerService {
-    int add(Beer beer);
+    long add(Beer beer);
     List<Beer> get();
-    Beer get(int id);
+    Beer get(long id);
 }

@@ -15,7 +15,7 @@ public class BeerService implements IBeerService {
     private final IBeerRepository repository;
 
     @Override
-    public int add(Beer beer) {
+    public long add(Beer beer) {
         return repository.add(beer);
     }
 
@@ -25,7 +25,7 @@ public class BeerService implements IBeerService {
     }
 
     @Override
-    public Beer get(int id) {
+    public Beer get(long id) {
         return repository.get(id);
     }
 }

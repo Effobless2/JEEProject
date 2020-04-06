@@ -21,19 +21,19 @@ public abstract class ABeerRepositoryTest {
 
     @Test
     void should_add_new_beer_and_returns_new_beer_id(){
-        int id = beerRepository.add(new Beer());
+        long id = beerRepository.add(new Beer());
         assertEquals(0, id);
     }
 
     @Test
     void should_get_must_have_1_beer_after_adding_1_beer(){
-        int id = beerRepository.add(new Beer());
+        long id = beerRepository.add(new Beer());
         assertEquals(1, beerRepository.get().size());
     }
 
     @Test
     void should_new_beer_can_be_returned_by_get(){
-        int id = beerRepository.add(new Beer());
+        long id = beerRepository.add(new Beer());
         Beer b = beerRepository.get(id);
         assertNotNull(b);
     }

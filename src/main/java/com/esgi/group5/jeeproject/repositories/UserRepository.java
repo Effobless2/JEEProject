@@ -17,9 +17,9 @@ public class UserRepository implements IUserRepository {
     private final UserRepositoryDAL userRepositoryDAL;
 
     @Override
-    public int add(User user) {
+    public long add(User user) {
         User created = userRepositoryDAL.save(user);
-        return Math.toIntExact(created.getId());
+        return created.getId();
     }
 
     @Override
@@ -28,8 +28,8 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User get(int id) {
-        Optional<User> user = userRepositoryDAL.findById((long) id);
+    public User get(long id) {
+        Optional<User> user = userRepositoryDAL.findById(id);
         return user.orElse(null);
 
     }

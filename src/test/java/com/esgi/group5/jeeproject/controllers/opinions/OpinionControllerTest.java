@@ -30,7 +30,7 @@ public class OpinionControllerTest {
 
 
     @Test
-    void should_list_all_beers(){
+    void should_list_all_opinions(){
         List<Opinion> beers =
                 given()
                         .log().all()
@@ -45,7 +45,7 @@ public class OpinionControllerTest {
     }
 
     @Test
-    void should_create_new_beer(){
+    void should_create_new_opinion(){
         Opinion test = new Opinion();
         int testId =
                 given()

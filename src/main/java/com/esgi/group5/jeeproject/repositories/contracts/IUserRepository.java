@@ -5,7 +5,7 @@ import com.esgi.group5.jeeproject.models.User;
 import java.util.List;
 
 public interface IUserRepository{
-    int add(User user);
+    long add(User user);
     List<User> get();
-    User get(int id);
+    User get(long id);
 }

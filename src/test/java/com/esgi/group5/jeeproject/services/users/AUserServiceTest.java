@@ -31,14 +31,14 @@ public abstract class AUserServiceTest {
     void should_add_new_user_and_returns_new_user_id(){
         ArrayList<User> mockUsers = new ArrayList<>();
         given(userRepository.get()).willReturn(mockUsers);
-        for(int i = 0; i < 10; i++){
+        for(long i = 0; i < 10; i++){
             String curName = name + i;
             User test = new User();
             test.setName(curName);
             mockUsers.add(test);
 
             given(userRepository.add(test)).willReturn(i);
-            int id = userService.add(test);
+            long id = userService.add(test);
             assertEquals(i, id);
             assertEquals(i + 1, userService.get().size());
 

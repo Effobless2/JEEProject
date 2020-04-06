@@ -27,15 +27,15 @@ public abstract class AOpinionServiceTest {
     }
 
     @Test
-    void should_add_new_beer_and_returns_new_beer_id(){
+    void should_add_new_opinion_and_returns_new_opinion_id(){
         ArrayList<Opinion> mockOpinion = new ArrayList<>();
         given(repository.get()).willReturn(mockOpinion);
-        for(int i = 0; i < 10; i++){
+        for(long i = 0; i < 10; i++){
             Opinion test = new Opinion();
             mockOpinion.add(test);
 
             given(repository.add(test)).willReturn(i);
-            int id = service.add(test);
+            long id = service.add(test);
             assertEquals(i, id);
             assertEquals(i + 1, service.get().size());
 

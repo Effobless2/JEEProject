@@ -35,7 +35,7 @@ public abstract class AUserRepositoryTest {
         u.setName(name);
         u.setId((long) 1);
         when(dal.save(u)).thenReturn(u);
-        int id = userRepository.add(u);
+        long id = userRepository.add(u);
         assertEquals(u.getId(), id);
     }
 
@@ -60,9 +60,9 @@ public abstract class AUserRepositoryTest {
         u.setId((long) 1);
         when(dal.save(u)).thenReturn(u);
 
-        int id = userRepository.add(u);
+        long id = userRepository.add(u);
 
-        when(dal.findById((long)id)).thenReturn(java.util.Optional.of(u));
+        when(dal.findById(id)).thenReturn(java.util.Optional.of(u));
         User u2 = userRepository.get(id);
 
         assertNotNull(u2);

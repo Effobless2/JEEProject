@@ -29,7 +29,7 @@ public class TradeController {
 
     @PostMapping
     public ResponseEntity<?> post(HttpServletRequest request, @RequestBody @Valid Trade trade){
-        int id = service.add(trade);
+        long id = service.add(trade);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -14,7 +14,7 @@ public class OpinionRepository implements IOpinionRepository {
     private List<Opinion> db = new ArrayList<>();
 
     @Override
-    public int add(Opinion opinion) {
+    public long add(Opinion opinion) {
         db.add(opinion);
         return db.size() - 1;
     }
@@ -25,9 +25,9 @@ public class OpinionRepository implements IOpinionRepository {
     }
 
     @Override
-    public Opinion get(int opinionId) {
+    public Opinion get(long opinionId) {
         if(opinionId >= db.size())
             return null;
-        return db.get(opinionId);
+        return db.get((int) opinionId);
     }
 }

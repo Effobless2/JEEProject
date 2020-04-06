@@ -1,10 +1,8 @@
 package com.esgi.group5.jeeproject.services.trades;
 
-import com.esgi.group5.jeeproject.models.Beer;
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -34,12 +32,12 @@ public abstract class ATradeServiceTest {
         ArrayList<Trade> mockTrade = new ArrayList<>();
         given(repository.get()).willReturn(mockTrade);
 
-        for (int i = 0; i < 10; i++) {
+        for (long i = 0; i < 10; i++) {
             Trade test = new Trade();
             mockTrade.add(test);
 
             given(repository.add(test)).willReturn(i);
-            int id = service.add(test);
+            long id = service.add(test);
             assertEquals(i, id);
             assertEquals(i + 1, service.get().size());
 

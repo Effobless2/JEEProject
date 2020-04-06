@@ -29,7 +29,7 @@ public class BeerController {
 
     @PostMapping
     public ResponseEntity<?> post(HttpServletRequest request, @RequestBody @Valid Beer beer){
-        int id = service.add(beer);
+        long id = service.add(beer);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

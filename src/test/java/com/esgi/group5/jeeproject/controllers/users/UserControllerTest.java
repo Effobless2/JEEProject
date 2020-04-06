@@ -56,7 +56,7 @@ public class UserControllerTest {
         test.setName("test");
         List<User> mockList = new ArrayList<>();
         mockList.add(test);
-        when(service.add(test)).thenReturn(0);
+        when(service.add(test)).thenReturn((long) 0);
         when(service.get()).thenReturn(mockList);
 
         int testId =

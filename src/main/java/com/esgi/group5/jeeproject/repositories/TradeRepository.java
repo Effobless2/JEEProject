@@ -14,7 +14,7 @@ public class TradeRepository implements ITradeRepository {
     private List<Trade> db = new ArrayList<>();
 
     @Override
-    public int add(Trade trade) {
+    public long add(Trade trade) {
         db.add(trade);
         return db.size() - 1;
     }
@@ -25,9 +25,9 @@ public class TradeRepository implements ITradeRepository {
     }
 
     @Override
-    public Trade get(int tradeId) {
+    public Trade get(long tradeId) {
         if(tradeId >= db.size())
             return null;
-        return db.get(tradeId);
+        return db.get((int) tradeId);
     }
 }
