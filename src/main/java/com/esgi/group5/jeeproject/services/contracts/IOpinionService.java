@@ -5,7 +5,7 @@ import com.esgi.group5.jeeproject.models.Opinion;
 import java.util.List;
 
 public interface IOpinionService {
-    int add(Opinion opinion);
+    long add(Opinion opinion);
     List<Opinion> get();
-    Opinion get(int opinionId);
+    Opinion get(long opinionId);
 }

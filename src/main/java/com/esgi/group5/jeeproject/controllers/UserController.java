@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> post(HttpServletRequest request, @RequestBody @Valid User user){
-        int id = userService.add(user);
+        long id = userService.add(user);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

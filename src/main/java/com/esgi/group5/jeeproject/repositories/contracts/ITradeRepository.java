@@ -6,7 +6,7 @@ import com.esgi.group5.jeeproject.models.Trade;
 import java.util.List;
 
 public interface ITradeRepository {
-    int add(Trade beer);
+    long add(Trade beer);
     List<Trade> get();
-    Trade get(int id);
+    Trade get(long id);
 }

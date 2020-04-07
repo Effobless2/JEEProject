@@ -14,7 +14,7 @@ public class TradeService implements ITradeService {
     private final ITradeRepository repository;
 
     @Override
-    public int add(Trade trade) {
+    public long add(Trade trade) {
         return repository.add(trade);
     }
 
@@ -24,7 +24,7 @@ public class TradeService implements ITradeService {
     }
 
     @Override
-    public Trade get(int tradeId) {
+    public Trade get(long tradeId) {
         return repository.get(tradeId);
     }
 }

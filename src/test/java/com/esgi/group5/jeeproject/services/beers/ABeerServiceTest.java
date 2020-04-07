@@ -30,12 +30,12 @@ public abstract class ABeerServiceTest {
     void should_add_new_beer_and_returns_new_beer_id(){
         ArrayList<Beer> mockBeer = new ArrayList<>();
         given(beerRepository.get()).willReturn(mockBeer);
-        for(int i = 0; i < 10; i++){
+        for(long i = 0; i < 10; i++){
             Beer test = new Beer();
             mockBeer.add(test);
 
             given(beerRepository.add(test)).willReturn(i);
-            int id = beerService.add(test);
+            long id = beerService.add(test);
             assertEquals(i, id);
             assertEquals(i + 1, beerService.get().size());
 

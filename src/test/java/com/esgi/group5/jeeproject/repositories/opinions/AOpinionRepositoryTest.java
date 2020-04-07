@@ -20,21 +20,21 @@ public abstract class AOpinionRepositoryTest {
     }
 
     @Test
-    void should_add_new_user_and_returns_new_user_id(){
-        int id = repository.add(new Opinion());
+    void should_add_new_user_and_returns_new_opinion_id(){
+        long id = repository.add(new Opinion());
         assertEquals(0, id);
     }
 
     @Test
-    void should_get_must_have_1_user_after_adding_1_user(){
-        int id = repository.add(new Opinion());
+    void should_get_must_have_1_opinion_after_adding_1_opinion(){
+        long id = repository.add(new Opinion());
         assertEquals(1, repository.get().size());
     }
 
     @Test
-    void should_new_user_can_be_returned_by_get(){
+    void should_new_opinion_can_be_returned_by_get(){
         Opinion test = new Opinion();
-        int id = repository.add(test);
+        long id = repository.add(test);
         Opinion o = repository.get(id);
         assertNotNull(o);
         assertEquals(test, o);

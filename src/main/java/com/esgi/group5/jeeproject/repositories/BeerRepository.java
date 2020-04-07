@@ -14,7 +14,7 @@ public class BeerRepository implements IBeerRepository {
     private List<Beer> db = new ArrayList<>();
 
     @Override
-    public int add(Beer beer) {
+    public long add(Beer beer) {
         db.add(beer);
         return db.size() - 1;
     }
@@ -25,9 +25,9 @@ public class BeerRepository implements IBeerRepository {
     }
 
     @Override
-    public Beer get(int id) {
+    public Beer get(long id) {
         if(id >= db.size())
             return null;
-        return db.get(id);
+        return db.get((int) id);
     }
 }

@@ -14,7 +14,7 @@ public class OpinionService implements IOpinionService {
     private final IOpinionRepository repository;
 
     @Override
-    public int add(Opinion opinion) {
+    public long add(Opinion opinion) {
         return repository.add(opinion);
     }
 
@@ -24,7 +24,7 @@ public class OpinionService implements IOpinionService {
     }
 
     @Override
-    public Opinion get(int opinionId) {
+    public Opinion get(long opinionId) {
         return repository.get(opinionId);
     }
 }

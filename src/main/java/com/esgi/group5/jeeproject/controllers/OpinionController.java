@@ -29,7 +29,7 @@ public class OpinionController {
 
     @PostMapping
     public ResponseEntity<?> post(HttpServletRequest request, @RequestBody @Valid Opinion opinion){
-        int id = service.add(opinion);
+        long id = service.add(opinion);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
