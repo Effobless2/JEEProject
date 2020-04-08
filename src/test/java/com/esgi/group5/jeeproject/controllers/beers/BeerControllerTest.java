@@ -1,7 +1,6 @@
 package com.esgi.group5.jeeproject.controllers.beers;
 
 import com.esgi.group5.jeeproject.models.Beer;
-import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.services.contracts.IBeerService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

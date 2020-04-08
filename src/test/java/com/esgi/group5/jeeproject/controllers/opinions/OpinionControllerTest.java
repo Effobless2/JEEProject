@@ -1,27 +1,34 @@
 package com.esgi.group5.jeeproject.controllers.opinions;
 
 import com.esgi.group5.jeeproject.models.Opinion;
+import com.esgi.group5.jeeproject.services.contracts.IOpinionService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OpinionControllerTest {
     @LocalServerPort
     private int port;
+
+    @MockBean
+    private IOpinionService service;
 
     @BeforeEach
     void setup(){
@@ -47,6 +54,11 @@ public class OpinionControllerTest {
     @Test
     void should_create_new_opinion(){
         Opinion test = new Opinion();
+        test.setName("test");
+        List<Opinion> mockList = new ArrayList<>();
+        mockList.add(test);
+        when(service.add(test)).thenReturn((long) 1);
+        when(service.get()).thenReturn(mockList);
         int testId =
                 given()
                         .contentType(ContentType.JSON)
@@ -58,7 +70,7 @@ public class OpinionControllerTest {
                         .extract()
                         .as(int.class);
 
-        assertThat(testId).isEqualTo(0);
+        assertThat(testId).isEqualTo(1);
         get("/opinions" ).then().body("$", hasSize(1));
     }
 }

@@ -1,7 +1,6 @@
 package com.esgi.group5.jeeproject.controllers.trades;
 
 import com.esgi.group5.jeeproject.models.Trade;
-import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

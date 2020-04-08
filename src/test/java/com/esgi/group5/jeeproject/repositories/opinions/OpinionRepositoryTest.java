@@ -6,7 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 public class OpinionRepositoryTest extends AOpinionRepositoryTest {
     @BeforeEach
     @Override
-    void setup() {
-        repository = new OpinionRepository();
+    protected void setup() {
+        super.setup();
+        repository = new OpinionRepository(dal);
     }
 }
