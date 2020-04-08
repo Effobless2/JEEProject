@@ -4,7 +4,6 @@ import com.esgi.group5.jeeproject.models.Beer;
 import com.esgi.group5.jeeproject.repositories.contracts.IBeerRepository;
 import com.esgi.group5.jeeproject.services.contracts.IBeerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -56,7 +56,7 @@ public class UserControllerTest {
         test.setName("test");
         List<User> mockList = new ArrayList<>();
         mockList.add(test);
-        when(service.add(test)).thenReturn((long) 0);
+        when(service.add(test)).thenReturn((long) 1);
         when(service.get()).thenReturn(mockList);
 
         int testId =
@@ -70,7 +70,7 @@ public class UserControllerTest {
                 .extract()
                 .as(int.class);
 
-        assertThat(testId).isEqualTo(0);
+        assertThat(testId).isEqualTo(1);
         get("/users" ).then().body("$", hasSize(1));
     }
 }

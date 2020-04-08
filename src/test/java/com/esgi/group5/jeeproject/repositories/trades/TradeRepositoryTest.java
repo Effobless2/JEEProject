@@ -6,7 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 public class TradeRepositoryTest extends ATradeRepositoryTest {
     @BeforeEach
     @Override
-    void setup() {
-        repository = new TradeRepository();
+    protected void setup() {
+        super.setup();
+        repository = new TradeRepository(dal);
     }
 }
