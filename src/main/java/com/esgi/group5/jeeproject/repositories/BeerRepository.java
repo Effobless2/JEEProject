@@ -1,33 +1,33 @@
 package com.esgi.group5.jeeproject.repositories;
 
+import com.esgi.group5.jeeproject.DAL.BeerDAL;
 import com.esgi.group5.jeeproject.models.Beer;
 import com.esgi.group5.jeeproject.repositories.contracts.IBeerRepository;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 public class BeerRepository implements IBeerRepository {
-    private List<Beer> db = new ArrayList<>();
+    private final BeerDAL beerDal;
 
     @Override
     public long add(Beer beer) {
-        db.add(beer);
-        return db.size() - 1;
+        Beer result = beerDal.save(beer);
+        return result.getId();
     }
 
     @Override
     public List<Beer> get() {
-        return db;
+        return beerDal.findAll();
     }
 
     @Override
     public Beer get(long id) {
-        if(id >= db.size())
-            return null;
-        return db.get((int) id);
+        Optional<Beer> result = beerDal.findById(id);
+        return result.orElse(null);
     }
 }

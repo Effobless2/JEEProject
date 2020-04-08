@@ -1,6 +1,6 @@
 package com.esgi.group5.jeeproject.repositories.users;
 
-import com.esgi.group5.jeeproject.DAL.UserRepositoryDAL;
+import com.esgi.group5.jeeproject.DAL.UserDAL;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
 import org.junit.jupiter.api.Test;
@@ -15,12 +15,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public abstract class AUserRepositoryTest {
-    protected UserRepositoryDAL dal;
+    protected UserDAL dal;
     protected IUserRepository userRepository;
     private String name = "test1";
 
     protected void setup(){
-        dal = mock(UserRepositoryDAL.class);
+        dal = mock(UserDAL.class);
     }
 
     @Test

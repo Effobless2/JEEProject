@@ -7,7 +7,8 @@ public class BeerRepositoryTest extends ABeerRepositoryTest {
 
     @BeforeEach
     @Override
-    void setup() {
-        this.beerRepository = new BeerRepository();
+    protected void setup() {
+        super.setup();
+        this.beerRepository = new BeerRepository(dal);
     }
 }
