@@ -1,21 +1,26 @@
 package com.esgi.group5.jeeproject.controllers.beers;
 
 import com.esgi.group5.jeeproject.models.Beer;
+import com.esgi.group5.jeeproject.models.User;
+import com.esgi.group5.jeeproject.services.contracts.IBeerService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -23,11 +28,13 @@ public class BeerControllerTest {
     @LocalServerPort
     private int port;
 
+    @MockBean
+    private IBeerService service;
+
     @BeforeEach
     void setup(){
         RestAssured.port = port;
     }
-
 
     @Test
     void should_list_all_beers(){
@@ -47,6 +54,11 @@ public class BeerControllerTest {
     @Test
     void should_create_new_beer(){
         Beer test = new Beer();
+        test.setName("test");
+        List<Beer> mockList = new ArrayList<>();
+        mockList.add(test);
+        when(service.add(test)).thenReturn((long) 1);
+        when(service.get()).thenReturn(mockList);
         int testId =
                 given()
                         .contentType(ContentType.JSON)
@@ -58,7 +70,7 @@ public class BeerControllerTest {
                         .extract()
                         .as(int.class);
 
-        assertThat(testId).isEqualTo(0);
+        assertThat(testId).isEqualTo(1);
         get("/beers" ).then().body("$", hasSize(1));
     }
 }

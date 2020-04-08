@@ -1,33 +1,33 @@
 package com.esgi.group5.jeeproject.repositories;
 
+import com.esgi.group5.jeeproject.DAL.TradeDAL;
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 public class TradeRepository implements ITradeRepository {
-    private List<Trade> db = new ArrayList<>();
+    private final TradeDAL tradeDAL;
 
     @Override
     public long add(Trade trade) {
-        db.add(trade);
-        return db.size() - 1;
+        Trade result = tradeDAL.save(trade);
+        return result.getId();
     }
 
     @Override
     public List<Trade> get() {
-        return db;
+        return tradeDAL.findAll();
     }
 
     @Override
     public Trade get(long tradeId) {
-        if(tradeId >= db.size())
-            return null;
-        return db.get((int) tradeId);
+        Optional<Trade> result = tradeDAL.findById(tradeId);
+        return result.orElse(null);
     }
 }
