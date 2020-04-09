@@ -18,7 +18,7 @@ import java.util.List;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,6 +48,37 @@ public class BeerControllerTest {
                         .getList(".", Beer.class);
         assertThat(beers).isNotNull();
         assertThat(beers).hasSize(0);
+    }
+
+    @Test
+    void should_get_one_beer_if_exist(){
+        Beer test = new Beer();
+        test.setName("test");
+        when(service.get(1)).thenReturn(test);
+        Beer result =
+                given()
+                        .contentType(ContentType.JSON)
+                        .when()
+                        .get("/beers/1")
+                        .then()
+                        .statusCode(HttpStatus.OK.value())
+                        .extract()
+                        .as(Beer.class);
+
+        assertThat(result).isEqualTo(test);
+    }
+
+    @Test
+    void should_get_null_beer_if_not_exist(){
+        when(service.get(1)).thenReturn(null);
+        given()
+            .contentType(ContentType.JSON)
+            .when()
+            .get("/beers/1")
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .and()
+            .contentType(emptyOrNullString());
     }
 
     @Test
