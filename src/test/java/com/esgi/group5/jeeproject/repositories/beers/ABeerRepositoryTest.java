@@ -69,7 +69,6 @@ public abstract class ABeerRepositoryTest {
         when(dal.save(test)).thenReturn(test);
 
         assertTrue(beerRepository.update(test));
-
     }
 
     @Test
@@ -81,7 +80,23 @@ public abstract class ABeerRepositoryTest {
         when(dal.findById(test.getId())).thenReturn(Optional.empty());
 
         assertFalse(beerRepository.update(test));
+    }
 
+    @Test
+    void should_delete_existing_beer(){
+        Beer test = new Beer();
+        test.setId((long) 1);
+
+        when(dal.findById(test.getId())).thenReturn(Optional.of(test));
+
+        assertTrue(beerRepository.delete(test.getId()));
+    }
+
+    @Test
+    void should_not_delete_non_existing_beer(){
+        when(dal.findById((long) 1)).thenReturn(Optional.empty());
+
+        assertFalse(beerRepository.delete(1));
     }
 
 }

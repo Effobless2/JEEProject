@@ -32,4 +32,9 @@ public class BeerService implements IBeerService {
     public boolean update(Beer beer) {
         return repository.update(beer);
     }
+
+    @Override
+    public boolean delete(long beerId) {
+        return repository.delete(beerId);
+    }
 }

@@ -43,4 +43,12 @@ public class BeerController {
                 .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .body(beer);
     }
+
+    @DeleteMapping("/{beerId}")
+    public ResponseEntity delete(@PathVariable("beerId") long beerId){
+        boolean result = service.delete(beerId);
+        return ResponseEntity
+                .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .build();
+    }
 }

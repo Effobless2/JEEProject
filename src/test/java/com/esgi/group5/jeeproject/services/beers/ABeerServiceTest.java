@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public abstract class ABeerServiceTest {
     protected IBeerService beerService;
@@ -43,5 +44,39 @@ public abstract class ABeerServiceTest {
             Beer b = beerService.get(id);
             assertNotNull(b);
         }
+    }
+
+    @Test
+    void should_update_beer(){
+        Beer test = new Beer();
+        test.setId((long) 1);
+
+        when(beerRepository.update(test)).thenReturn(true);
+
+        assertTrue(beerService.update(test));
+    }
+
+    @Test
+    void should_not_update_non_existing_beer(){
+        Beer test = new Beer();
+        test.setId((long) 1);
+
+        when(beerRepository.update(test)).thenReturn(false);
+
+        assertFalse(beerService.update(test));
+    }
+
+    @Test
+    void should_delete_beer(){
+        when(beerRepository.delete(1)).thenReturn(true);
+
+        assertTrue(beerService.delete(1));
+    }
+
+    @Test
+    void should_not_delete_non_existing_beer(){
+        when(beerRepository.delete(1)).thenReturn(false);
+
+        assertFalse(beerService.delete(1));
     }
 }

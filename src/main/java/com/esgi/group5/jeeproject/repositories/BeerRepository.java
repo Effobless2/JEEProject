@@ -34,9 +34,19 @@ public class BeerRepository implements IBeerRepository {
     @Override
     public boolean update(Beer beer) {
         Optional<Beer> beerDB = beerDal.findById(beer.getId());
-        if(!beerDB.isPresent())
+        if(beerDB.isEmpty())
             return false;
         beerDal.save(beer);
+        return true;
+    }
+
+    @Override
+    public boolean delete(long beerId) {
+        Optional<Beer> beer = beerDal.findById(beerId);
+        if(beer.isEmpty())
+            return false;
+        Beer b = beer.get();
+        beerDal.delete(b);
         return true;
     }
 }

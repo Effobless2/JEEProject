@@ -10,4 +10,6 @@ public interface IBeerService {
     Beer get(long id);
 
     boolean update(Beer beer);
+
+    boolean delete(long beerId);
 }

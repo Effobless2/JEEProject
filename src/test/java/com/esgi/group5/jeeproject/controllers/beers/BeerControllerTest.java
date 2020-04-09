@@ -79,18 +79,14 @@ public class BeerControllerTest {
         test.setName("test");
         List<Beer> mockList = new ArrayList<>();
         mockList.add(test);
-
-        Beer updated = new Beer();
-        updated.setName("test Changed");
-        updated.setId((long) 1);
-        when(service.update(updated)).thenReturn(true);
-        when(service.get((long) 1)).thenReturn(updated);
+        when(service.update(test)).thenReturn(true);
+        when(service.get((long) 1)).thenReturn(test);
 
         when(service.get()).thenReturn(mockList);
         Beer result =
                 given()
                         .contentType(ContentType.JSON)
-                        .body(updated)
+                        .body(test)
                         .when()
                         .put("/beers")
                         .then()
@@ -98,7 +94,7 @@ public class BeerControllerTest {
                         .extract()
                         .as(Beer.class);
 
-        assertThat(result).isEqualTo(updated);
+        assertThat(result).isEqualTo(test);
 
         get("/beers" ).then().body("$", hasSize(1));
     }
@@ -107,24 +103,43 @@ public class BeerControllerTest {
     void should_not_update_beer_if_id_invalid(){
         Beer test = new Beer();
         test.setName("test");
+        test.setId((long) 1);
         List<Beer> mockList = new ArrayList<>();
         mockList.add(test);
 
-        Beer updated = new Beer();
-        updated.setName("test Changed");
-        updated.setId((long) 2);
-        when(service.update(updated)).thenReturn(false);
-        when(service.get((long) 1)).thenReturn(updated);
+        when(service.update(test)).thenReturn(false);
 
         when(service.get()).thenReturn(mockList);
         given()
             .contentType(ContentType.JSON)
-            .body(updated)
+            .body(test)
             .when()
             .put("/beers")
             .then()
             .statusCode(HttpStatus.NOT_FOUND.value());
 
         get("/beers" ).then().body("$", hasSize(1));
+    }
+
+    @Test
+    void should_return_ok_for_deleting_existing_beer(){
+        when(service.delete((long) 1)).thenReturn(true);
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/beers/1")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void should_return_not_found_for_deleting_non_existing_beer(){
+        when(service.delete((long) 1)).thenReturn(false);
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/beers/1")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 }
