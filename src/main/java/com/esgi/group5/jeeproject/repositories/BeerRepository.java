@@ -2,6 +2,7 @@ package com.esgi.group5.jeeproject.repositories;
 
 import com.esgi.group5.jeeproject.DAL.BeerDAL;
 import com.esgi.group5.jeeproject.models.Beer;
+import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.repositories.contracts.IBeerRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,13 @@ public class BeerRepository implements IBeerRepository {
         if(users != null){
             users.forEach((User user) -> {
                 Collection<Beer> beers = user.getFavourites();
+                beers.remove(b);
+            });
+        }
+        Collection<Trade> trades = b.getTrades();
+        if(trades != null){
+            trades.forEach((Trade trade) -> {
+                Collection<Beer> beers = trade.getItems();
                 beers.remove(b);
             });
         }

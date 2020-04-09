@@ -18,7 +18,7 @@ public class Beer {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
-    private Set<Trade> trades;
+    private Collection<Trade> trades;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "favourites", fetch = FetchType.LAZY)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class Trade {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Beer> items;
+    private Collection<Beer> items;
 
     @ManyToOne
     private User responsible;
