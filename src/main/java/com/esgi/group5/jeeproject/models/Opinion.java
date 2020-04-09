@@ -12,4 +12,12 @@ public class Opinion {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @ManyToOne
+    @JoinColumn
+    private User user;
+
+    @ManyToOne
+    @JoinColumn
+    private Beer beer;
 }
