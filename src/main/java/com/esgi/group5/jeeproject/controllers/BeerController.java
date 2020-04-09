@@ -35,4 +35,12 @@ public class BeerController {
                 .status(HttpStatus.CREATED)
                 .body(id);
     }
+
+    @PutMapping
+    public ResponseEntity put(HttpServletRequest request, @RequestBody @Valid Beer beer){
+        boolean result = service.update(beer);
+        return ResponseEntity
+                .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .body(beer);
+    }
 }

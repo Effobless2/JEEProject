@@ -27,4 +27,9 @@ public class BeerService implements IBeerService {
     public Beer get(long id) {
         return repository.get(id);
     }
+
+    @Override
+    public boolean update(Beer beer) {
+        return repository.update(beer);
+    }
 }

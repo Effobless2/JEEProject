@@ -72,4 +72,59 @@ public class BeerControllerTest {
         assertThat(testId).isEqualTo(1);
         get("/beers" ).then().body("$", hasSize(1));
     }
+
+    @Test
+    void should_update_beer(){
+        Beer test = new Beer();
+        test.setName("test");
+        List<Beer> mockList = new ArrayList<>();
+        mockList.add(test);
+
+        Beer updated = new Beer();
+        updated.setName("test Changed");
+        updated.setId((long) 1);
+        when(service.update(updated)).thenReturn(true);
+        when(service.get((long) 1)).thenReturn(updated);
+
+        when(service.get()).thenReturn(mockList);
+        Beer result =
+                given()
+                        .contentType(ContentType.JSON)
+                        .body(updated)
+                        .when()
+                        .put("/beers")
+                        .then()
+                        .statusCode(HttpStatus.OK.value())
+                        .extract()
+                        .as(Beer.class);
+
+        assertThat(result).isEqualTo(updated);
+
+        get("/beers" ).then().body("$", hasSize(1));
+    }
+
+    @Test
+    void should_not_update_beer_if_id_invalid(){
+        Beer test = new Beer();
+        test.setName("test");
+        List<Beer> mockList = new ArrayList<>();
+        mockList.add(test);
+
+        Beer updated = new Beer();
+        updated.setName("test Changed");
+        updated.setId((long) 2);
+        when(service.update(updated)).thenReturn(false);
+        when(service.get((long) 1)).thenReturn(updated);
+
+        when(service.get()).thenReturn(mockList);
+        given()
+            .contentType(ContentType.JSON)
+            .body(updated)
+            .when()
+            .put("/beers")
+            .then()
+            .statusCode(HttpStatus.NOT_FOUND.value());
+
+        get("/beers" ).then().body("$", hasSize(1));
+    }
 }

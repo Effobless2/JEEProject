@@ -30,4 +30,13 @@ public class BeerRepository implements IBeerRepository {
         Optional<Beer> result = beerDal.findById(id);
         return result.orElse(null);
     }
+
+    @Override
+    public boolean update(Beer beer) {
+        Optional<Beer> beerDB = beerDal.findById(beer.getId());
+        if(!beerDB.isPresent())
+            return false;
+        beerDal.save(beer);
+        return true;
+    }
 }
