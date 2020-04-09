@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,11 @@ public class Beer {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "beers", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
     private Set<Trade> trades;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favourites", fetch = FetchType.LAZY)
+    private Collection<User> likedBy;
 
 }

@@ -2,10 +2,12 @@ package com.esgi.group5.jeeproject.repositories;
 
 import com.esgi.group5.jeeproject.DAL.BeerDAL;
 import com.esgi.group5.jeeproject.models.Beer;
+import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.repositories.contracts.IBeerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +48,14 @@ public class BeerRepository implements IBeerRepository {
         if(beer.isEmpty())
             return false;
         Beer b = beer.get();
-        beerDal.delete(b);
+        Collection<User> users = b.getLikedBy();
+        if(users != null){
+            users.forEach((User user) -> {
+                Collection<Beer> beers = user.getFavourites();
+                beers.remove(b);
+            });
+        }
+        beerDal.deleteById(b.getId());
         return true;
     }
 }

@@ -17,12 +17,7 @@ public class Trade {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "rel_trades_beers",
-        joinColumns = @JoinColumn(name = "trade_id"),
-        inverseJoinColumns = @JoinColumn(name = "beer_id")
-    )
-    private Set<Beer> beers;
+    private Set<Beer> items;
 
     @ManyToOne
     private User responsible;
