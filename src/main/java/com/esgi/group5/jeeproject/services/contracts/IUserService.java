@@ -5,7 +5,9 @@ import com.esgi.group5.jeeproject.models.User;
 import java.util.List;
 
 public interface IUserService {
-    long add(User user);
+    User add(User user);
     List<User> get();
     User get(long id);
+
+    User connect(User user);
 }

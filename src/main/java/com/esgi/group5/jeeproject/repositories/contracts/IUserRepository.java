@@ -5,7 +5,11 @@ import com.esgi.group5.jeeproject.models.User;
 import java.util.List;
 
 public interface IUserRepository{
-    long add(User user);
+    User add(User user);
     List<User> get();
     User get(long id);
+
+    User getByGoogleId(String googleId);
+
+    boolean update(User user);
 }

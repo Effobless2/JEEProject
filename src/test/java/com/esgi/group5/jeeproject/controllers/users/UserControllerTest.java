@@ -54,12 +54,13 @@ public class UserControllerTest {
     void should_create_new_user(){
         User test = new User();
         test.setName("test");
+        test.setId((long) 1);
         List<User> mockList = new ArrayList<>();
         mockList.add(test);
-        when(service.add(test)).thenReturn((long) 1);
+        when(service.add(test)).thenReturn(test);
         when(service.get()).thenReturn(mockList);
 
-        int testId =
+        long testId =
             given()
                 .contentType(ContentType.JSON)
                 .body(test)
@@ -68,7 +69,7 @@ public class UserControllerTest {
             .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .extract()
-                .as(int.class);
+                .as(long.class);
 
         assertThat(testId).isEqualTo(1);
         get("/users" ).then().body("$", hasSize(1));

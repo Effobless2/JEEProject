@@ -14,7 +14,7 @@ public class UserService implements IUserService {
     private final IUserRepository repository;
 
     @Override
-    public long add(User user) {
+    public User add(User user) {
         return repository.add(user);
     }
 
@@ -26,5 +26,20 @@ public class UserService implements IUserService {
     @Override
     public User get(long id) {
         return repository.get(id);
+    }
+
+    @Override
+    public User connect(User user) {
+        User result;
+        User searchResult = repository.getByGoogleId(user.getGoogleId());
+        if(searchResult == null){
+            result = repository.add(user);
+        } else {
+            user.setId(searchResult.getId());
+            repository.update(user);
+            result = user;
+        }
+        return result;
+
     }
 }
