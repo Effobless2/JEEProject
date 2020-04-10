@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -37,10 +39,13 @@ public class UserController {
             user = userService.connect(user);
 
             String token = jwtUtil.generateToken(user);
+            Map<String, Object> bodyResponse = new HashMap<>();
+            bodyResponse.put("token", token);
+
 
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(token);
+                    .body(bodyResponse);
 
         } catch (InvalidGoogleTokenException e) {
             return ResponseEntity
