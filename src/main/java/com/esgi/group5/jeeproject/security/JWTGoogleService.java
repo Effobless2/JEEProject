@@ -1,5 +1,6 @@
 package com.esgi.group5.jeeproject.security;
 
+import com.esgi.group5.jeeproject.models.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
@@ -32,5 +33,17 @@ public class JWTGoogleService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public User convertGoogleTokenToUser(GoogleIdToken googleIdToken){
+        User user = new User();
+        GoogleIdToken.Payload payload = googleIdToken.getPayload();
+
+        user.setGoogleId(payload.getSubject());
+        user.setName((String) googleIdToken.getPayload().get("name"));
+        user.setEmail(googleIdToken.getPayload().getEmail());
+        user.setAvatarUrl((String) googleIdToken.getPayload().get("picture"));
+
+        return user;
     }
 }

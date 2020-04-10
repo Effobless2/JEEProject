@@ -12,7 +12,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public abstract class AUserServiceTest {
-    private String name = "test";
     protected IUserService userService;
 
     protected IUserRepository userRepository;
@@ -32,20 +31,22 @@ public abstract class AUserServiceTest {
         ArrayList<User> mockUsers = new ArrayList<>();
         given(userRepository.get()).willReturn(mockUsers);
         for(long i = 0; i < 10; i++){
+            String name = "test";
             String curName = name + i;
             User test = new User();
+            test.setId(i);
             test.setName(curName);
             mockUsers.add(test);
 
-            given(userRepository.add(test)).willReturn(i);
-            long id = userService.add(test);
-            assertEquals(i, id);
+            given(userRepository.add(test)).willReturn(test);
+            User u = userService.add(test);
+            assertEquals(i, u.getId());
             assertEquals(i + 1, userService.get().size());
 
-            given(userRepository.get(id)).willReturn(test);
-            User u = userService.get(id);
-            assertNotNull(u);
-            assertEquals(curName, u.getName());
+            given(userRepository.get(u.getId())).willReturn(test);
+            User res = userService.get(u.getId());
+            assertNotNull(res);
+            assertEquals(curName, res.getName());
         }
     }
 }

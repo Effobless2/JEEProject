@@ -16,9 +16,8 @@ public class UserRepository implements IUserRepository {
     private final UserDAL userDAL;
 
     @Override
-    public long add(User user) {
-        User created = userDAL.save(user);
-        return created.getId();
+    public User add(User user) {
+        return userDAL.save(user);
     }
 
     @Override
@@ -31,5 +30,20 @@ public class UserRepository implements IUserRepository {
         Optional<User> user = userDAL.findById(id);
         return user.orElse(null);
 
+    }
+
+    @Override
+    public User getByGoogleId(String googleId) {
+        Optional<User> user = userDAL.findUserByGoogleId(googleId);
+        return user.orElse(null);
+    }
+
+    @Override
+    public boolean update(User user) {
+        Optional<User> search = userDAL.findById(user.getId());
+        if(search.isEmpty())
+            return false;
+        userDAL.save(user);
+        return true;
     }
 }

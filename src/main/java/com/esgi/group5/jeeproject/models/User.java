@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +14,10 @@ public class User {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String avatarUrl;
+    private String email;
+    @Column(unique = true)
+    private String googleId;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
