@@ -8,4 +8,8 @@ public interface IBeerRepository {
     long add(Beer beer);
     List<Beer> get();
     Beer get(long id);
+
+    boolean update(Beer beer);
+
+    boolean delete(long beerId);
 }

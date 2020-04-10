@@ -9,15 +9,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public abstract class ABeerRepositoryTest {
     protected IBeerRepository beerRepository;
     protected BeerDAL dal;
-    private String name = "test1";
 
     protected void setup(){
         dal = mock(BeerDAL.class);
@@ -59,6 +57,46 @@ public abstract class ABeerRepositoryTest {
         when(dal.findById(id)).thenReturn(Optional.of(test));
         Beer b = beerRepository.get(id);
         assertNotNull(b);
+    }
+
+    @Test
+    void should_update_beer(){
+        Beer test = new Beer();
+        test.setId((long) 1);
+        test.setName("First");
+
+        when(dal.findById(test.getId())).thenReturn(Optional.of(test));
+        when(dal.save(test)).thenReturn(test);
+
+        assertTrue(beerRepository.update(test));
+    }
+
+    @Test
+    void should_not_update_beer(){
+        Beer test = new Beer();
+        test.setId((long) 1);
+        test.setName("First");
+
+        when(dal.findById(test.getId())).thenReturn(Optional.empty());
+
+        assertFalse(beerRepository.update(test));
+    }
+
+    @Test
+    void should_delete_existing_beer(){
+        Beer test = new Beer();
+        test.setId((long) 1);
+
+        when(dal.findById(test.getId())).thenReturn(Optional.of(test));
+
+        assertTrue(beerRepository.delete(test.getId()));
+    }
+
+    @Test
+    void should_not_delete_non_existing_beer(){
+        when(dal.findById((long) 1)).thenReturn(Optional.empty());
+
+        assertFalse(beerRepository.delete(1));
     }
 
 }

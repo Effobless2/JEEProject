@@ -35,4 +35,20 @@ public class BeerController {
                 .status(HttpStatus.CREATED)
                 .body(id);
     }
+
+    @PutMapping
+    public ResponseEntity put(HttpServletRequest request, @RequestBody @Valid Beer beer){
+        boolean result = service.update(beer);
+        return ResponseEntity
+                .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .body(beer);
+    }
+
+    @DeleteMapping("/{beerId}")
+    public ResponseEntity delete(@PathVariable("beerId") long beerId){
+        boolean result = service.delete(beerId);
+        return ResponseEntity
+                .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .build();
+    }
 }
