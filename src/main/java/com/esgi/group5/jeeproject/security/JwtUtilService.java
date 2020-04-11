@@ -2,14 +2,12 @@ package com.esgi.group5.jeeproject.security;
 
 import com.esgi.group5.jeeproject.models.User;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 @Service
 public class JwtUtilService {
@@ -57,7 +55,4 @@ public class JwtUtilService {
             return false;
         }
     }
-
-
-
 }

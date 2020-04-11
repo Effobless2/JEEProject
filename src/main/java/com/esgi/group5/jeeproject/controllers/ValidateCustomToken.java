@@ -1,9 +1,7 @@
 package com.esgi.group5.jeeproject.controllers;
 
 import com.esgi.group5.jeeproject.security.JwtUtilService;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/validateToken")
 @RequiredArgsConstructor
 public class ValidateCustomToken {
-    @Autowired
-    JwtUtilService jwtUtil;
+    public final JwtUtilService jwtUtil;
 
     @PostMapping
-    public ResponseEntity<?> ValidateToken(HttpServletRequest request) throws Exception {
+    public ResponseEntity<?> ValidateToken(HttpServletRequest request) {
         String token = request.getHeader("token");
         if(jwtUtil.validateToken(token)){
             return ResponseEntity.ok("token OK : " + token);
