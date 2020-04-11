@@ -1,14 +1,15 @@
 package com.esgi.group5.jeeproject.security;
 
 import com.esgi.group5.jeeproject.models.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Service
 public class JwtUtilService {
@@ -34,5 +35,29 @@ public class JwtUtilService {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
+
+    public Boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
+        } catch (SignatureException e) {
+            System.out.println("Invalid JWT signature.");
+            return false;
+        } catch (MalformedJwtException e) {
+            System.out.println("Invalid JWT token.");
+            return false;
+        } catch (ExpiredJwtException e) {
+            System.out.println("Expired JWT token.");
+            return false;
+        } catch (UnsupportedJwtException e) {
+            System.out.println("Unsupported JWT token.");
+            return false;
+        } catch (IllegalArgumentException e) {
+            System.out.println("JWT token compact of handler are invalid.");
+            return false;
+        }
+    }
+
+
 
 }
