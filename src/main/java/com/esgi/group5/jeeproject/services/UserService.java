@@ -35,9 +35,11 @@ public class UserService implements IUserService {
         if(searchResult == null){
             result = repository.add(user);
         } else {
-            user.setId(searchResult.getId());
-            repository.update(user);
-            result = user;
+            searchResult.setEmail(user.getEmail());
+            searchResult.setName(user.getName());
+            searchResult.setAvatarUrl(user.getAvatarUrl());
+            repository.update(searchResult);
+            result = searchResult;
         }
         return result;
 
