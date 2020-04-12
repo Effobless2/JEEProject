@@ -24,7 +24,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User get(long id) {
+    public User get(Long id) {
         return repository.get(id);
     }
 
