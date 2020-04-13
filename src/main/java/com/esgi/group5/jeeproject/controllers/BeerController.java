@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/beers")
@@ -18,8 +19,9 @@ public class BeerController {
     private final IBeerService service;
 
     @GetMapping
-    public List<Beer> get(){
-        return service.get();
+    public ResponseEntity<?> get(@RequestHeader Map<String, String> headers){
+        List<Beer> beers = service.get();
+        return ResponseEntity.ok().body(beers);
     }
 
     @GetMapping("/{beerId}")

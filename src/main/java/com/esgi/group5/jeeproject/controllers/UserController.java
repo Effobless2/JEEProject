@@ -1,9 +1,9 @@
 package com.esgi.group5.jeeproject.controllers;
 
 import com.esgi.group5.jeeproject.models.User;
-import com.esgi.group5.jeeproject.security.InvalidGoogleTokenException;
-import com.esgi.group5.jeeproject.security.JWTGoogleService;
-import com.esgi.group5.jeeproject.security.JwtUtilService;
+import com.esgi.group5.jeeproject.security.google.InvalidGoogleTokenException;
+import com.esgi.group5.jeeproject.security.google.contracts.IJWTGoogleService;
+import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
 import com.esgi.group5.jeeproject.services.contracts.IUserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController {
     private final IUserService userService;
-    private final JWTGoogleService jwtGoogleService;
-    private final JwtUtilService jwtUtil;
+    private final IJWTGoogleService jwtGoogleService;
+    private final IBeererTokenService tokenService;
 
     @PostMapping("/auth")
     public ResponseEntity<?> authentication(HttpServletRequest request, @RequestBody @Valid String googleToken){
@@ -38,7 +38,7 @@ public class UserController {
             User user = jwtGoogleService.convertGoogleTokenToUser(googleIdToken);
             user = userService.connect(user);
 
-            String token = jwtUtil.generateToken(user);
+            String token = tokenService.generateToken(user);
             Map<String, Object> bodyResponse = new HashMap<>();
             bodyResponse.put("token", token);
 
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User get(@PathVariable("userId") int userId){
+    public User get(@PathVariable("userId") Long userId){
         return userService.get(userId);
     }
 

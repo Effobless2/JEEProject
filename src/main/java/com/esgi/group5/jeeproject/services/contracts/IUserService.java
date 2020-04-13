@@ -7,7 +7,7 @@ import java.util.List;
 public interface IUserService {
     User add(User user);
     List<User> get();
-    User get(long id);
+    User get(Long id);
 
     User connect(User user);
 }

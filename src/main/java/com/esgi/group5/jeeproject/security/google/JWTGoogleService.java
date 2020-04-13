@@ -1,6 +1,7 @@
-package com.esgi.group5.jeeproject.security;
+package com.esgi.group5.jeeproject.security.google;
 
 import com.esgi.group5.jeeproject.models.User;
+import com.esgi.group5.jeeproject.security.google.contracts.IJWTGoogleService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
@@ -14,7 +15,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 @Service
-public class JWTGoogleService {
+public class JWTGoogleService implements IJWTGoogleService {
     @Value("${googleOAuth.clientId}")
     private String CLIENT_ID;
 
