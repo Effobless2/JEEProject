@@ -12,8 +12,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/trades")
+@CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class TradeController {
     private final ITradeService service;
 
