@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping("/auth")
     public ResponseEntity<?> authentication(HttpServletRequest request, @RequestBody @Valid String googleToken){
         try {
-            GoogleIdToken googleIdToken = jwtGoogleService.tokenVerification(googleToken.substring(6));
+            GoogleIdToken googleIdToken = jwtGoogleService.tokenVerification(googleToken);
             if(googleIdToken == null){
                 return ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
