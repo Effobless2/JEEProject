@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/beers")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class BeerController {
     private final IBeerService service;

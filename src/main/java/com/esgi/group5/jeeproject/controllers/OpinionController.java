@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/opinions")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class OpinionController {
     private final IOpinionService service;
