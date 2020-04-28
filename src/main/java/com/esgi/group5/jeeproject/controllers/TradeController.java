@@ -22,7 +22,6 @@ import java.util.List;
 public class TradeController {
     private final ITradeService tradeService;
     private final IBeererTokenService tokenService;
-    private final IUserService userService;
 
     @GetMapping
     public List<Trade> get(){
@@ -36,7 +35,14 @@ public class TradeController {
 
     @PostMapping
     public ResponseEntity<?> post(HttpServletRequest request, @RequestBody @Valid Trade trade){
-        long id = tradeService.add(trade);
+        User user = tokenService.getUser(request);
+        if(user == null)
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+        
+        trade.setResponsible(user);
+        Long id = tradeService.add(trade);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
