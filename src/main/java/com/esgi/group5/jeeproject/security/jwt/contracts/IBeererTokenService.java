@@ -13,4 +13,6 @@ public interface IBeererTokenService {
     boolean validateToken(String token);
 
     Authentication getAuthentication(String token);
+
+    User getUser(HttpServletRequest req);
 }

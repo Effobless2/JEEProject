@@ -51,7 +51,7 @@ public class BeerController {
     public ResponseEntity delete(@PathVariable("beerId") long beerId){
         boolean result = service.delete(beerId);
         return ResponseEntity
-                .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .status(result ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND)
                 .build();
     }
 }

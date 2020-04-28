@@ -6,6 +6,7 @@ import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,14 @@ public class TradeRepository implements ITradeRepository {
     public Trade get(long tradeId) {
         Optional<Trade> result = tradeDAL.findById(tradeId);
         return result.orElse(null);
+    }
+
+    @Override
+    public boolean update(Trade trade) {
+        Optional<Trade> t = tradeDAL.findById(trade.getId());
+        if(t.isEmpty())
+            return false;
+        tradeDAL.save(trade);
+        return true;
     }
 }

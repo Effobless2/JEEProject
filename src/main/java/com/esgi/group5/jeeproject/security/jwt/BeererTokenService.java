@@ -83,6 +83,14 @@ public class BeererTokenService implements IBeererTokenService {
         return Long.parseLong(Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject());
     }
 
+    public User getUser(HttpServletRequest req){
+        String token = resolveToken(req);
+        if (token == null)
+            return null;
+        Long id = getUserId(token);
+        return userService.get(id);
+    }
+
     public Authentication getAuthentication(String token) {
         Long userId = getUserId(token);
         User user = userService.get(userId);
