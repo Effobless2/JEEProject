@@ -4,7 +4,6 @@ import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
-import com.esgi.group5.jeeproject.services.contracts.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +39,7 @@ public class TradeController {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .build();
-        
+
         trade.setResponsible(user);
         Long id = tradeService.add(trade);
 
@@ -49,8 +48,8 @@ public class TradeController {
                 .body(id);
     }
 
-    @PostMapping("/image/{tradeId}")
-    public ResponseEntity<?> postImage(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestParam("image") MultipartFile file){
+    @PatchMapping("/image/{tradeId}")
+    public ResponseEntity<?> patchImage(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestParam("file") MultipartFile file){
         User user = tokenService.getUser(request);
 
         Trade trade = tradeService.get(tradeId);
