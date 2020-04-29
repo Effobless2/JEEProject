@@ -14,6 +14,7 @@ public class Trade {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String profilePict;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)

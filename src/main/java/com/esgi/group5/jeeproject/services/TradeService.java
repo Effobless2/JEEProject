@@ -5,6 +5,7 @@ import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,5 +27,12 @@ public class TradeService implements ITradeService {
     @Override
     public Trade get(long tradeId) {
         return repository.get(tradeId);
+    }
+
+    @Override
+    public boolean updatePict(Trade trade, MultipartFile image) {
+        if(image != null)
+            trade.setProfilePict(image.getOriginalFilename());
+        return repository.update(trade);
     }
 }

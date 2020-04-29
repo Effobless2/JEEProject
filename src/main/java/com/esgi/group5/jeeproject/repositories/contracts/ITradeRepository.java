@@ -9,4 +9,5 @@ public interface ITradeRepository {
     long add(Trade beer);
     List<Trade> get();
     Trade get(long id);
+    boolean update(Trade trade);
 }
