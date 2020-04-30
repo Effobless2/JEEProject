@@ -30,9 +30,7 @@ public class TradeService implements ITradeService {
     }
 
     @Override
-    public boolean updatePict(Trade trade, MultipartFile image) {
-        if(image != null)
-            trade.setProfilePict(image.getOriginalFilename());
+    public boolean update(Trade trade) {
         return repository.update(trade);
     }
 }
