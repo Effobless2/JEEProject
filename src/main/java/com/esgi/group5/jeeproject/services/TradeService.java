@@ -30,8 +30,7 @@ public class TradeService implements ITradeService {
     }
 
     @Override
-    public boolean updatePict(Trade trade, String url) {
-        trade.setProfilePict(url);
+    public boolean update(Trade trade) {
         return repository.update(trade);
     }
 }

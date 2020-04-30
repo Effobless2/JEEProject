@@ -3,7 +3,6 @@ package com.esgi.group5.jeeproject.controllers;
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
-import com.esgi.group5.jeeproject.services.AzureService;
 import com.esgi.group5.jeeproject.services.contracts.IAzureService;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +72,8 @@ public class TradeController {
         }
 
         URI url = azureService.uploadImageToStorage(file, tradeId, "trade");
-        tradeService.updatePict(trade, String.valueOf(url));
+        trade.setProfilePict(String.valueOf(url));
+        tradeService.update(trade);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

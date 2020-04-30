@@ -9,5 +9,5 @@ public interface ITradeService {
     long add(Trade trade);
     List<Trade> get();
     Trade get(long tradeId);
-    boolean updatePict(Trade trade, String url);
+    boolean update(Trade trade);
 }
