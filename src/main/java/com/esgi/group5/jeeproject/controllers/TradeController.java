@@ -3,6 +3,8 @@ package com.esgi.group5.jeeproject.controllers;
 import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
+import com.esgi.group5.jeeproject.services.AzureService;
+import com.esgi.group5.jeeproject.services.contracts.IAzureService;
 import com.esgi.group5.jeeproject.services.contracts.ITradeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,6 +25,7 @@ import java.util.List;
 public class TradeController {
     private final ITradeService tradeService;
     private final IBeererTokenService tokenService;
+    private final IAzureService azureService;
 
     @GetMapping
     public List<Trade> get(){
@@ -49,10 +54,10 @@ public class TradeController {
     }
 
     @PatchMapping("/image/{tradeId}")
-    public ResponseEntity<?> patchImage(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestParam("file") MultipartFile file){
+    public ResponseEntity<?> patchImage(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestParam("file") MultipartFile file) throws IOException {
         User user = tokenService.getUser(request);
-
         Trade trade = tradeService.get(tradeId);
+
         if(trade == null){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
@@ -67,7 +72,9 @@ public class TradeController {
                     .build();
         }
 
-        tradeService.updatePict(trade, file);
+        URI url = azureService.uploadImageToStorage(file, tradeId, "trade");
+        tradeService.updatePict(trade, String.valueOf(url));
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
