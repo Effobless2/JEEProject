@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.DELETE, "/opinion/**").hasRole("USER")
 
                     .antMatchers(HttpMethod.GET, "/beers/**").permitAll()
-                    .antMatchers(HttpMethod.POST, "/beers/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/beers/**").permitAll() //A Modifier en hasRole("ADMIN")
                     .antMatchers(HttpMethod.PUT, "/beers/**").hasRole("ADMIN")
                     .antMatchers(HttpMethod.DELETE, "/beers/**").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.PATCH, "/beers/image/**").hasRole("ADMIN");
+                    .antMatchers(HttpMethod.PATCH, "/beers/image/**").permitAll(); //A Modifier en hasRole("ADMIN")
     }
 }
 
