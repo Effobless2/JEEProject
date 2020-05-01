@@ -15,6 +15,9 @@ public class Beer {
     private Long id;
     private String name;
     private String profilePict;
+    private String type;
+    private double alcoholLevel;
+    private String description;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)

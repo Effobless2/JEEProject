@@ -15,6 +15,11 @@ public class Trade {
     private Long id;
     private String name;
     private String profilePict;
+    private String type;
+    private double longitude;
+    private double lattitude;
+    private String address;
+    private String description;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
