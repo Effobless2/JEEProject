@@ -1,14 +1,21 @@
 package com.esgi.group5.jeeproject.controllers;
 
 import com.esgi.group5.jeeproject.models.Beer;
+import com.esgi.group5.jeeproject.models.Trade;
+import com.esgi.group5.jeeproject.models.User;
+import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
+import com.esgi.group5.jeeproject.services.contracts.IAzureService;
 import com.esgi.group5.jeeproject.services.contracts.IBeerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +25,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BeerController {
     private final IBeerService service;
+    private final IBeererTokenService tokenService;
+    private final IAzureService azureService;
 
     @GetMapping
     public ResponseEntity<?> get(@RequestHeader Map<String, String> headers){
@@ -52,6 +61,26 @@ public class BeerController {
         boolean result = service.delete(beerId);
         return ResponseEntity
                 .status(result ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND)
+                .build();
+    }
+
+    @PatchMapping("/image/{tradeId}")
+    public ResponseEntity<?> patchImage(HttpServletRequest request, @PathVariable("tradeId") Long beerId, @RequestParam("file") MultipartFile file) throws IOException {
+        User user = tokenService.getUser(request);
+        Beer beer = service.get(beerId);
+
+        if(beer == null){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        URI url = azureService.uploadImageToStorage(file, beerId, "beer");
+        beer.setProfilePict(String.valueOf(url));
+        service.update(beer);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .build();
     }
 }
