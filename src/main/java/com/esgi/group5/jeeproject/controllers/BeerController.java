@@ -1,7 +1,6 @@
 package com.esgi.group5.jeeproject.controllers;
 
 import com.esgi.group5.jeeproject.models.Beer;
-import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
 import com.esgi.group5.jeeproject.services.contracts.IAzureService;
@@ -84,10 +83,6 @@ public class BeerController {
                 .status(HttpStatus.OK)
                 .build();
     }
-    /*
-    private String name;
-    private String type;
-    private double alcoholLevel;*/
 
     @GetMapping("/search")
     public ResponseEntity<?> getBeersWithFilters(
