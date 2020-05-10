@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/beers")
@@ -82,5 +83,21 @@ public class BeerController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+    /*
+    private String name;
+    private String type;
+    private double alcoholLevel;*/
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getBeersWithFilters(
+            HttpServletRequest request,
+            @RequestParam("name") Optional<String> name,
+            @RequestParam("types") Optional<List<String>> types,
+            @RequestParam("alcoholLevel") Optional<Double> alcoholLevel
+    ){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.service.filter(name, types, alcoholLevel));
     }
 }
