@@ -1,7 +1,6 @@
 package com.esgi.group5.jeeproject.controllers;
 
 import com.esgi.group5.jeeproject.models.Beer;
-import com.esgi.group5.jeeproject.models.Trade;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
 import com.esgi.group5.jeeproject.services.contracts.IAzureService;
@@ -18,6 +17,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/beers")
@@ -82,5 +82,17 @@ public class BeerController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getBeersWithFilters(
+            HttpServletRequest request,
+            @RequestParam("name") Optional<String> name,
+            @RequestParam("types") Optional<List<String>> types,
+            @RequestParam("alcoholLevel") Optional<Double> alcoholLevel
+    ){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.service.filter(name, types, alcoholLevel));
     }
 }
