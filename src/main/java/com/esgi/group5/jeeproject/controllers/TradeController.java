@@ -52,6 +52,31 @@ public class TradeController {
                 .body(id);
     }
 
+    @PutMapping("/{tradeId}")
+    public ResponseEntity<?> put(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestBody @Valid Trade trade){
+        User user = tokenService.getUser(request);
+        Trade older = tradeService.get(tradeId);
+
+        if(trade == null || older == null)
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+
+        if(user == null || (
+            trade.getResponsible() != null &&
+            !trade.getResponsible().getId().equals(user.getId())))
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+
+        Fill(older, trade);
+        tradeService.update(older);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
     @PatchMapping("/image/{tradeId}")
     public ResponseEntity<?> patchImage(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestParam("file") MultipartFile file) throws IOException {
         User user = tokenService.getUser(request);
@@ -78,5 +103,15 @@ public class TradeController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    private void Fill(Trade destination, Trade source){
+        destination.setName(source.getName());
+        destination.setProfilePict(source.getProfilePict());
+        destination.setType(source.getType());
+        destination.setLongitude(source.getLongitude());
+        destination.setLattitude(source.getLattitude());
+        destination.setAddress(source.getAddress());
+        destination.setDescription(source.getDescription());
     }
 }
