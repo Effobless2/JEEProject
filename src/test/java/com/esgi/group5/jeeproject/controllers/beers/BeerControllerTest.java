@@ -97,7 +97,7 @@ public class BeerControllerTest {
                         .when()
                         .post("/beers")
                         .then()
-                        .statusCode(HttpStatus.FORBIDDEN.value());
+                        .statusCode(HttpStatus.CREATED.value());
                         /*.extract()
                         .as(int.class);
 

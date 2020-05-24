@@ -48,12 +48,21 @@ public class BeerController {
                 .body(id);
     }
 
-    @PutMapping
-    public ResponseEntity put(HttpServletRequest request, @RequestBody @Valid Beer beer){
-        boolean result = service.update(beer);
+    @PutMapping("/{beerId}")
+    public ResponseEntity put(HttpServletRequest request, @PathVariable("beerId") Long beerId, @RequestBody @Valid Beer beer){
+        Beer older = service.get(beerId);
+
+        if(older == null)
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(beerId);
+
+        Fill(beer, older);
+        boolean result = service.update(older);
+
         return ResponseEntity
                 .status(result ? HttpStatus.OK : HttpStatus.NOT_FOUND)
-                .body(beer);
+                .body(older);
     }
 
     @DeleteMapping("/{beerId}")
@@ -94,5 +103,12 @@ public class BeerController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(this.service.filter(name, types, alcoholLevel));
+    }
+
+    private void Fill(Beer source, Beer destination){
+        destination.setName(source.getName());
+        destination.setType(source.getType());
+        destination.setProfilePict(source.getProfilePict());
+        destination.setDescription(source.getDescription());
     }
 }
