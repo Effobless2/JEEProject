@@ -1,5 +1,6 @@
 package com.esgi.group5.jeeproject.security.jwt;
 
+import com.esgi.group5.jeeproject.models.Role;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
 import com.esgi.group5.jeeproject.services.contracts.IUserService;
@@ -35,6 +36,7 @@ public class BeererTokenService implements IBeererTokenService {
         claims.put("name", user.getName());
         claims.put("email", user.getEmail());
         claims.put("avatarUrl", user.getAvatarUrl());
+        claims.put("roles", user.getRoles());
         return claims;
     }
 
@@ -99,13 +101,11 @@ public class BeererTokenService implements IBeererTokenService {
     }
 
     private Collection<GrantedAuthority> getAuthorities(User user){
-        /*Temporaire*/
         ArrayList<String> roles = new ArrayList<>();
-        roles.add("ROLE_USER");
-        if(user.getEmail().equals("FAKE_ADDRESS@TROLL.COM"))
-            roles.add("ROLE_ADMIN");
+        for(Role role: user.getRoles())
+            roles.add(role.getLabel());
+        roles.add("caca");
 
         return roles.stream().map(SimpleGrantedAuthority::new).collect(toList());
-        /* ** */
     }
 }
