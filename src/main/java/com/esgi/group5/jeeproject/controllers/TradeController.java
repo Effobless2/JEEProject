@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/trades")
@@ -78,5 +79,18 @@ public class TradeController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getBeersWithFilters(
+            HttpServletRequest request,
+            @RequestParam("name") Optional<String> name,
+            @RequestParam("types") Optional<List<String>> types,
+            @RequestParam("lng") Optional<Double> lng,
+            @RequestParam("lat") Optional<Double> lat
+    ){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.tradeService.filter(name, types, lng, lat));
     }
 }
