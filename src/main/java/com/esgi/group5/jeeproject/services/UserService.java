@@ -6,6 +6,7 @@ import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
 import com.esgi.group5.jeeproject.services.contracts.IRoleService;
 import com.esgi.group5.jeeproject.services.contracts.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import java.util.List;
 public class UserService implements IUserService {
     private final IUserRepository repository;
     private final IRoleService roleService;
+
+    @Value("${beerer.admin.email}")
+    private String ADMIN_EMAIL;
 
     @Override
     public User add(User user) {
@@ -39,7 +43,10 @@ public class UserService implements IUserService {
         User searchResult = repository.getByGoogleId(user.getGoogleId());
         if(searchResult == null){
             Collection<Role> roles = new ArrayList<>();
-            roles.add(roleService.getUserRole());
+            if(user.getEmail().equals(ADMIN_EMAIL))
+                roles.add(roleService.getAdminRole());
+            else
+                roles.add(roleService.getUserRole());
             user.setRoles(roles);
             result = repository.add(user);
         } else {
