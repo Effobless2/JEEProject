@@ -9,6 +9,6 @@ public class UserServiceTest extends AUserServiceTest {
     @Override
     protected void setup() {
         super.setup();
-        userService = new UserService(userRepository);
+        userService = new UserService(userRepository, roleService);
     }
 }
