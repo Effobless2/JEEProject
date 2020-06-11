@@ -25,4 +25,7 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Beer> favourites;
 
+    @ManyToMany
+    private Collection<Role> roles;
+
 }

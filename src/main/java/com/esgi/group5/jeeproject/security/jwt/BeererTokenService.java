@@ -1,8 +1,8 @@
 package com.esgi.group5.jeeproject.security.jwt;
 
+import com.esgi.group5.jeeproject.models.Role;
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.security.jwt.contracts.IBeererTokenService;
-import com.esgi.group5.jeeproject.services.contracts.IUserService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
 public class BeererTokenService implements IBeererTokenService {
-    private final IUserService userService;
 
     @Value("${jwt.secretKey}")
     private String SECRET_KEY;
@@ -35,6 +35,7 @@ public class BeererTokenService implements IBeererTokenService {
         claims.put("name", user.getName());
         claims.put("email", user.getEmail());
         claims.put("avatarUrl", user.getAvatarUrl());
+        claims.put("roles", user.getRoles().stream().map(Role::getLabel).collect(Collectors.toList()));
         return claims;
     }
 
@@ -83,29 +84,43 @@ public class BeererTokenService implements IBeererTokenService {
         return Long.parseLong(Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject());
     }
 
+    private User getUserFromToken(String token) {
+        if(token == null)
+            return null;
+        User u = new User();
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        u.setId(Long.parseLong(claims.get("id").toString()));
+        u.setName(claims.get("name").toString());
+        u.setAvatarUrl(claims.get("avatarUrl").toString());
+        u.setEmail(claims.get("email").toString());
+        u.setRoles(getRoles(claims));
+        return u;
+    }
+    private Collection<Role> getRoles(Claims claims){
+        return ((List<String>)claims.get("roles")).stream().map(r -> {
+            Role role = new Role();
+            role.setLabel(r);
+            return role;
+        }).collect(Collectors.toList());
+    }
+
     public User getUser(HttpServletRequest req){
         String token = resolveToken(req);
         if (token == null)
             return null;
-        Long id = getUserId(token);
-        return userService.get(id);
+        return getUserFromToken(token);
     }
 
     public Authentication getAuthentication(String token) {
-        Long userId = getUserId(token);
-        User user = userService.get(userId);
+        User user = getUserFromToken(token);
         Collection<GrantedAuthority> authorities = getAuthorities(user);
         return new BeererAuthenticationToken(user, authorities);
     }
 
     private Collection<GrantedAuthority> getAuthorities(User user){
-        /*Temporaire*/
         ArrayList<String> roles = new ArrayList<>();
-        roles.add("ROLE_USER");
-        if(user.getEmail().equals("FAKE_ADDRESS@TROLL.COM"))
-            roles.add("ROLE_ADMIN");
-
+        for(Role role: user.getRoles())
+            roles.add(role.getLabel());
         return roles.stream().map(SimpleGrantedAuthority::new).collect(toList());
-        /* ** */
     }
 }

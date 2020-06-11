@@ -2,6 +2,7 @@ package com.esgi.group5.jeeproject.services.users;
 
 import com.esgi.group5.jeeproject.models.User;
 import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
+import com.esgi.group5.jeeproject.services.contracts.IRoleService;
 import com.esgi.group5.jeeproject.services.contracts.IUserService;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +16,11 @@ public abstract class AUserServiceTest {
     protected IUserService userService;
 
     protected IUserRepository userRepository;
+    protected IRoleService roleService;
 
     protected void setup(){
         userRepository = mock(IUserRepository.class);
+        roleService = mock(IRoleService.class);
     }
 
     @Test
