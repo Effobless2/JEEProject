@@ -1,43 +1,43 @@
 package com.esgi.group5.jeeproject.repositories;
-
-import com.esgi.group5.jeeproject.DAL.TradeDAL;
-import com.esgi.group5.jeeproject.models.Trade;
+/*
+import com.esgi.group5.jeeproject.persistence.datatbase.repositories.JpaTradeRepository;
+import com.esgi.group5.jeeproject.persistence.datatbase.daos.TradeDAO;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
 public class TradeRepository implements ITradeRepository {
-    private final TradeDAL tradeDAL;
+    private final JpaTradeRepository jpaTradeRepository;
 
     @Override
-    public long add(Trade trade) {
-        Trade result = tradeDAL.save(trade);
+    public long add(TradeDAO trade) {
+        TradeDAO result = jpaTradeRepository.save(trade);
         return result.getId();
     }
 
     @Override
-    public List<Trade> get() {
-        return tradeDAL.findAll();
+    public List<TradeDAO> get() {
+        return jpaTradeRepository.findAll();
     }
 
     @Override
-    public Trade get(long tradeId) {
-        Optional<Trade> result = tradeDAL.findById(tradeId);
+    public TradeDAO get(long tradeId) {
+        Optional<TradeDAO> result = jpaTradeRepository.findById(tradeId);
         return result.orElse(null);
     }
 
     @Override
-    public boolean update(Trade trade) {
-        Optional<Trade> t = tradeDAL.findById(trade.getId());
+    public boolean update(TradeDAO trade) {
+        Optional<TradeDAO> t = jpaTradeRepository.findById(trade.getId());
         if(t.isEmpty())
             return false;
-        tradeDAL.save(trade);
+        jpaTradeRepository.save(trade);
         return true;
     }
 }
+*/

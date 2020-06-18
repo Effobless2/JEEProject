@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.repositories;
-
-import com.esgi.group5.jeeproject.DAL.OpinionDAL;
-import com.esgi.group5.jeeproject.models.Opinion;
+/*
+import com.esgi.group5.jeeproject.persistence.datatbase.repositories.JpaOpinionRepository;
+import com.esgi.group5.jeeproject.persistence.datatbase.daos.OpinionDAO;
 import com.esgi.group5.jeeproject.repositories.contracts.IOpinionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,22 +12,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Component
 public class OpinionRepository implements IOpinionRepository {
-    private final OpinionDAL opinionDAL;
+    private final JpaOpinionRepository jpaOpinionRepository;
 
     @Override
-    public long add(Opinion opinion) {
-        Opinion result = opinionDAL.save(opinion);
+    public long add(OpinionDAO opinion) {
+        OpinionDAO result = jpaOpinionRepository.save(opinion);
         return result.getId();
     }
 
     @Override
-    public List<Opinion> get() {
-        return opinionDAL.findAll();
+    public List<OpinionDAO> get() {
+        return jpaOpinionRepository.findAll();
     }
 
     @Override
-    public Opinion get(long opinionId) {
-        Optional<Opinion> result = opinionDAL.findById(opinionId);
+    public OpinionDAO get(long opinionId) {
+        Optional<OpinionDAO> result = jpaOpinionRepository.findById(opinionId);
         return result.orElse(null);
     }
 }
+*/

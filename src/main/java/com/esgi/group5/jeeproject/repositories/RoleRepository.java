@@ -1,7 +1,5 @@
 package com.esgi.group5.jeeproject.repositories;
-
-import com.esgi.group5.jeeproject.DAL.RoleDAL;
-import com.esgi.group5.jeeproject.models.Role;
+/*
 import com.esgi.group5.jeeproject.repositories.contracts.IRoleRepository;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +7,15 @@ import java.util.Optional;
 
 @Component
 public class RoleRepository implements IRoleRepository {
-    private RoleDAL roleDAL;
+    private JpaRoleRepository jpaRoleRepository;
 
-    public RoleRepository(RoleDAL roleDAL) {
-        this.roleDAL = roleDAL;
+    public RoleRepository(JpaRoleRepository jpaRoleRepository) {
+        this.jpaRoleRepository = jpaRoleRepository;
     }
 
     @Override
-    public Role get(String label) {
-        Optional<Role> role = roleDAL.findRoleByLabel(label);
+    public RoleDAO get(String label) {
+        Optional<RoleDAO> role = jpaRoleRepository.findRoleByLabel(label);
         if (role.isEmpty()) {
             return add(label);
         }
@@ -25,9 +23,10 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public Role add(String label) {
-        Role r = new Role();
+    public RoleDAO add(String label) {
+        RoleDAO r = new RoleDAO();
         r.setLabel(label);
-        return roleDAL.save(r);
+        return jpaRoleRepository.save(r);
     }
 }
+*/
