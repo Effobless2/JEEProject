@@ -30,7 +30,7 @@ public class UpdateBeerTest {
         Beer test = new Beer();
         test.setId(1L);
 
-        when(beerRepository.update(test)).thenReturn(Optional.of(test));
+        when(beerRepository.updateBeer(test)).thenReturn(Optional.of(test));
         Beer b = updateBeerService.updateBeer(test);
         assertNotNull(b);
         assertEquals(b, test);

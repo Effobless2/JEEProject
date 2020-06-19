@@ -25,13 +25,13 @@ public class CreateBeerTest {
     @Test
     void should_add_new_beer(){
         ArrayList<Beer> mockBeer = new ArrayList<>();
-        given(beerRepository.get()).willReturn(mockBeer);
+        given(beerRepository.getAllBeers()).willReturn(mockBeer);
         for(long i = 0L; i < 10; i++){
             Beer test = new Beer();
             mockBeer.add(test);
-            given(beerRepository.create(test)).willReturn(test);
+            given(beerRepository.createBeer(test)).willReturn(test);
             Beer beer = createBeerService.createBeer(test);
-            assertEquals(i + 1, beerRepository.get().size());
+            assertEquals(i + 1, beerRepository.getAllBeers().size());
             assertEquals(beer, test);
         }
     }

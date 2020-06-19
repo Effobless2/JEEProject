@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface TradeRepository {
-    Trade create(Trade trade);
-    Collection<Trade> get();
-    Optional<Trade> get(Long id);
-    void delete(Long id);
-    Optional<Trade> update(Trade trade);
+    Trade createTrade(Trade trade);
+    Collection<Trade> getAllTrades();
+    Optional<Trade> getTradeById(Long id);
+    void deleteTradeWithId(Long id);
+    Optional<Trade> updateTrade(Trade trade);
 }

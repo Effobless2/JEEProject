@@ -11,6 +11,6 @@ public class CreateBeerService {
     }
 
     public Beer createBeer(Beer beer) {
-        return beerRepository.create(beer);
+        return beerRepository.createBeer(beer);
     }
 }

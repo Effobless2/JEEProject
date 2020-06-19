@@ -13,6 +13,6 @@ public class CreateTradeService {
 
     public Trade createTrade(Trade trade, User responsible) {
         //TODO: Link User to trade
-        return tradeRepository.create(trade);
+        return tradeRepository.createTrade(trade);
     }
 }

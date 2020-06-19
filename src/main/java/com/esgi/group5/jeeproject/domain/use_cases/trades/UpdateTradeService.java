@@ -30,7 +30,7 @@ public class UpdateTradeService {
     }
 
     private Trade updateTrade(Trade trade) {
-        Optional<Trade> updated = tradeRepository.update(trade);
+        Optional<Trade> updated = tradeRepository.updateTrade(trade);
         return updated.orElse(null);
     }
 }

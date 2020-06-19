@@ -12,7 +12,7 @@ public class DeleteTradeService {
 
     public boolean deleteTrade(Long tradeId, User user) {
         //TODO: Check if user is the responsible of the concerned Trade
-        tradeRepository.delete(tradeId);
+        tradeRepository.deleteTradeWithId(tradeId);
         return true;
     }
 }

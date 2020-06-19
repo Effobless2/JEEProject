@@ -25,7 +25,7 @@ public class CreateOpinionTest {
         for(long i = 0; i < 10; i++){
             Opinion test = new Opinion();
 
-            given(repository.create(test)).willReturn(test);
+            given(repository.createOpinion(test)).willReturn(test);
             Opinion opinion = createOpinionService.createOpinion(test);
             assertNotNull(opinion);
         }

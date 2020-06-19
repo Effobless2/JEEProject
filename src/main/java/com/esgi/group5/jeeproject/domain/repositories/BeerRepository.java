@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface BeerRepository {
-    Beer create(Beer beer);
-    Collection<Beer> get();
-    Optional<Beer> get(Long id);
-    void delete(Long id);
-    Optional<Beer> update(Beer beer);
+    Beer createBeer(Beer beer);
+    Collection<Beer> getAllBeers();
+    Optional<Beer> getBeerById(Long id);
+    void deleteBeerWithId(Long id);
+    Optional<Beer> updateBeer(Beer beer);
 }

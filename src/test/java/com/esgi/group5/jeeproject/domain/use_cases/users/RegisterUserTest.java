@@ -25,7 +25,7 @@ public class RegisterUserTest {
     @Test
     void should_add_new_user_and_returns_new_user_id(){
         ArrayList<User> mockUsers = new ArrayList<>();
-        given(userRepository.get()).willReturn(mockUsers);
+        given(userRepository.getAllUsers()).willReturn(mockUsers);
         for(long i = 0; i < 10; i++){
             String name = "test";
             String curName = name + i;
@@ -34,7 +34,7 @@ public class RegisterUserTest {
             test.setName(curName);
             mockUsers.add(test);
 
-            given(userRepository.create(test)).willReturn(test);
+            given(userRepository.createUser(test)).willReturn(test);
             User u = registerUserService.register(test);
             assertNotNull(u);
         }

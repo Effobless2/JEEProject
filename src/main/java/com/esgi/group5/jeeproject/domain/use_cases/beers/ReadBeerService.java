@@ -16,11 +16,11 @@ public class ReadBeerService {
     }
 
     public Collection<Beer> get(){
-        return beerRepository.get();
+        return beerRepository.getAllBeers();
     }
 
     public Beer get(Long id){
-        return beerRepository.get(id).orElse(null);
+        return beerRepository.getBeerById(id).orElse(null);
     }
 
     public Collection<Beer> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> alcoholLevel) {

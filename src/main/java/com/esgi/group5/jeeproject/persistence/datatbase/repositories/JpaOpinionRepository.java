@@ -17,32 +17,32 @@ import java.util.stream.Collectors;
 @Repository
 public interface JpaOpinionRepository extends JpaRepository<OpinionDAO, Long>, OpinionRepository {
 
-    default Opinion create(Opinion opinion) {
+    default Opinion createOpinion(Opinion opinion) {
         OpinionDAO dao = OpinionParser.parse(opinion);
         OpinionDAO saved = save(dao);
         return OpinionParser.parse(saved);
     }
-    default Collection<Opinion> get() {
+    default Collection<Opinion> getAllOpinions() {
         return findAll()
                 .stream()
                 .map(OpinionParser::parse)
                 .collect(Collectors.toList());
     }
-    default Optional<Opinion> get(Long id) {
+    default Optional<Opinion> getOpinionById(Long id) {
         Optional<OpinionDAO> found = findById(id);
         return found.map(OpinionParser::parse);
     }
-    default void delete(Long id) {
+    default void deleteOpinionWithId(Long id) {
         deleteById(id);
     }
-    default Optional<Opinion> update(Opinion opinion) {
+    default Optional<Opinion> updateOpinion(Opinion opinion) {
         if(opinion.getId() == null)
             return Optional.empty();
         update(
                 opinion.getId(),
                 opinion.getName(),
                 opinion.getComment());
-        return get(opinion.getId());
+        return getOpinionById(opinion.getId());
     }
 
     @Transactional

@@ -17,27 +17,27 @@ import java.util.stream.Collectors;
 @Repository
 public interface JpaBeerRepository extends JpaRepository<BeerDAO, Long>, BeerRepository {
 
-    default Beer create(Beer beer) {
+    default Beer createBeer(Beer beer) {
         BeerDAO dao = BeerParser.parse(beer);
         BeerDAO saved = save(dao);
         return BeerParser.parse(saved);
     }
 
-    default Collection<Beer> get() {
+    default Collection<Beer> getAllBeers() {
         Collection<BeerDAO> collection = findAll();
         return collection
                 .stream()
                 .map(BeerParser::parse)
                 .collect(Collectors.toList());
     }
-    default Optional<Beer> get(Long id) {
+    default Optional<Beer> getBeerById(Long id) {
         Optional<BeerDAO> found = findById(id);
         return found.map(BeerParser::parse);
     }
-    default void delete(Long id) {
+    default void deleteBeerWithId(Long id) {
         deleteById(id);
     }
-    default Optional<Beer> update(Beer beer) {
+    default Optional<Beer> updateBeer(Beer beer) {
         if(beer.getId() == null)
             return Optional.empty();
         update(
@@ -47,7 +47,7 @@ public interface JpaBeerRepository extends JpaRepository<BeerDAO, Long>, BeerRep
                 beer.getDescription(),
                 beer.getType(),
                 beer.getProfilePict());
-        return get(beer.getId());
+        return getBeerById(beer.getId());
     }
 
 

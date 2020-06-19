@@ -17,11 +17,11 @@ public class ReadTradeService {
     }
 
     public Collection<Trade> get(){
-        return tradeRepository.get();
+        return tradeRepository.getAllTrades();
     }
 
     public Trade get(Long id){
-        return tradeRepository.get(id).orElse(null);
+        return tradeRepository.getTradeById(id).orElse(null);
     }
 
     public Collection<Trade> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> lng, Optional<Double> lat) {

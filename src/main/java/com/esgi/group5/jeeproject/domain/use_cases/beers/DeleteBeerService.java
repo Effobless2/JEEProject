@@ -10,7 +10,7 @@ public class DeleteBeerService {
     }
 
     public boolean deleteBeer(Long beerId){
-        beerRepository.delete(beerId);
+        beerRepository.deleteBeerWithId(beerId);
         return true;
     }
 }

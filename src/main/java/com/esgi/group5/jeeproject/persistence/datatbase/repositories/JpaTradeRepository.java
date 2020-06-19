@@ -17,28 +17,28 @@ import java.util.stream.Collectors;
 @Repository
 public interface JpaTradeRepository extends JpaRepository<TradeDAO, Long>, TradeRepository {
 
-    default Trade create(Trade trade){
+    default Trade createTrade(Trade trade){
         TradeDAO dao = TradeParser.parse(trade);
         TradeDAO saved = save(dao);
         return TradeParser.parse(saved);
     }
-    default Collection<Trade> get(){
+    default Collection<Trade> getAllTrades(){
         return findAll()
                 .stream()
                 .map(TradeParser::parse)
                 .collect(Collectors.toList());
 
     }
-    default Optional<Trade> get(Long id){
+    default Optional<Trade> getTradeById(Long id){
         Optional<TradeDAO> found = findById(id);
         if(found.isEmpty())
             return Optional.empty();
         return Optional.of(TradeParser.parse(found.get()));
     }
-    default void delete(Long id){
+    default void deleteTradeWithId(Long id){
         deleteById(id);
     }
-    default Optional<Trade> update(Trade trade){
+    default Optional<Trade> updateTrade(Trade trade){
         if(trade.getId() == null)
             return Optional.empty();
         update(
@@ -51,7 +51,7 @@ public interface JpaTradeRepository extends JpaRepository<TradeDAO, Long>, Trade
             trade.getAddress(),
             trade.getDescription()
         );
-        return get(trade.getId());
+        return getTradeById(trade.getId());
     }
 
     @Transactional

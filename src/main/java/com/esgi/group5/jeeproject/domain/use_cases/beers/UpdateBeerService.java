@@ -17,7 +17,7 @@ public class UpdateBeerService {
     }
 
     public Beer updateBeer(Beer beer) {
-        Optional<Beer> updated = beerRepository.update(beer);
+        Optional<Beer> updated = beerRepository.updateBeer(beer);
         return updated.orElse(null);
     }
 

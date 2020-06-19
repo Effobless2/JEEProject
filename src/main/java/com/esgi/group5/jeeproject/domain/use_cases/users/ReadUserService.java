@@ -13,10 +13,10 @@ public class ReadUserService {
     }
 
     public Collection<User> get(){
-        return this.userRepository.get();
+        return this.userRepository.getAllUsers();
     }
 
     public User get(Long userId) {
-        return this.userRepository.get(userId).orElse(null);
+        return this.userRepository.getUserById(userId).orElse(null);
     }
 }

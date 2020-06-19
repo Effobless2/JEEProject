@@ -11,6 +11,6 @@ public class RegisterUserService {
     }
 
     public User register(User user){
-        return this.userRepository.create(user);
+        return this.userRepository.createUser(user);
     }
 }

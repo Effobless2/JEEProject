@@ -23,7 +23,7 @@ public class ReadOpinionTest {
 
     @Test
     void should_be_empty_after_init(){
-        given(repository.get()).willReturn(new ArrayList<>());
+        given(repository.getAllOpinions()).willReturn(new ArrayList<>());
         assertTrue(readOpinionService.get().isEmpty());
     }
 }

@@ -11,7 +11,7 @@ public class CreateOpinionService {
     }
 
     public Opinion createOpinion(Opinion opinion) {
-        return opinionRepository.create(opinion);
+        return opinionRepository.createOpinion(opinion);
     }
 
 }

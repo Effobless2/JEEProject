@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface UserRepository {
-    User create(User user);
-    Collection<User> get();
-    Optional<User> get(Long id);
-    void delete(Long id);
-    Optional<User> update(User user);
+    User createUser(User user);
+    Collection<User> getAllUsers();
+    Optional<User> getUserById(Long id);
+    void deleteUserWithId(Long id);
+    Optional<User> updateUser(User user);
 }

@@ -26,7 +26,7 @@ public class CreateTradeTest {
     @Test
     void should_add_new_trade(){
         ArrayList<Trade> mockTrade = new ArrayList<>();
-        given(repository.get()).willReturn(mockTrade);
+        given(repository.getAllTrades()).willReturn(mockTrade);
 
         User userTest = new User();
         for (long i = 0L; i < 10; i++) {

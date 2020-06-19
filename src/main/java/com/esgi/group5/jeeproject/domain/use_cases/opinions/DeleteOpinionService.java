@@ -11,6 +11,6 @@ public class DeleteOpinionService {
     }
 
     public void deleteOpinion(Opinion opinion){
-        opinionRepository.delete(opinion.getId());
+        opinionRepository.deleteOpinionWithId(opinion.getId());
     }
 }
