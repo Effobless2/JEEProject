@@ -14,12 +14,12 @@ import java.util.Optional;
 
 @Service
 public class AuthenticationFromGoogleService {
-    private final BeererAuthenticationRepository googleAccountRepository;
+    private final BeererAuthenticationRepository beererAuthenticationRepository;
     private final RegisterUserService registerUserService;
     private final ReadUserService readUserService;
 
-    public AuthenticationFromGoogleService(GoogleAccountRepository googleAccountRepository, RegisterUserService registerUserService, ReadUserService readUserService) {
-        this.googleAccountRepository = googleAccountRepository;
+    public AuthenticationFromGoogleService(GoogleAccountRepository beererAuthenticationRepository, RegisterUserService registerUserService, ReadUserService readUserService) {
+        this.beererAuthenticationRepository = beererAuthenticationRepository;
         this.registerUserService = registerUserService;
         this.readUserService = readUserService;
     }
@@ -42,7 +42,7 @@ public class AuthenticationFromGoogleService {
     }
 
     public Optional<GoogleAccountAndBeererUserRelationshipDAO> getRelatedUserAccount(String googleId){
-        return googleAccountRepository.findUserByGoogleId(googleId);
+        return beererAuthenticationRepository.findUserByGoogleId(googleId);
     }
 
     public User createAccountForGoogleAccount(GoogleAccountDTO googleAccountDTO) {
@@ -52,7 +52,7 @@ public class AuthenticationFromGoogleService {
                 googleAccountDTO.getGoogleId(),
                 registered.getId()
         );
-        GoogleAccountAndBeererUserRelationshipDAO registeredRelation = googleAccountRepository.create(dao);
+        GoogleAccountAndBeererUserRelationshipDAO registeredRelation = beererAuthenticationRepository.create(dao);
         return registered;
     }
 }
