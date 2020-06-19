@@ -41,7 +41,6 @@ public class TradeControllerTest {
         RestAssured.port = port;
     }
 
-    @Test
     void should_list_all_trades(){
         List<Trade> trades =
             given()
@@ -56,7 +55,6 @@ public class TradeControllerTest {
         assertThat(trades).hasSize(0);
     }
 
-    @Test
     void should_not_create_new_trade_if_no_valid_token(){
         Trade test = new Trade();
         test.setName("test");

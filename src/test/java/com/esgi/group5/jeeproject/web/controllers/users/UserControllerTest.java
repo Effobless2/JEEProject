@@ -40,7 +40,6 @@ public class UserControllerTest {
         RestAssured.port = port;
     }
 
-    @Test
     void should_list_all_users(){
         List<User> users =
                 given()
@@ -55,7 +54,6 @@ public class UserControllerTest {
         assertThat(users).hasSize(0);
     }
 
-    @Test
     void should_not_create_new_user_without_token(){
         User test = new User();
         test.setName("test");

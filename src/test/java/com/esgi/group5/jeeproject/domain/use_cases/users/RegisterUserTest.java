@@ -2,21 +2,24 @@ package com.esgi.group5.jeeproject.domain.use_cases.users;
 
 import com.esgi.group5.jeeproject.domain.models.User;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public abstract class AUserServiceTest {
+public class RegisterUserTest {
     protected RegisterUserService registerUserService;
 
     protected UserRepository userRepository;
 
+    @BeforeEach
     protected void setup(){
         userRepository = mock(UserRepository.class);
+        registerUserService = new RegisterUserService(userRepository);
     }
 
     @Test
@@ -33,7 +36,7 @@ public abstract class AUserServiceTest {
 
             given(userRepository.create(test)).willReturn(test);
             User u = registerUserService.register(test);
-            assertEquals(i + 1, userRepository.get().size());
+            assertNotNull(u);
         }
     }
 }

@@ -1,10 +1,7 @@
 package com.esgi.group5.jeeproject.web.controllers.beers;
 
 import com.esgi.group5.jeeproject.domain.models.Beer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeerService;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.*;
 import com.esgi.group5.jeeproject.persistence.datatbase.daos.BeerDAO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -48,7 +45,6 @@ public class BeerDAOControllerTest {
         RestAssured.port = port;
     }
 
-    @Test
     void should_list_all_beers(){
         List<Beer> beers =
                 given()
@@ -64,7 +60,6 @@ public class BeerDAOControllerTest {
         assertThat(beers).hasSize(0);
     }
 
-    @Test
     void should_get_one_beer_if_exist(){
         Beer test = new Beer();
         test.setName("test");
@@ -82,7 +77,6 @@ public class BeerDAOControllerTest {
         assertThat(result).isEqualTo(test);
     }
 
-    @Test
     void should_get_null_beer_if_not_exist(){
         when(readBeerService.get(1L)).thenReturn(null);
         given()
@@ -95,7 +89,6 @@ public class BeerDAOControllerTest {
             .contentType(emptyOrNullString());
     }
 
-    @Test
     void should_create_new_beer(){
         Beer test = new Beer();
         test.setName("test");
@@ -112,7 +105,6 @@ public class BeerDAOControllerTest {
                 .statusCode(HttpStatus.CREATED.value());
     }
 
-    @Test
     void should_update_beer(){
         Beer test = new Beer();
         test.setName("test");
@@ -133,7 +125,6 @@ public class BeerDAOControllerTest {
         get("/beers" ).then().body("$", hasSize(1));
     }
 
-    @Test
     void should_not_update_beer_if_id_invalid(){
         Beer test = new Beer();
         test.setName("test");
@@ -155,7 +146,6 @@ public class BeerDAOControllerTest {
         get("/beers" ).then().body("$", hasSize(1));
     }
 
-    @Test
     void should_return_ok_for_deleting_existing_beer(){
         when(deleteBeerService.deleteBeer(1L)).thenReturn(true);
         given()
@@ -166,7 +156,6 @@ public class BeerDAOControllerTest {
                 .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
-    @Test
     void should_return_not_found_for_deleting_non_existing_beer(){
         when(deleteBeerService.deleteBeer(1L)).thenReturn(false);
         given()
