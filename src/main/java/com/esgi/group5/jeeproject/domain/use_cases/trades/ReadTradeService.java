@@ -16,16 +16,16 @@ public class ReadTradeService {
         this.tradeRepository = tradeRepository;
     }
 
-    public Collection<Trade> get(){
+    public Collection<Trade> getAllTrades(){
         return tradeRepository.getAllTrades();
     }
 
-    public Trade get(Long id){
+    public Trade getTradeById(Long id){
         return tradeRepository.getTradeById(id).orElse(null);
     }
 
     public Collection<Trade> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> lng, Optional<Double> lat) {
-        List<Trade> matchesFilters = get()
+        List<Trade> matchesFilters = getAllTrades()
                 .stream()
                 .filter(trade -> trade.isMatchingFilters(name, types))
                 .collect(Collectors.toList());

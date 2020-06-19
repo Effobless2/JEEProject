@@ -23,6 +23,6 @@ public class ReadTradeTest {
     @Test
     void should_be_empty_after_init(){
         given(repository.getAllTrades()).willReturn(new ArrayList<>());
-        assertTrue(readTradeService.get().isEmpty());
+        assertTrue(readTradeService.getAllTrades().isEmpty());
     }
 }

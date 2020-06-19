@@ -15,16 +15,16 @@ public class ReadBeerService {
         this.beerRepository = beerRepository;
     }
 
-    public Collection<Beer> get(){
+    public Collection<Beer> getAllBeers(){
         return beerRepository.getAllBeers();
     }
 
-    public Beer get(Long id){
+    public Beer getBeerById(Long id){
         return beerRepository.getBeerById(id).orElse(null);
     }
 
     public Collection<Beer> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> alcoholLevel) {
-        return get()
+        return getAllBeers()
                 .stream()
                 .filter(beer -> beer.isMatchingFilters(name, types, alcoholLevel))
                 .collect(Collectors.toList());

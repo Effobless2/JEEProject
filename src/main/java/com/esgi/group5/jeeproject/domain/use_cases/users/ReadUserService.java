@@ -12,11 +12,11 @@ public class ReadUserService {
         this.userRepository = userRepository;
     }
 
-    public Collection<User> get(){
+    public Collection<User> getAllUsers(){
         return this.userRepository.getAllUsers();
     }
 
-    public User get(Long userId) {
+    public User getUserById(Long userId) {
         return this.userRepository.getUserById(userId).orElse(null);
     }
 }

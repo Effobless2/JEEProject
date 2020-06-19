@@ -25,7 +25,7 @@ public class ReadBeerTest {
     @Test
     void should_be_empty_after_init(){
         given(beerRepository.getAllBeers()).willReturn(new ArrayList<>());
-        assertTrue(readBeerService.get().isEmpty());
+        assertTrue(readBeerService.getAllBeers().isEmpty());
     }
 
     @Test
@@ -37,8 +37,8 @@ public class ReadBeerTest {
         beers.add(new Beer());
 
         given(beerRepository.getAllBeers()).willReturn(beers);
-        assertFalse(readBeerService.get().isEmpty());
-        assertEquals(4, readBeerService.get().size());
+        assertFalse(readBeerService.getAllBeers().isEmpty());
+        assertEquals(4, readBeerService.getAllBeers().size());
     }
 
     @Test
@@ -46,6 +46,6 @@ public class ReadBeerTest {
         Beer beer = new Beer();
 
         given(beerRepository.getBeerById(1L)).willReturn(java.util.Optional.of(beer));
-        assertNotNull(readBeerService.get(1L));
+        assertNotNull(readBeerService.getBeerById(1L));
     }
 }

@@ -12,7 +12,7 @@ public class ReadOpinionService {
         this.opinionRepository = opinionRepository;
     }
 
-    public Collection<Opinion> get(){
+    public Collection<Opinion> getAllOpinions(){
         return this.opinionRepository.getAllOpinions();
     }
 }

@@ -24,6 +24,6 @@ public class ReadOpinionTest {
     @Test
     void should_be_empty_after_init(){
         given(repository.getAllOpinions()).willReturn(new ArrayList<>());
-        assertTrue(readOpinionService.get().isEmpty());
+        assertTrue(readOpinionService.getAllOpinions().isEmpty());
     }
 }

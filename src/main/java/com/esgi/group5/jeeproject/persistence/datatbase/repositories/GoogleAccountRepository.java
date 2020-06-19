@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.persistence.datatbase.repositories;
 
 import com.esgi.group5.jeeproject.persistence.datatbase.daos.GoogleAccountAndBeererUserRelationshipDAO;
-import com.esgi.group5.jeeproject.web.security.beererToken.BeererAuthenticationRepository;
+import com.esgi.group5.jeeproject.infrastructure.web.security.beererToken.BeererAuthenticationRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
