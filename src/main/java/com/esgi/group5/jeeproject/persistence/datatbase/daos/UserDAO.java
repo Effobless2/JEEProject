@@ -14,11 +14,11 @@ public class UserDAO {
     private String name;
     private String avatarUrl;
     private String email;
-
+/*
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     private Collection<BeerDAO> favourites;
-
+*/
     public UserDAO() {
     }
 

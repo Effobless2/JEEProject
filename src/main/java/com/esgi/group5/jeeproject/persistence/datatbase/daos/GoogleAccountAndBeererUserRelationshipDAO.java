@@ -1,4 +1,4 @@
-package com.esgi.group5.jeeproject.web.security.database.daos;
+package com.esgi.group5.jeeproject.persistence.datatbase.daos;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -6,15 +6,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "google_account_and_beerer_user_rel")
-public class GoogleAccountAndBeererUserRelationship {
+public class GoogleAccountAndBeererUserRelationshipDAO {
     @Id
     private String googleId;
     private Long beererId;
 
-    public GoogleAccountAndBeererUserRelationship() {
+    public GoogleAccountAndBeererUserRelationshipDAO() {
     }
 
-    public GoogleAccountAndBeererUserRelationship(String googleId, Long beererId) {
+    public GoogleAccountAndBeererUserRelationshipDAO(String googleId, Long beererId) {
         this.googleId = googleId;
         this.beererId = beererId;
     }

@@ -11,6 +11,7 @@ public class UserWithTokenDTO {
     private List<String> roles;
 
     public UserWithTokenDTO() {
+        roles = new ArrayList<>();
     }
 
     public Long getId() {

@@ -18,14 +18,14 @@ public class TradeDAO {
     private double latitude;
     private String address;
     private String description;
-
+/*
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     private Collection<BeerDAO> items;
 
     @ManyToOne
     private UserDAO responsible;
-
+*/
 
     public TradeDAO() {
     }

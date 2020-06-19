@@ -1,6 +1,7 @@
 package com.esgi.group5.jeeproject.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.User;
+import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUserService;
 import com.esgi.group5.jeeproject.web.dtos.users.GoogleAccountDTO;
 import com.esgi.group5.jeeproject.web.security.AuthenticationFromGoogleService;
 import com.esgi.group5.jeeproject.web.security.googleToken.JWTGoogleService;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,11 +24,13 @@ public class UserController {
     private final JWTGoogleService jwtGoogleService;
     private final TokenProvider tokenService;
     private final AuthenticationFromGoogleService authenticationFromGoogleService;
+    private final ReadUserService readUserService;
 
-    public UserController(JWTGoogleService jwtGoogleService, TokenProvider tokenService, AuthenticationFromGoogleService authenticationFromGoogleService) {
+    public UserController(JWTGoogleService jwtGoogleService, TokenProvider tokenService, AuthenticationFromGoogleService authenticationFromGoogleService, ReadUserService readUserService) {
         this.jwtGoogleService = jwtGoogleService;
         this.tokenService = tokenService;
         this.authenticationFromGoogleService = authenticationFromGoogleService;
+        this.readUserService = readUserService;
     }
 
     @PostMapping("/auth")
@@ -40,8 +46,27 @@ public class UserController {
         User connectedUser = authenticationFromGoogleService.authenticateUser(googleAccountDTO.get());
         String token = tokenService.generateToken(connectedUser);
 
+        Map<String, Object> bodyResponse = new HashMap<>();
+        bodyResponse.put("token", token);
+
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(bodyResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllUser() {
+        Collection<User> users = readUserService.get();
+
+        if(users.isEmpty()) {
+            return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .build();
+        }
+
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(token);
+            .body(users);
     }
 }

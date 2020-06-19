@@ -1,4 +1,4 @@
-package com.esgi.group5.jeeproject.web.security;
+package com.esgi.group5.jeeproject.web.configs;
 
 import com.esgi.group5.jeeproject.web.security.beererToken.BeererAuthenticationTokenFilter;
 import com.esgi.group5.jeeproject.web.security.beererToken.TokenProvider;
