@@ -1,8 +1,8 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers.users;
 
 import com.esgi.group5.jeeproject.domain.models.User;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUserService;
-import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUserService;
+import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
+import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUser;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,10 +28,10 @@ public class UserControllerTest {
     private int port;
 
     @MockBean
-    private ReadUserService readUserService;
+    private ReadUser readUser;
 
     @MockBean
-    private RegisterUserService registerUserService;
+    private RegisterUser registerUser;
 
     @BeforeEach
     void setup(){
@@ -58,8 +58,8 @@ public class UserControllerTest {
         test.setId((long) 1);
         List<User> mockList = new ArrayList<>();
         mockList.add(test);
-        when(registerUserService.register(test)).thenReturn(test);
-        when(readUserService.getAllUsers()).thenReturn(mockList);
+        when(registerUser.register(test)).thenReturn(test);
+        when(readUser.getAllUsers()).thenReturn(mockList);
 
         long testId =
             given()

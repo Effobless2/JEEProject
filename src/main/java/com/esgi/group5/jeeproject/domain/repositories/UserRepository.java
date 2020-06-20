@@ -8,6 +8,6 @@ public interface UserRepository {
     User createUser(User user);
     Collection<User> getAllUsers();
     Optional<User> getUserById(Long id);
-    void deleteUserWithId(Long id);
+    void deleteUserById(Long id);
     Optional<User> updateUser(User user);
 }

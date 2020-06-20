@@ -13,13 +13,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class CreateTradeTest {
-    protected CreateTradeService createTradeService;
+    protected CreateTrade createTrade;
     protected TradeRepository repository;
 
     @BeforeEach
     protected void setup() {
         repository = mock(TradeRepository.class);
-        createTradeService = new CreateTradeService(repository);
+        createTrade = new CreateTrade(repository);
     }
 
 
@@ -32,8 +32,8 @@ public class CreateTradeTest {
         for (long i = 0L; i < 10; i++) {
             Trade test = new Trade();
             mockTrade.add(test);
-            given(createTradeService.createTrade(test, userTest)).willReturn(test);
-            Trade created = createTradeService.createTrade(test, userTest);
+            given(createTrade.createTrade(test, userTest)).willReturn(test);
+            Trade created = createTrade.createTrade(test, userTest);
             assertNotNull(created);
         }
     }

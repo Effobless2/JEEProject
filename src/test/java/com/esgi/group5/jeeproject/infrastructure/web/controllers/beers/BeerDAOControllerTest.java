@@ -2,7 +2,7 @@ package com.esgi.group5.jeeproject.infrastructure.web.controllers.beers;
 
 import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.use_cases.beers.*;
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.BeerDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.BeerDAO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,16 +28,16 @@ public class BeerDAOControllerTest {
     private int port;
 
     @MockBean
-    private ReadBeerService readBeerService;
+    private ReadBeer readBeer;
 
     @MockBean
-    private CreateBeerService createBeerService;
+    private CreateBeer createBeer;
 
     @MockBean
-    private UpdateBeerService updateBeerService;
+    private UpdateBeer updateBeer;
 
     @MockBean
-    private DeleteBeerService deleteBeerService;
+    private DeleteBeer deleteBeer;
 
     @BeforeEach
     void setup(){
@@ -62,7 +62,7 @@ public class BeerDAOControllerTest {
     void should_get_one_beer_if_exist(){
         Beer test = new Beer();
         test.setName("test");
-        when(readBeerService.getBeerById(1L)).thenReturn(test);
+        when(readBeer.getBeerById(1L)).thenReturn(test);
         BeerDAO result =
                 given()
                         .contentType(ContentType.JSON)
@@ -77,7 +77,7 @@ public class BeerDAOControllerTest {
     }
 
     void should_get_null_beer_if_not_exist(){
-        when(readBeerService.getBeerById(1L)).thenReturn(null);
+        when(readBeer.getBeerById(1L)).thenReturn(null);
         given()
             .contentType(ContentType.JSON)
             .when()
@@ -93,8 +93,8 @@ public class BeerDAOControllerTest {
         test.setName("test");
         List<Beer> mockList = new ArrayList<>();
         mockList.add(test);
-        when(createBeerService.createBeer(test)).thenReturn(test);
-        when(readBeerService.getAllBeers()).thenReturn(mockList);
+        when(createBeer.createBeer(test)).thenReturn(test);
+        when(readBeer.getAllBeers()).thenReturn(mockList);
         given()
                 .contentType(ContentType.JSON)
                 .body(test)
@@ -109,10 +109,10 @@ public class BeerDAOControllerTest {
         test.setName("test");
         List<Beer> mockList = new ArrayList<>();
         mockList.add(test);
-        when(updateBeerService.updateBeer(test)).thenReturn(test);
-        when(readBeerService.getBeerById(1L)).thenReturn(test);
+        when(updateBeer.updateBeer(test)).thenReturn(test);
+        when(readBeer.getBeerById(1L)).thenReturn(test);
 
-        when(readBeerService.getAllBeers()).thenReturn(mockList);
+        when(readBeer.getAllBeers()).thenReturn(mockList);
         given()
                 .contentType(ContentType.JSON)
                 .body(test)
@@ -131,9 +131,9 @@ public class BeerDAOControllerTest {
         List<Beer> mockList = new ArrayList<>();
         mockList.add(test);
 
-        when(updateBeerService.updateBeer(test)).thenReturn(null);
+        when(updateBeer.updateBeer(test)).thenReturn(null);
 
-        when(readBeerService.getAllBeers()).thenReturn(mockList);
+        when(readBeer.getAllBeers()).thenReturn(mockList);
         given()
             .contentType(ContentType.JSON)
             .body(test)
@@ -146,7 +146,7 @@ public class BeerDAOControllerTest {
     }
 
     void should_return_ok_for_deleting_existing_beer(){
-        when(deleteBeerService.deleteBeer(1L)).thenReturn(true);
+        when(deleteBeer.deleteBeer(1L)).thenReturn(true);
         given()
                 .contentType(ContentType.JSON)
                 .when()
@@ -156,7 +156,7 @@ public class BeerDAOControllerTest {
     }
 
     void should_return_not_found_for_deleting_non_existing_beer(){
-        when(deleteBeerService.deleteBeer(1L)).thenReturn(false);
+        when(deleteBeer.deleteBeer(1L)).thenReturn(false);
         given()
                 .contentType(ContentType.JSON)
                 .when()

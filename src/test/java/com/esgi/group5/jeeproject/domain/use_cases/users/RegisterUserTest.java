@@ -12,14 +12,14 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class RegisterUserTest {
-    protected RegisterUserService registerUserService;
+    protected RegisterUser registerUser;
 
     protected UserRepository userRepository;
 
     @BeforeEach
     protected void setup(){
         userRepository = mock(UserRepository.class);
-        registerUserService = new RegisterUserService(userRepository);
+        registerUser = new RegisterUser(userRepository);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class RegisterUserTest {
             mockUsers.add(test);
 
             given(userRepository.createUser(test)).willReturn(test);
-            User u = registerUserService.register(test);
+            User u = registerUser.register(test);
             assertNotNull(u);
         }
     }

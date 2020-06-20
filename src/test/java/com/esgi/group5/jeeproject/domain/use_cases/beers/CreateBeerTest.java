@@ -14,12 +14,12 @@ import static org.mockito.Mockito.mock;
 public class CreateBeerTest {
 
     private BeerRepository beerRepository;
-    private CreateBeerService createBeerService;
+    private CreateBeer createBeer;
 
     @BeforeEach
     void setup(){
         beerRepository = mock(BeerRepository.class);
-        createBeerService = new CreateBeerService(beerRepository);
+        createBeer = new CreateBeer(beerRepository);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class CreateBeerTest {
             Beer test = new Beer();
             mockBeer.add(test);
             given(beerRepository.createBeer(test)).willReturn(test);
-            Beer beer = createBeerService.createBeer(test);
+            Beer beer = createBeer.createBeer(test);
             assertEquals(i + 1, beerRepository.getAllBeers().size());
             assertEquals(beer, test);
         }

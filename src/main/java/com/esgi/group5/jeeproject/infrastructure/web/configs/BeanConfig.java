@@ -3,17 +3,17 @@ package com.esgi.group5.jeeproject.infrastructure.web.configs;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
 import com.esgi.group5.jeeproject.domain.tools.ImageUploadService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeerService;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeer;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.DeleteTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.UpdateTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUserService;
-import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUserService;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.DeleteTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.UpdateTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
+import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUser;
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.StorageException;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
@@ -44,53 +44,53 @@ public class BeanConfig {
     }
 
     @Bean
-    public CreateBeerService createBeerService(BeerRepository beerRepository){
-        return new CreateBeerService(beerRepository);
+    public CreateBeer createBeerService(BeerRepository beerRepository){
+        return new CreateBeer(beerRepository);
     }
 
     @Bean
-    public ReadBeerService readBeerService(BeerRepository beerRepository){
-        return new ReadBeerService(beerRepository);
+    public ReadBeer readBeerService(BeerRepository beerRepository){
+        return new ReadBeer(beerRepository);
     }
 
     @Bean
-    public UpdateBeerService updateBeerService(BeerRepository beerRepository, ImageUploadService imageUploadService){
-        return new UpdateBeerService(imageUploadService, beerRepository);
+    public UpdateBeer updateBeerService(BeerRepository beerRepository, ImageUploadService imageUploadService){
+        return new UpdateBeer(imageUploadService, beerRepository);
     }
 
     @Bean
-    public DeleteBeerService deleteBeerService(BeerRepository beerRepository){
-        return new DeleteBeerService(beerRepository);
+    public DeleteBeer deleteBeerService(BeerRepository beerRepository){
+        return new DeleteBeer(beerRepository);
     }
 
     @Bean
-    public CreateTradeService createTradeService(TradeRepository tradeRepository) {
-        return new CreateTradeService(tradeRepository);
+    public CreateTrade createTradeService(TradeRepository tradeRepository) {
+        return new CreateTrade(tradeRepository);
     }
 
     @Bean
-    public ReadTradeService readTradeService(TradeRepository tradeRepository) {
-        return new ReadTradeService(tradeRepository);
+    public ReadTrade readTradeService(TradeRepository tradeRepository) {
+        return new ReadTrade(tradeRepository);
     }
 
     @Bean
-    public UpdateTradeService updateTradeService(TradeRepository tradeRepository, ImageUploadService imageUploadService) {
-        return new UpdateTradeService(tradeRepository, imageUploadService);
+    public UpdateTrade updateTradeService(TradeRepository tradeRepository, ImageUploadService imageUploadService) {
+        return new UpdateTrade(tradeRepository, imageUploadService);
     }
 
     @Bean
-    public DeleteTradeService deleteTradeService(TradeRepository tradeRepository) {
-        return new DeleteTradeService(tradeRepository);
+    public DeleteTrade deleteTradeService(TradeRepository tradeRepository) {
+        return new DeleteTrade(tradeRepository);
     }
 
     @Bean
-    public RegisterUserService registerUserService(UserRepository userRepository) {
-        return new RegisterUserService(userRepository);
+    public RegisterUser registerUserService(UserRepository userRepository) {
+        return new RegisterUser(userRepository);
     }
 
     @Bean
-    public ReadUserService readUserService(UserRepository userRepository) {
-        return new ReadUserService(userRepository);
+    public ReadUser readUserService(UserRepository userRepository) {
+        return new ReadUser(userRepository);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers.opinions;
 /*
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.OpinionDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.OpinionDAO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;

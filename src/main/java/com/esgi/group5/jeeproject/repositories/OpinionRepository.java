@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.repositories;
 /*
-import com.esgi.group5.jeeproject.persistence.datatbase.repositories.JpaOpinionRepository;
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.OpinionDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.repositories.JpaOpinionRepository;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.OpinionDAO;
 import com.esgi.group5.jeeproject.repositories.contracts.IOpinionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

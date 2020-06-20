@@ -1,10 +1,10 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.Trade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.DeleteTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.UpdateTradeService;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.DeleteTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.UpdateTrade;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.trades.EditTradeDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.trades.parsers.TradeParser;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.users.UserWithTokenDTO;
@@ -26,28 +26,28 @@ import java.util.Optional;
 @RequestMapping("/trades")
 @CrossOrigin(origins = "*")
 public class TradeController {
-    private final ReadTradeService readTradeService;
-    private final CreateTradeService createTradeService;
-    private final UpdateTradeService updateTradeService;
-    private final DeleteTradeService deleteTradeService;
+    private final ReadTrade readTrade;
+    private final CreateTrade createTrade;
+    private final UpdateTrade updateTrade;
+    private final DeleteTrade deleteTrade;
     private final TokenProvider tokenProvider;
 
-    public TradeController(ReadTradeService readTradeService,
-                           CreateTradeService createTradeService,
-                           UpdateTradeService updateTradeService,
-                           DeleteTradeService deleteTradeService,
+    public TradeController(ReadTrade readTrade,
+                           CreateTrade createTrade,
+                           UpdateTrade updateTrade,
+                           DeleteTrade deleteTrade,
                            TokenProvider tokenProvider
     ) {
-        this.readTradeService = readTradeService;
-        this.createTradeService = createTradeService;
-        this.updateTradeService = updateTradeService;
-        this.deleteTradeService = deleteTradeService;
+        this.readTrade = readTrade;
+        this.createTrade = createTrade;
+        this.updateTrade = updateTrade;
+        this.deleteTrade = deleteTrade;
         this.tokenProvider = tokenProvider;
     }
 
     @GetMapping
     public ResponseEntity<?> get(){
-        Collection<Trade> trades = readTradeService.getAllTrades();
+        Collection<Trade> trades = readTrade.getAllTrades();
 
         return trades.isEmpty() ?
             ResponseEntity
@@ -60,7 +60,7 @@ public class TradeController {
 
     @GetMapping("/{tradeId}")
     public ResponseEntity<?> get(@PathVariable("tradeId") Long tradeId){
-        Trade trade = readTradeService.getTradeById(tradeId);
+        Trade trade = readTrade.getTradeById(tradeId);
         return trade != null ?
             ResponseEntity
                 .status(HttpStatus.OK)
@@ -80,7 +80,7 @@ public class TradeController {
                 .build();
 
         Trade trade = TradeParser.parser(editTradeDTO);
-        Trade saved = createTradeService.createTrade(trade, UserParser.parse(user));
+        Trade saved = createTrade.createTrade(trade, UserParser.parse(user));
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -97,7 +97,7 @@ public class TradeController {
                     .build();
 
         Trade trade = TradeParser.parser(editTradeDTO);
-        Trade updated = updateTradeService.updateTrade(trade, UserParser.parse(user));
+        Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user));
 
         return updated != null ?
             ResponseEntity
@@ -117,13 +117,13 @@ public class TradeController {
                 .status(HttpStatus.UNAUTHORIZED)
                 .build();
 
-        Trade trade = readTradeService.getTradeById(tradeId);
+        Trade trade = readTrade.getTradeById(tradeId);
         if(trade == null)
             return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .build();
 
-        Trade updated = updateTradeService.updateTrade(trade, UserParser.parse(user), file);
+        Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user), file);
 
         return updated != null ?
             ResponseEntity
@@ -141,7 +141,7 @@ public class TradeController {
             @RequestParam("lng") Optional<Double> lng,
             @RequestParam("lat") Optional<Double> lat
     ){
-        Collection<Trade> filteredTrades = readTradeService.filter(name, types, lng, lat);
+        Collection<Trade> filteredTrades = readTrade.filter(name, types, lng, lat);
         return filteredTrades.isEmpty() ?
             ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
@@ -160,7 +160,7 @@ public class TradeController {
                     .status(HttpStatus.UNAUTHORIZED)
                     .build();
 
-        boolean removed = deleteTradeService.deleteTrade(tradeId, UserParser.parse(user));
+        boolean removed = deleteTrade.deleteTrade(tradeId, UserParser.parse(user));
         return ResponseEntity
                 .status(removed ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .build();

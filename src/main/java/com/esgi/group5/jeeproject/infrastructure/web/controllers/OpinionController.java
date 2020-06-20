@@ -1,6 +1,6 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 /*
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.OpinionDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.OpinionDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

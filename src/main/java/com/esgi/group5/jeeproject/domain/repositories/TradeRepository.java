@@ -9,6 +9,6 @@ public interface TradeRepository {
     Trade createTrade(Trade trade);
     Collection<Trade> getAllTrades();
     Optional<Trade> getTradeById(Long id);
-    void deleteTradeWithId(Long id);
+    void deleteTradeById(Long id);
     Optional<Trade> updateTrade(Trade trade);
 }

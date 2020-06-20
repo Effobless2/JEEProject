@@ -1,10 +1,10 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.Beer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeerService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeerService;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeer;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.beers.EditBeerDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.beers.parsers.BeerParser;
 import org.springframework.http.HttpStatus;
@@ -22,26 +22,26 @@ import java.util.Optional;
 @RequestMapping("/beers")
 @CrossOrigin(origins = "*")
 public class BeerController {
-    private final CreateBeerService createBeerService;
-    private final UpdateBeerService updateBeerService;
-    private final ReadBeerService readBeerService;
-    private final DeleteBeerService deleteBeerService;
+    private final CreateBeer createBeer;
+    private final UpdateBeer updateBeer;
+    private final ReadBeer readBeer;
+    private final DeleteBeer deleteBeer;
 
     public BeerController(
-        CreateBeerService createBeerService,
-        UpdateBeerService updateBeerService,
-        ReadBeerService readBeerService,
-        DeleteBeerService deleteBeerService
+        CreateBeer createBeer,
+        UpdateBeer updateBeer,
+        ReadBeer readBeer,
+        DeleteBeer deleteBeer
     ) {
-        this.createBeerService = createBeerService;
-        this.updateBeerService = updateBeerService;
-        this.readBeerService = readBeerService;
-        this.deleteBeerService = deleteBeerService;
+        this.createBeer = createBeer;
+        this.updateBeer = updateBeer;
+        this.readBeer = readBeer;
+        this.deleteBeer = deleteBeer;
     }
 
     @GetMapping
     public ResponseEntity<?> get(){
-        Collection<Beer> beers = readBeerService.getAllBeers();
+        Collection<Beer> beers = readBeer.getAllBeers();
 
         return beers.isEmpty() ?
             ResponseEntity
@@ -54,7 +54,7 @@ public class BeerController {
 
     @GetMapping("/{beerId}")
     public ResponseEntity<?> get(@PathVariable("beerId") Long beerId){
-        Beer beer = readBeerService.getBeerById(beerId);
+        Beer beer = readBeer.getBeerById(beerId);
         return beer != null ?
             ResponseEntity
                 .status(HttpStatus.OK)
@@ -68,7 +68,7 @@ public class BeerController {
     public ResponseEntity<?> post(@RequestBody @Valid EditBeerDTO beerDTO){
 
         Beer beer = BeerParser.parse(beerDTO);
-        Beer saved = createBeerService.createBeer(beer);
+        Beer saved = createBeer.createBeer(beer);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -80,7 +80,7 @@ public class BeerController {
         Beer beer = BeerParser.parse(editBeerDTO);
         beer.setId(beerId);
 
-        Beer updated = updateBeerService.updateBeer(beer);
+        Beer updated = updateBeer.updateBeer(beer);
 
         return updated != null ?
             ResponseEntity
@@ -93,7 +93,7 @@ public class BeerController {
 
     @DeleteMapping("/{beerId}")
     public ResponseEntity<?> delete(@PathVariable("beerId") Long beerId){
-        boolean removed = deleteBeerService.deleteBeer(beerId);
+        boolean removed = deleteBeer.deleteBeer(beerId);
         return ResponseEntity
             .status(removed ? HttpStatus.OK : HttpStatus.NOT_FOUND)
             .build();
@@ -101,14 +101,14 @@ public class BeerController {
 
     @PatchMapping("/image/{tradeId}")
     public ResponseEntity<?> patchImage(@PathVariable("tradeId") Long beerId, @RequestParam("file") MultipartFile file) {
-        Beer beer = readBeerService.getBeerById(beerId);
+        Beer beer = readBeer.getBeerById(beerId);
 
         if(beer == null){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .build();
         }
-        Beer updated = updateBeerService.updateBeer(beer, file);
+        Beer updated = updateBeer.updateBeer(beer, file);
 
         return updated != null ?
             ResponseEntity
@@ -126,7 +126,7 @@ public class BeerController {
             @RequestParam("types") Optional<List<String>> types,
             @RequestParam("alcoholLevel") Optional<Double> alcoholLevel
     ){
-        Collection<Beer> filteredBeers = readBeerService.filter(name, types, alcoholLevel);
+        Collection<Beer> filteredBeers = readBeer.filter(name, types, alcoholLevel);
 
         return filteredBeers.isEmpty() ?
             ResponseEntity

@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.repositories;
 /*
-import com.esgi.group5.jeeproject.persistence.datatbase.repositories.JpaTradeRepository;
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.TradeDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.repositories.JpaTradeRepository;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.TradeDAO;
 import com.esgi.group5.jeeproject.repositories.contracts.ITradeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

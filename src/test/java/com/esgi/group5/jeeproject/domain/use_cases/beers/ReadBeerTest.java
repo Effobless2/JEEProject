@@ -14,18 +14,18 @@ import static org.mockito.Mockito.mock;
 public class ReadBeerTest {
 
     private BeerRepository beerRepository;
-    private ReadBeerService readBeerService;
+    private ReadBeer readBeer;
 
     @BeforeEach
     void setup(){
         beerRepository = mock(BeerRepository.class);
-        readBeerService = new ReadBeerService(beerRepository);
+        readBeer = new ReadBeer(beerRepository);
     }
 
     @Test
     void should_be_empty_after_init(){
         given(beerRepository.getAllBeers()).willReturn(new ArrayList<>());
-        assertTrue(readBeerService.getAllBeers().isEmpty());
+        assertTrue(readBeer.getAllBeers().isEmpty());
     }
 
     @Test
@@ -37,8 +37,8 @@ public class ReadBeerTest {
         beers.add(new Beer());
 
         given(beerRepository.getAllBeers()).willReturn(beers);
-        assertFalse(readBeerService.getAllBeers().isEmpty());
-        assertEquals(4, readBeerService.getAllBeers().size());
+        assertFalse(readBeer.getAllBeers().isEmpty());
+        assertEquals(4, readBeer.getAllBeers().size());
     }
 
     @Test
@@ -46,6 +46,6 @@ public class ReadBeerTest {
         Beer beer = new Beer();
 
         given(beerRepository.getBeerById(1L)).willReturn(java.util.Optional.of(beer));
-        assertNotNull(readBeerService.getBeerById(1L));
+        assertNotNull(readBeer.getBeerById(1L));
     }
 }

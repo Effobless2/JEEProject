@@ -11,19 +11,19 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class ReadOpinionTest {
-    protected ReadOpinionService readOpinionService;
+    protected ReadOpinion readOpinion;
     protected OpinionRepository repository;
 
     @BeforeEach
     void setup() {
         repository = mock(OpinionRepository.class);
-        readOpinionService = new ReadOpinionService(repository);
+        readOpinion = new ReadOpinion(repository);
 
     }
 
     @Test
     void should_be_empty_after_init(){
         given(repository.getAllOpinions()).willReturn(new ArrayList<>());
-        assertTrue(readOpinionService.getAllOpinions().isEmpty());
+        assertTrue(readOpinion.getAllOpinions().isEmpty());
     }
 }

@@ -8,18 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class DeleteBeerTest {
-    protected DeleteBeerService deleteBeerService;
+    protected DeleteBeer deleteBeer;
     private BeerRepository beerRepository;
 
 
     @BeforeEach
     void setup(){
         beerRepository = mock(BeerRepository.class);
-        deleteBeerService = new DeleteBeerService(beerRepository);
+        deleteBeer = new DeleteBeer(beerRepository);
     }
 
     @Test
     void should_delete_beer(){
-        assertTrue(deleteBeerService.deleteBeer(1L));
+        assertTrue(deleteBeer.deleteBeer(1L));
     }
 }

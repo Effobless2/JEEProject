@@ -1,6 +1,6 @@
 package com.esgi.group5.jeeproject.infrastructure.web.security.beererToken;
 
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.GoogleAccountAndBeererUserRelationshipDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.GoogleAccountAndBeererUserRelationshipDAO;
 
 import java.util.Optional;
 

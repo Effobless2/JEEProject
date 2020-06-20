@@ -10,13 +10,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class CreateOpinionTest {
-    protected CreateOpinionService createOpinionService;
+    protected CreateOpinion createOpinion;
     protected OpinionRepository repository;
 
     @BeforeEach
     void setup() {
         repository = mock(OpinionRepository.class);
-        createOpinionService = new CreateOpinionService(repository);
+        createOpinion = new CreateOpinion(repository);
     }
 
 
@@ -26,7 +26,7 @@ public class CreateOpinionTest {
             Opinion test = new Opinion();
 
             given(repository.createOpinion(test)).willReturn(test);
-            Opinion opinion = createOpinionService.createOpinion(test);
+            Opinion opinion = createOpinion.createOpinion(test);
             assertNotNull(opinion);
         }
     }

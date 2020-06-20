@@ -2,8 +2,8 @@ package com.esgi.group5.jeeproject.infrastructure.web.controllers.trades;
 
 import com.esgi.group5.jeeproject.domain.models.Trade;
 import com.esgi.group5.jeeproject.domain.models.User;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTradeService;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTradeService;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTrade;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,10 +29,10 @@ public class TradeControllerTest {
     private int port;
 
     @MockBean
-    private ReadTradeService readTradeService;
+    private ReadTrade readTrade;
 
     @MockBean
-    private CreateTradeService createTradeService;
+    private CreateTrade createTrade;
 
     @BeforeEach
     void setup(){
@@ -58,8 +58,8 @@ public class TradeControllerTest {
         test.setName("test");
         List<Trade> mockList = new ArrayList<>();
         mockList.add(test);
-        when(createTradeService.createTrade(test, new User())).thenReturn(test);
-        when(readTradeService.getAllTrades()).thenReturn(mockList);
+        when(createTrade.createTrade(test, new User())).thenReturn(test);
+        when(readTrade.getAllTrades()).thenReturn(mockList);
         given()
             .contentType(ContentType.JSON)
             .body(test)

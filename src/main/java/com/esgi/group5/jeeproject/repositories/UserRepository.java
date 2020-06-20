@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.repositories;
 /*
-import com.esgi.group5.jeeproject.persistence.datatbase.repositories.JpaUserRepository;
-import com.esgi.group5.jeeproject.persistence.datatbase.daos.UserDAO;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.repositories.JpaUserRepository;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.UserDAO;
 import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

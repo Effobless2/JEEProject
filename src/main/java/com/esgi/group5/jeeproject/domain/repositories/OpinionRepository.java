@@ -9,6 +9,6 @@ public interface OpinionRepository {
     Opinion createOpinion(Opinion opinion);
     Collection<Opinion> getAllOpinions();
     Optional<Opinion> getOpinionById(Long id);
-    void deleteOpinionWithId(Long id);
+    void deleteOpinionById(Long id);
     Optional<Opinion> updateOpinion(Opinion opinion);
 }

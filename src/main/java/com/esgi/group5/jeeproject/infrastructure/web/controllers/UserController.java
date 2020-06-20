@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.User;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUserService;
+import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.users.GoogleAccountDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.security.AuthenticationFromGoogleService;
 import com.esgi.group5.jeeproject.infrastructure.web.security.googleToken.JWTGoogleService;
@@ -24,13 +24,13 @@ public class UserController {
     private final JWTGoogleService jwtGoogleService;
     private final TokenProvider tokenService;
     private final AuthenticationFromGoogleService authenticationFromGoogleService;
-    private final ReadUserService readUserService;
+    private final ReadUser readUser;
 
-    public UserController(JWTGoogleService jwtGoogleService, TokenProvider tokenService, AuthenticationFromGoogleService authenticationFromGoogleService, ReadUserService readUserService) {
+    public UserController(JWTGoogleService jwtGoogleService, TokenProvider tokenService, AuthenticationFromGoogleService authenticationFromGoogleService, ReadUser readUser) {
         this.jwtGoogleService = jwtGoogleService;
         this.tokenService = tokenService;
         this.authenticationFromGoogleService = authenticationFromGoogleService;
-        this.readUserService = readUserService;
+        this.readUser = readUser;
     }
 
     @PostMapping("/auth")
@@ -57,7 +57,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getAllUser() {
-        Collection<User> users = readUserService.getAllUsers();
+        Collection<User> users = readUser.getAllUsers();
 
         if(users.isEmpty()) {
             return ResponseEntity

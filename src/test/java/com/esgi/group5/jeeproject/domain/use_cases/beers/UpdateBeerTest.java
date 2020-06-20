@@ -15,14 +15,14 @@ import static org.mockito.Mockito.when;
 
 public class UpdateBeerTest {
     private BeerRepository beerRepository;
-    private UpdateBeerService updateBeerService;
+    private UpdateBeer updateBeer;
     private ImageUploadService imageUploadService;
 
     @BeforeEach
     void setup(){
         beerRepository = mock(BeerRepository.class);
         imageUploadService = mock(ImageUploadService.class);
-        updateBeerService = new UpdateBeerService(imageUploadService, beerRepository);
+        updateBeer = new UpdateBeer(imageUploadService, beerRepository);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class UpdateBeerTest {
         test.setId(1L);
 
         when(beerRepository.updateBeer(test)).thenReturn(Optional.of(test));
-        Beer b = updateBeerService.updateBeer(test);
+        Beer b = updateBeer.updateBeer(test);
         assertNotNull(b);
         assertEquals(b, test);
     }
