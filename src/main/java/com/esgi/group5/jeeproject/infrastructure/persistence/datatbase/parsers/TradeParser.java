@@ -16,6 +16,7 @@ public class TradeParser {
         result.setLongitude(tradeDAO.getLongitude());
         result.setProfilePict(result.getProfilePict());
         result.setType(result.getType());
+        result.setResponsible(UserParser.parse(tradeDAO.getResponsible()));
 
         return result;
     }
@@ -31,7 +32,7 @@ public class TradeParser {
         result.setLongitude(trade.getLongitude());
         result.setProfilePict(result.getProfilePict());
         result.setType(result.getType());
-
+        result.setResponsible(UserParser.parse(trade.getResponsible()));
         return result;
     }
 }

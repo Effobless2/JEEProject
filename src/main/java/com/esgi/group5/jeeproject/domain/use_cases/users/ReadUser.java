@@ -17,6 +17,6 @@ public class ReadUser {
     }
 
     public User getUserById(Long userId) {
-        return this.userRepository.getUserById(userId).orElse(null);
+        return this.userRepository.getUserByIdWithMarkets(userId).orElse(null);
     }
 }

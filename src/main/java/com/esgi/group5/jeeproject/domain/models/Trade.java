@@ -14,12 +14,13 @@ public class Trade extends EntityModel {
     private String address;
     private String description;
     private Set<Beer> items = new HashSet<>();
+    private User responsible;
 
     public Trade() {
         super();
     }
 
-    public Trade(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description, Set<Beer> items) {
+    public Trade(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description, Set<Beer> items, User responsible) {
         super(id);
         this.name = name;
         this.profilePict = profilePict;
@@ -29,6 +30,7 @@ public class Trade extends EntityModel {
         this.address = address;
         this.description = description;
         this.items = items;
+        this.responsible = responsible;
     }
 
     public String getName() {
@@ -97,6 +99,14 @@ public class Trade extends EntityModel {
 
     public void addItem(Beer beer) {
         items.add(beer);
+    }
+
+    public User getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(User responsible) {
+        this.responsible = responsible;
     }
 
     public void removeItem(Beer beer) {

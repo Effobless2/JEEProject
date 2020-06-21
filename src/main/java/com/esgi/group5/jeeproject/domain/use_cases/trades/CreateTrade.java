@@ -12,7 +12,7 @@ public class CreateTrade {
     }
 
     public Trade createTrade(Trade trade, User responsible) {
-        //TODO: Link User to trade
+        trade.setResponsible(responsible);
         return tradeRepository.createTrade(trade);
     }
 }

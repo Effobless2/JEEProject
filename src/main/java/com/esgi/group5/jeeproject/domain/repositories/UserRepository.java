@@ -10,4 +10,5 @@ public interface UserRepository {
     Optional<User> getUserById(Long id);
     void deleteUserById(Long id);
     Optional<User> updateUser(User user);
+    Optional<User> getUserByIdWithMarkets(Long id);
 }

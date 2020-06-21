@@ -20,15 +20,15 @@ public class TradeDAO {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<BeerDAO> items = new HashSet<>();
-/*
+
     @ManyToOne
     private UserDAO responsible;
-*/
+
 
     public TradeDAO() {
     }
 
-    public TradeDAO(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description, Set<BeerDAO> items) {
+    public TradeDAO(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description, UserDAO respnsible, Set<BeerDAO> items) {
         this.id = id;
         this.name = name;
         this.profilePict = profilePict;
@@ -38,6 +38,7 @@ public class TradeDAO {
         this.address = address;
         this.description = description;
         this.items = items;
+        this.responsible = respnsible;
     }
 
     public Long getId() {
@@ -110,5 +111,13 @@ public class TradeDAO {
 
     public void setItems(Set<BeerDAO> items) {
         this.items = items;
+    }
+
+    public UserDAO getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(UserDAO responsible) {
+        this.responsible = responsible;
     }
 }

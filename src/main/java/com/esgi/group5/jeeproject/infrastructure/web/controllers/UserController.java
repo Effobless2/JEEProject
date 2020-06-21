@@ -69,4 +69,19 @@ public class UserController {
             .status(HttpStatus.OK)
             .body(users);
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable("userId") Long userId) {
+        User user = readUser.getUserById(userId);
+
+        if(user == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(user);
+    }
 }

@@ -4,6 +4,7 @@ import com.esgi.group5.jeeproject.domain.models.User;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
 import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.UserDAO;
 import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.parsers.UserParser;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.parsers.UserWithMarketsParser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,6 +37,13 @@ public interface JpaUserRepository extends JpaRepository<UserDAO, Long>, UserRep
         if(found.isEmpty())
             return Optional.empty();
         return Optional.of(UserParser.parse(found.get()));
+    }
+
+    default Optional<User> getUserByIdWithMarkets(Long id) {
+        Optional<UserDAO> found = findById(id);
+        if(found.isEmpty())
+            return Optional.empty();
+        return Optional.of(UserWithMarketsParser.parse(found.get()));
     }
 
     default void deleteUserById(Long id) {
