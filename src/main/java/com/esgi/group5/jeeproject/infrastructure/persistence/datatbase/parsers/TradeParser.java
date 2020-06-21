@@ -14,8 +14,8 @@ public class TradeParser {
         result.setAddress(tradeDAO.getAddress());
         result.setLatitude(tradeDAO.getLatitude());
         result.setLongitude(tradeDAO.getLongitude());
-        result.setProfilePict(result.getProfilePict());
-        result.setType(result.getType());
+        result.setProfilePict(tradeDAO.getProfilePict());
+        result.setType(tradeDAO.getType());
         result.setResponsible(UserParser.parse(tradeDAO.getResponsible()));
 
         return result;
@@ -30,8 +30,8 @@ public class TradeParser {
         result.setAddress(trade.getAddress());
         result.setLatitude(trade.getLatitude());
         result.setLongitude(trade.getLongitude());
-        result.setProfilePict(result.getProfilePict());
-        result.setType(result.getType());
+        result.setProfilePict(trade.getProfilePict());
+        result.setType(trade.getType());
         result.setResponsible(UserParser.parse(trade.getResponsible()));
         return result;
     }

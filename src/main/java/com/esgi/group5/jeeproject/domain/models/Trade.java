@@ -4,15 +4,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Trade extends EntityModel {
-    private String name;
-    private String profilePict;
-    private String type;
+    private String name = "";
+    private String profilePict = "";
+    private String type = "";
     private double longitude;
     private double latitude;
-    private String address;
-    private String description;
+    private String address = "";
+    private String description = "";
     private Set<Beer> items = new HashSet<>();
     private User responsible;
 

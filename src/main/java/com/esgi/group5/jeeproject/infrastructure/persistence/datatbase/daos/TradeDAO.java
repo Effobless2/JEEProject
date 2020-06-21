@@ -10,13 +10,13 @@ public class TradeDAO {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String profilePict;
-    private String type;
+    private String name = "";
+    private String profilePict = "";
+    private String type = "";
     private double longitude;
     private double latitude;
-    private String address;
-    private String description;
+    private String address = "";
+    private String description = "";
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<BeerDAO> items = new HashSet<>();

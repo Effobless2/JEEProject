@@ -18,12 +18,22 @@ public class UpdateTrade {
     }
 
     public Trade updateTrade(Trade trade, User user) {
-        //TODO: Check if user is responsible of the trade
+        Optional<Trade> t = tradeRepository.getTradeById(trade.getId());
+        if (t.isEmpty() ||
+            user == null ||
+            user.getId() !=
+            t.get().getResponsible().getId())
+            return null;
         return updateTrade(trade);
     }
 
     public Trade updateTrade(Trade trade, User user, MultipartFile image) {
-        //TODO: Check if user is responsible of the trade
+        Optional<Trade> t = tradeRepository.getTradeById(trade.getId());
+        if (t.isEmpty() ||
+            user == null ||
+            user.getId() !=
+            t.get().getResponsible().getId())
+            return null;
         Optional<String> imageUrl = imageUploadService.uploadImageTradeImage(image, trade.getId());
         imageUrl.ifPresent(trade::setProfilePict);
         return updateTrade(trade);
