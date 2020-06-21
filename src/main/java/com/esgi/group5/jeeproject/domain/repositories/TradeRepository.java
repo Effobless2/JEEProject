@@ -11,4 +11,8 @@ public interface TradeRepository {
     Optional<Trade> getTradeById(Long id);
     void deleteTradeById(Long id);
     Optional<Trade> updateTrade(Trade trade);
+
+    Optional<Trade> getTradeByIdWithBeers(Long tradeId);
+
+    void updateTradeItems(Trade trade);
 }

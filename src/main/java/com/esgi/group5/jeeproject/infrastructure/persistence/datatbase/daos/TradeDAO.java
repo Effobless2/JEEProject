@@ -1,6 +1,8 @@
 package com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "trades")
@@ -15,11 +17,10 @@ public class TradeDAO {
     private double latitude;
     private String address;
     private String description;
-/*
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Collection<BeerDAO> items;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<BeerDAO> items = new HashSet<>();
+/*
     @ManyToOne
     private UserDAO responsible;
 */
@@ -27,7 +28,7 @@ public class TradeDAO {
     public TradeDAO() {
     }
 
-    public TradeDAO(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description) {
+    public TradeDAO(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description, Set<BeerDAO> items) {
         this.id = id;
         this.name = name;
         this.profilePict = profilePict;
@@ -36,6 +37,7 @@ public class TradeDAO {
         this.latitude = latitude;
         this.address = address;
         this.description = description;
+        this.items = items;
     }
 
     public Long getId() {
@@ -100,5 +102,13 @@ public class TradeDAO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<BeerDAO> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<BeerDAO> items) {
+        this.items = items;
     }
 }

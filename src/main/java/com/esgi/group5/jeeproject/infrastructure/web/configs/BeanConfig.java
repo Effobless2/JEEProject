@@ -3,15 +3,9 @@ package com.esgi.group5.jeeproject.infrastructure.web.configs;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
 import com.esgi.group5.jeeproject.domain.tools.ImageUploadService;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.*;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeer;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTrade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.DeleteTrade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTrade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.UpdateTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.*;
 import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
 import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUser;
 import com.microsoft.azure.storage.CloudStorageAccount;
@@ -93,4 +87,23 @@ public class BeanConfig {
         return new ReadUser(userRepository);
     }
 
+    @Bean
+    public MakeBeerSoldByTrade makeBeerSoldByTrade(TradeRepository tradeRepository, BeerRepository beerRepository) {
+        return new MakeBeerSoldByTrade(beerRepository, tradeRepository);
+    }
+
+    @Bean
+    public RemoveBeerFromTradeItems removeBeerFromTradeItems(TradeRepository tradeRepository, BeerRepository beerRepository) {
+        return new RemoveBeerFromTradeItems(beerRepository, tradeRepository);
+    }
+
+    @Bean
+    public GetTradeByIdWithTheirBeers getTradeByIdWithTheirBeers(TradeRepository tradeRepository) {
+        return new GetTradeByIdWithTheirBeers(tradeRepository);
+    }
+
+    @Bean
+    public GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers(BeerRepository beerRepository) {
+        return new GetBeerByIdWithTheirSellers(beerRepository);
+    }
 }

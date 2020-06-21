@@ -1,7 +1,9 @@
 package com.esgi.group5.jeeproject.domain.models;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class Beer extends EntityModel {
     private String name;
@@ -9,18 +11,20 @@ public class Beer extends EntityModel {
     private String type;
     private double alcoholLevel;
     private String description;
+    private Set<Trade> sellers = new HashSet<>();
 
     public Beer() {
         super();
     }
 
-    public Beer(Long id, String name, String profilePict, String type, double alcoholLevel, String description) {
+    public Beer(Long id, String name, String profilePict, String type, double alcoholLevel, String description, Set<Trade> sellers) {
         super(id);
         this.name = name;
         this.profilePict = profilePict;
         this.type = type;
         this.alcoholLevel = alcoholLevel;
         this.description = description;
+        this.sellers = sellers;
     }
 
     public String getName() {
@@ -90,5 +94,13 @@ public class Beer extends EntityModel {
             return true;
         return this.alcoholLevel >= alcoholLevel.get() - 1.0d &&
                 this.alcoholLevel <= alcoholLevel.get() + 1.0d;
+    }
+
+    public Set<Trade> getSellers() {
+        return sellers;
+    }
+
+    public void setSellers(Set<Trade> sellers) {
+        this.sellers = sellers;
     }
 }

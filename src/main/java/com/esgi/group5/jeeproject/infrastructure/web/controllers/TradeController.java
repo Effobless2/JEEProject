@@ -1,10 +1,7 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.Trade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.CreateTrade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.DeleteTrade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.ReadTrade;
-import com.esgi.group5.jeeproject.domain.use_cases.trades.UpdateTrade;
+import com.esgi.group5.jeeproject.domain.use_cases.trades.*;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.trades.EditTradeDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.trades.parsers.TradeParser;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.users.UserWithTokenDTO;
@@ -30,18 +27,27 @@ public class TradeController {
     private final CreateTrade createTrade;
     private final UpdateTrade updateTrade;
     private final DeleteTrade deleteTrade;
+    private final GetTradeByIdWithTheirBeers getTradeByIdWithTheirBeers;
+    private final MakeBeerSoldByTrade makeBeerSoldByTrade;
+    private final RemoveBeerFromTradeItems removeBeerFromTradeItems;
     private final TokenProvider tokenProvider;
 
     public TradeController(ReadTrade readTrade,
                            CreateTrade createTrade,
                            UpdateTrade updateTrade,
                            DeleteTrade deleteTrade,
+                           GetTradeByIdWithTheirBeers getTradeByIdWithTheirBeers,
+                           MakeBeerSoldByTrade makeBeerSoldByTrade,
+                           RemoveBeerFromTradeItems removeBeerFromTradeItems,
                            TokenProvider tokenProvider
     ) {
         this.readTrade = readTrade;
         this.createTrade = createTrade;
         this.updateTrade = updateTrade;
         this.deleteTrade = deleteTrade;
+        this.getTradeByIdWithTheirBeers = getTradeByIdWithTheirBeers;
+        this.makeBeerSoldByTrade = makeBeerSoldByTrade;
+        this.removeBeerFromTradeItems = removeBeerFromTradeItems;
         this.tokenProvider = tokenProvider;
     }
 
@@ -60,7 +66,7 @@ public class TradeController {
 
     @GetMapping("/{tradeId}")
     public ResponseEntity<?> get(@PathVariable("tradeId") Long tradeId){
-        Trade trade = readTrade.getTradeById(tradeId);
+        Trade trade = getTradeByIdWithTheirBeers.getTradeByIdWithTheirBeers(tradeId);
         return trade != null ?
             ResponseEntity
                 .status(HttpStatus.OK)
@@ -84,7 +90,7 @@ public class TradeController {
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(saved);
+            .body(saved.getId());
     }
 
     @PutMapping("/{tradeId}")
@@ -165,6 +171,26 @@ public class TradeController {
                 .status(removed ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .build();
 
+    }
+
+    @PatchMapping("/{tradeId}/add/{beerId}")
+    public ResponseEntity<?> addBeerToTradeItems(
+            @PathVariable("tradeId") Long tradeId,
+            @PathVariable("beerId") Long beerId) {
+        boolean beerAdded = makeBeerSoldByTrade.makeBeerSoldByTrade(tradeId, beerId);
+        return ResponseEntity
+            .status(beerAdded ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+            .build();
+    }
+
+    @PatchMapping("/{tradeId}/remove/{beerId}")
+    public ResponseEntity<?> removeBeerToTradeItems(
+            @PathVariable("tradeId") Long tradeId,
+            @PathVariable("beerId") Long beerId) {
+        boolean beerAdded = removeBeerFromTradeItems.removeBeerFromTradeItems(tradeId, beerId);
+        return ResponseEntity
+                .status(beerAdded ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+                .build();
     }
 
 }

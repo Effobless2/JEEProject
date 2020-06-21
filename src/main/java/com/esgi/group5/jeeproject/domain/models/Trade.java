@@ -1,7 +1,9 @@
 package com.esgi.group5.jeeproject.domain.models;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class Trade extends EntityModel {
     private String name;
@@ -11,12 +13,13 @@ public class Trade extends EntityModel {
     private double latitude;
     private String address;
     private String description;
+    private Set<Beer> items = new HashSet<>();
 
     public Trade() {
         super();
     }
 
-    public Trade(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description) {
+    public Trade(Long id, String name, String profilePict, String type, double longitude, double latitude, String address, String description, Set<Beer> items) {
         super(id);
         this.name = name;
         this.profilePict = profilePict;
@@ -25,6 +28,7 @@ public class Trade extends EntityModel {
         this.latitude = latitude;
         this.address = address;
         this.description = description;
+        this.items = items;
     }
 
     public String getName() {
@@ -81,6 +85,28 @@ public class Trade extends EntityModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Beer> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Beer> items) {
+        this.items = items;
+    }
+
+    public void addItem(Beer beer) {
+        items.add(beer);
+    }
+
+    public void removeItem(Beer beer) {
+        if(beer.getId() == null)
+            return;
+        Optional<Beer> existing = items
+                .stream()
+                .filter(b -> b.getId().equals(beer.getId()))
+                .findFirst();
+        existing.ifPresent(value -> items.remove(value));
     }
 
     public boolean isMatchingFilters(Optional<String> name, Optional<List<String>> types) {

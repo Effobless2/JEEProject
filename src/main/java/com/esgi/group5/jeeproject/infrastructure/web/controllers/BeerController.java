@@ -1,10 +1,7 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.Beer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.CreateBeer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.DeleteBeer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.ReadBeer;
-import com.esgi.group5.jeeproject.domain.use_cases.beers.UpdateBeer;
+import com.esgi.group5.jeeproject.domain.use_cases.beers.*;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.beers.EditBeerDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.beers.parsers.BeerParser;
 import org.springframework.http.HttpStatus;
@@ -26,17 +23,19 @@ public class BeerController {
     private final UpdateBeer updateBeer;
     private final ReadBeer readBeer;
     private final DeleteBeer deleteBeer;
+    private final GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers;
 
     public BeerController(
-        CreateBeer createBeer,
-        UpdateBeer updateBeer,
-        ReadBeer readBeer,
-        DeleteBeer deleteBeer
-    ) {
+            CreateBeer createBeer,
+            UpdateBeer updateBeer,
+            ReadBeer readBeer,
+            DeleteBeer deleteBeer,
+            GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers) {
         this.createBeer = createBeer;
         this.updateBeer = updateBeer;
         this.readBeer = readBeer;
         this.deleteBeer = deleteBeer;
+        this.getBeerByIdWithTheirSellers = getBeerByIdWithTheirSellers;
     }
 
     @GetMapping
@@ -54,7 +53,7 @@ public class BeerController {
 
     @GetMapping("/{beerId}")
     public ResponseEntity<?> get(@PathVariable("beerId") Long beerId){
-        Beer beer = readBeer.getBeerById(beerId);
+        Beer beer = getBeerByIdWithTheirSellers.getBeerByIdWithSellers(beerId);
         return beer != null ?
             ResponseEntity
                 .status(HttpStatus.OK)

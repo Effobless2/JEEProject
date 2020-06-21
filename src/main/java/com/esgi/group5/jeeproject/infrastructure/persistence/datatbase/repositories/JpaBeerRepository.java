@@ -4,6 +4,7 @@ import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
 import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.BeerDAO;
 import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.parsers.BeerParser;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.parsers.BeerWithSellersParser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -50,6 +51,18 @@ public interface JpaBeerRepository extends JpaRepository<BeerDAO, Long>, BeerRep
         return getBeerById(beer.getId());
     }
 
+    @Override
+    default Optional<Beer> getBeerByIdWithSellers(Long beerId) {
+        Optional<BeerDAO> dao = findById(beerId);
+
+        if(dao.isEmpty())
+            return Optional.empty();
+
+        Beer result = BeerWithSellersParser.parse(dao.get());
+
+        return Optional.of(result);
+
+    }
 
     @Transactional
     @Modifying

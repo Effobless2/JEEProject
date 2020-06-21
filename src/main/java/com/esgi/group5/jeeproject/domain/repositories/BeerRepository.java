@@ -11,4 +11,6 @@ public interface BeerRepository {
     Optional<Beer> getBeerById(Long id);
     void deleteBeerById(Long id);
     Optional<Beer> updateBeer(Beer beer);
+
+    Optional<Beer> getBeerByIdWithSellers(Long beerId);
 }
