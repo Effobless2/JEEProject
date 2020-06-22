@@ -55,11 +55,7 @@ public class TradeController {
     public ResponseEntity<?> get(){
         Collection<Trade> trades = readTrade.getAllTrades();
 
-        return trades.isEmpty() ?
-            ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build() :
-            ResponseEntity
+        return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(trades);
     }
@@ -103,6 +99,7 @@ public class TradeController {
                     .build();
 
         Trade trade = TradeParser.parser(editTradeDTO);
+        trade.setId(tradeId);
         Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user));
 
         return updated != null ?
@@ -148,11 +145,7 @@ public class TradeController {
             @RequestParam("lat") Optional<Double> lat
     ){
         Collection<Trade> filteredTrades = readTrade.filter(name, types, lng, lat);
-        return filteredTrades.isEmpty() ?
-            ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build() :
-            ResponseEntity
+        return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredTrades);
     }

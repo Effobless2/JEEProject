@@ -42,11 +42,7 @@ public class BeerController {
     public ResponseEntity<?> get(){
         Collection<Beer> beers = readBeer.getAllBeers();
 
-        return beers.isEmpty() ?
-            ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build() :
-            ResponseEntity
+        return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(beers);
     }
@@ -127,11 +123,7 @@ public class BeerController {
     ){
         Collection<Beer> filteredBeers = readBeer.filter(name, types, alcoholLevel);
 
-        return filteredBeers.isEmpty() ?
-            ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build() :
-            ResponseEntity
+        return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredBeers);
     }

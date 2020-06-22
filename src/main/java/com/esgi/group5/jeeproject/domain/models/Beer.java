@@ -86,7 +86,7 @@ public class Beer extends EntityModel {
         return types.get()
             .stream()
             .map(String::toLowerCase)
-            .anyMatch(this.type::equals);
+            .anyMatch(this.type.toLowerCase()::equals);
     }
 
     private boolean isAlcoholLevelNear(Optional<Double> alcoholLevel) {
