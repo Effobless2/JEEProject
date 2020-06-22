@@ -1,5 +1,6 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
+import com.esgi.group5.jeeproject.domain.exceptions.*;
 import com.esgi.group5.jeeproject.domain.models.Trade;
 import com.esgi.group5.jeeproject.domain.use_cases.trades.*;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.trades.EditTradeDTO;
@@ -102,22 +103,33 @@ public class TradeController {
 
         Trade trade = TradeParser.parser(editTradeDTO);
         trade.setId(tradeId);
-        Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user));
 
-        return updated != null ?
-            ResponseEntity
-                .status(HttpStatus.OK)
-                .body(updated) :
-            ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build();
+        try {
+            Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user));
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(updated);
+
+        } catch (UserNotAllowedToUpdateTradeException e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+
+        } catch (TradeDoesntExistException e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
     }
 
     @PatchMapping("/image/{tradeId}")
     public ResponseEntity<?> patchImage(HttpServletRequest request, @PathVariable("tradeId") Long tradeId, @RequestParam("file") MultipartFile file) throws IOException {
         UserWithTokenDTO user = tokenProvider.getUser(request);
 
-        if(user == null)
+        if (user == null)
             return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .build();
@@ -128,15 +140,25 @@ public class TradeController {
                 .status(HttpStatus.NOT_FOUND)
                 .build();
 
-        Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user), file);
+        try {
+            Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user), file);
 
-        return updated != null ?
-            ResponseEntity
-                .status(HttpStatus.OK)
-                .body(updated) :
-            ResponseEntity
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(updated);
+
+        } catch (UserNotAllowedToUpdateTradeException e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+
+        } catch (TradeDoesntExistException e) {
+
+            return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .build();
+        }
     }
 
     @GetMapping("/search")
@@ -161,31 +183,81 @@ public class TradeController {
                     .status(HttpStatus.UNAUTHORIZED)
                     .build();
 
-        boolean removed = deleteTrade.deleteTrade(tradeId, UserParser.parse(user));
-        return ResponseEntity
-                .status(removed ? HttpStatus.OK : HttpStatus.NOT_FOUND)
-                .build();
+        try {
+            boolean removed = deleteTrade.deleteTrade(tradeId, UserParser.parse(user));
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .build();
+        } catch (TradeDoesntExistException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        } catch (UserNotAllowedToDeleteTradeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+        }
 
     }
 
     @PatchMapping("/{tradeId}/add/{beerId}")
     public ResponseEntity<?> addBeerToTradeItems(
+            HttpServletRequest request,
             @PathVariable("tradeId") Long tradeId,
             @PathVariable("beerId") Long beerId) {
-        boolean beerAdded = makeBeerSoldByTrade.makeBeerSoldByTrade(tradeId, beerId);
-        return ResponseEntity
-            .status(beerAdded ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
-            .build();
+
+        UserWithTokenDTO user = tokenProvider.getUser(request);
+        if(user == null)
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+
+        try {
+
+            boolean beerAdded = makeBeerSoldByTrade.makeBeerSoldByTrade(tradeId, beerId, UserParser.parse(user));
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .build();
+
+        } catch (TradeDoesntExistException | BeerDoesntExistException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        } catch (UserNotAllowedToManageStocksException e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+        }
     }
 
     @PatchMapping("/{tradeId}/remove/{beerId}")
     public ResponseEntity<?> removeBeerToTradeItems(
+            HttpServletRequest request,
             @PathVariable("tradeId") Long tradeId,
             @PathVariable("beerId") Long beerId) {
-        boolean beerAdded = removeBeerFromTradeItems.removeBeerFromTradeItems(tradeId, beerId);
-        return ResponseEntity
-                .status(beerAdded ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
-                .build();
+
+        UserWithTokenDTO user = tokenProvider.getUser(request);
+        if(user == null)
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+
+        try {
+
+            boolean beerAdded = removeBeerFromTradeItems.removeBeerFromTradeItems(tradeId, beerId, UserParser.parse(user));
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .build();
+
+        } catch (TradeDoesntExistException | BeerDoesntExistException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        } catch (UserNotAllowedToManageStocksException e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+        }
     }
 
 }

@@ -1,7 +1,11 @@
 package com.esgi.group5.jeeproject.domain.use_cases.trades;
 
+import com.esgi.group5.jeeproject.domain.exceptions.BeerDoesntExistException;
+import com.esgi.group5.jeeproject.domain.exceptions.TradeDoesntExistException;
+import com.esgi.group5.jeeproject.domain.exceptions.UserNotAllowedToManageStocksException;
 import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.models.Trade;
+import com.esgi.group5.jeeproject.domain.models.User;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 
@@ -16,16 +20,19 @@ public class RemoveBeerFromTradeItems {
         this.tradeRepository = tradeRepository;
     }
 
-    public boolean removeBeerFromTradeItems(Long tradeId, Long beerId) {
+    public boolean removeBeerFromTradeItems(Long tradeId, Long beerId, User userWhoAddsBeer)
+            throws TradeDoesntExistException, UserNotAllowedToManageStocksException, BeerDoesntExistException {
         Optional<Trade> trade = tradeRepository.getTradeByIdWithBeers(tradeId);
 
         if(trade.isEmpty())
-            return false;
+            throw new TradeDoesntExistException();
 
+        if (userWhoAddsBeer == null || userWhoAddsBeer.getId() != trade.get().getResponsible().getId())
+            throw new UserNotAllowedToManageStocksException();
         Optional<Beer> beer = beerRepository.getBeerById(beerId);
 
         if(beer.isEmpty())
-            return false;
+            throw new BeerDoesntExistException();
 
         return removeBeerToTradeItems(trade.get(), beer.get());
     }

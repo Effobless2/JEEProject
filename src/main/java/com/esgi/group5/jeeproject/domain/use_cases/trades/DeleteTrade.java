@@ -1,5 +1,7 @@
 package com.esgi.group5.jeeproject.domain.use_cases.trades;
 
+import com.esgi.group5.jeeproject.domain.exceptions.TradeDoesntExistException;
+import com.esgi.group5.jeeproject.domain.exceptions.UserNotAllowedToDeleteTradeException;
 import com.esgi.group5.jeeproject.domain.models.Trade;
 import com.esgi.group5.jeeproject.domain.models.User;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
@@ -13,12 +15,12 @@ public class DeleteTrade {
         this.tradeRepository = tradeRepository;
     }
 
-    public boolean deleteTrade(Long tradeId, User user) {
+    public boolean deleteTrade(Long tradeId, User user) throws TradeDoesntExistException, UserNotAllowedToDeleteTradeException {
         Optional<Trade> trade = tradeRepository.getTradeById(tradeId);
         if (trade.isEmpty())
-            return false;
+            throw new TradeDoesntExistException();
         if (trade.get().getResponsible().getId() != user.getId())
-            return false;
+            throw new UserNotAllowedToDeleteTradeException();
         tradeRepository.deleteTradeById(tradeId);
         return true;
     }
