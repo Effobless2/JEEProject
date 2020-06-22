@@ -31,6 +31,7 @@ public class TradeController {
     private final MakeBeerSoldByTrade makeBeerSoldByTrade;
     private final RemoveBeerFromTradeItems removeBeerFromTradeItems;
     private final TokenProvider tokenProvider;
+    private final FilterTrades filterTrades;
 
     public TradeController(ReadTrade readTrade,
                            CreateTrade createTrade,
@@ -39,8 +40,8 @@ public class TradeController {
                            GetTradeByIdWithTheirBeers getTradeByIdWithTheirBeers,
                            MakeBeerSoldByTrade makeBeerSoldByTrade,
                            RemoveBeerFromTradeItems removeBeerFromTradeItems,
-                           TokenProvider tokenProvider
-    ) {
+                           TokenProvider tokenProvider,
+                           FilterTrades filterTrades) {
         this.readTrade = readTrade;
         this.createTrade = createTrade;
         this.updateTrade = updateTrade;
@@ -49,6 +50,7 @@ public class TradeController {
         this.makeBeerSoldByTrade = makeBeerSoldByTrade;
         this.removeBeerFromTradeItems = removeBeerFromTradeItems;
         this.tokenProvider = tokenProvider;
+        this.filterTrades = filterTrades;
     }
 
     @GetMapping
@@ -144,7 +146,7 @@ public class TradeController {
             @RequestParam("lng") Optional<Double> lng,
             @RequestParam("lat") Optional<Double> lat
     ){
-        Collection<Trade> filteredTrades = readTrade.filter(name, types, lng, lat);
+        Collection<Trade> filteredTrades = filterTrades.filter(name, types, lng, lat);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredTrades);

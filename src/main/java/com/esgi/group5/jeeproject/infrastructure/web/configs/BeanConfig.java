@@ -106,4 +106,14 @@ public class BeanConfig {
     public GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers(BeerRepository beerRepository) {
         return new GetBeerByIdWithTheirSellers(beerRepository);
     }
+
+    @Bean
+    public FilterTrades filterTrades(TradeRepository tradeRepository) {
+        return new FilterTrades(tradeRepository);
+    }
+
+    @Bean
+    public FilterBeers filterBeers(BeerRepository beerRepository) {
+        return new FilterBeers(beerRepository);
+    }
 }

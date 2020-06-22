@@ -24,18 +24,20 @@ public class BeerController {
     private final ReadBeer readBeer;
     private final DeleteBeer deleteBeer;
     private final GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers;
+    private final FilterBeers filterBeers;
 
     public BeerController(
             CreateBeer createBeer,
             UpdateBeer updateBeer,
             ReadBeer readBeer,
             DeleteBeer deleteBeer,
-            GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers) {
+            GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers, FilterBeers filterBeers) {
         this.createBeer = createBeer;
         this.updateBeer = updateBeer;
         this.readBeer = readBeer;
         this.deleteBeer = deleteBeer;
         this.getBeerByIdWithTheirSellers = getBeerByIdWithTheirSellers;
+        this.filterBeers = filterBeers;
     }
 
     @GetMapping
@@ -121,7 +123,7 @@ public class BeerController {
             @RequestParam("types") Optional<List<String>> types,
             @RequestParam("alcoholLevel") Optional<Double> alcoholLevel
     ){
-        Collection<Beer> filteredBeers = readBeer.filter(name, types, alcoholLevel);
+        Collection<Beer> filteredBeers = filterBeers.filter(name, types, alcoholLevel);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

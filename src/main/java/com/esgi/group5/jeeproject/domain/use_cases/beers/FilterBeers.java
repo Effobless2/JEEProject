@@ -8,18 +8,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ReadBeer {
+public class FilterBeers {
     private final BeerRepository beerRepository;
 
-    public ReadBeer(BeerRepository beerRepository) {
+    public FilterBeers(BeerRepository beerRepository) {
         this.beerRepository = beerRepository;
     }
 
-    public Collection<Beer> getAllBeers(){
-        return beerRepository.getAllBeers();
-    }
-
-    public Beer getBeerById(Long id){
-        return beerRepository.getBeerById(id).orElse(null);
+    public Collection<Beer> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> alcoholLevel) {
+        return beerRepository.getAllBeers()
+                .stream()
+                .filter(beer -> beer.isMatchingFilters(name, types, alcoholLevel))
+                .collect(Collectors.toList());
     }
 }
