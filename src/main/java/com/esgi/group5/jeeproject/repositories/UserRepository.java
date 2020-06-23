@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.repositories;
-
-import com.esgi.group5.jeeproject.DAL.UserDAL;
-import com.esgi.group5.jeeproject.models.User;
+/*
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.repositories.JpaUserRepository;
+import com.esgi.group5.jeeproject.infrastructure.persistence.datatbase.daos.UserDAO;
 import com.esgi.group5.jeeproject.repositories.contracts.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,37 +13,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserRepository implements IUserRepository {
 
-    private final UserDAL userDAL;
+    private final JpaUserRepository jpaUserRepository;
 
     @Override
-    public User add(User user) {
-        return userDAL.save(user);
+    public UserDAO add(UserDAO user) {
+        return jpaUserRepository.save(user);
     }
 
     @Override
-    public List<User> get() {
-        return userDAL.findAll();
+    public List<UserDAO> get() {
+        return jpaUserRepository.findAll();
     }
 
     @Override
-    public User get(long id) {
-        Optional<User> user = userDAL.findById(id);
+    public UserDAO get(long id) {
+        Optional<UserDAO> user = jpaUserRepository.findById(id);
         return user.orElse(null);
 
     }
 
     @Override
-    public User getByGoogleId(String googleId) {
-        Optional<User> user = userDAL.findUserByGoogleId(googleId);
+    public UserDAO getByGoogleId(String googleId) {
+        Optional<UserDAO> user = jpaUserRepository.findUserByGoogleId(googleId);
         return user.orElse(null);
     }
 
     @Override
-    public boolean update(User user) {
-        Optional<User> search = userDAL.findById(user.getId());
+    public boolean update(UserDAO user) {
+        Optional<UserDAO> search = jpaUserRepository.findById(user.getId());
         if(search.isEmpty())
             return false;
-        userDAL.save(user);
+        jpaUserRepository.save(user);
         return true;
     }
 }
+*/
