@@ -12,7 +12,7 @@ public class GetBeerByIdWithTheirSellers {
         this.beerRepository = beerRepository;
     }
 
-    public Beer getBeerByIdWithSellers(Long beerId) {
+    public Beer execute(Long beerId) {
         Optional<Beer> beer = beerRepository.getBeerByIdWithSellers(beerId);
         return beer.orElse(null);
     }

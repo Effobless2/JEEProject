@@ -15,7 +15,7 @@ public class DeleteTrade {
         this.tradeRepository = tradeRepository;
     }
 
-    public boolean deleteTrade(Long tradeId, User user) throws TradeDoesntExistException, UserNotAllowedToDeleteTradeException {
+    public boolean execute(Long tradeId, User user) throws TradeDoesntExistException, UserNotAllowedToDeleteTradeException {
         Optional<Trade> trade = tradeRepository.getTradeById(tradeId);
         if (trade.isEmpty())
             throw new TradeDoesntExistException();

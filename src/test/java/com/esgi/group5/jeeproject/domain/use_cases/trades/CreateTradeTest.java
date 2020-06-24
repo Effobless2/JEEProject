@@ -32,8 +32,8 @@ public class CreateTradeTest {
         for (long i = 0L; i < 10; i++) {
             Trade test = new Trade();
             mockTrade.add(test);
-            given(createTrade.createTrade(test, userTest)).willReturn(test);
-            Trade created = createTrade.createTrade(test, userTest);
+            given(createTrade.execute(test, userTest)).willReturn(test);
+            Trade created = createTrade.execute(test, userTest);
             assertNotNull(created);
         }
     }

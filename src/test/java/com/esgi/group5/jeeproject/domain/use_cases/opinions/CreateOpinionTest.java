@@ -26,7 +26,7 @@ public class CreateOpinionTest {
             Opinion test = new Opinion();
 
             given(repository.createOpinion(test)).willReturn(test);
-            Opinion opinion = createOpinion.createOpinion(test);
+            Opinion opinion = createOpinion.execute(test);
             assertNotNull(opinion);
         }
     }

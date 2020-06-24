@@ -3,14 +3,16 @@ package com.esgi.group5.jeeproject.domain.use_cases.beers;
 import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
 
-public class CreateBeer {
+import java.util.Collection;
+
+public class GetAllBeers {
     private final BeerRepository beerRepository;
 
-    public CreateBeer(BeerRepository beerRepository) {
+    public GetAllBeers(BeerRepository beerRepository) {
         this.beerRepository = beerRepository;
     }
 
-    public Beer execute(Beer beer) {
-        return beerRepository.createBeer(beer);
+    public Collection<Beer> execute(){
+        return beerRepository.getAllBeers();
     }
 }

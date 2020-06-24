@@ -3,17 +3,16 @@ package com.esgi.group5.jeeproject.domain.use_cases.trades;
 import com.esgi.group5.jeeproject.domain.models.Trade;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 
-import java.util.Optional;
+import java.util.Collection;
 
-public class GetTradeByIdWithTheirBeers {
+public class GetAllTrades {
     private final TradeRepository tradeRepository;
 
-    public GetTradeByIdWithTheirBeers(TradeRepository tradeRepository) {
+    public GetAllTrades(TradeRepository tradeRepository) {
         this.tradeRepository = tradeRepository;
     }
 
-    public Trade execute(Long tradeId) {
-        Optional<Trade> trade = tradeRepository.getTradeByIdWithBeers(tradeId);
-        return trade.orElse(null);
+    public Collection<Trade> execute(){
+        return tradeRepository.getAllTrades();
     }
 }
