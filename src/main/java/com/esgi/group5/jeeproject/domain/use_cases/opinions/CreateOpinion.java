@@ -10,7 +10,7 @@ public class CreateOpinion {
         this.opinionRepository = opinionRepository;
     }
 
-    public Opinion createOpinion(Opinion opinion) {
+    public Opinion execute(Opinion opinion) {
         return opinionRepository.createOpinion(opinion);
     }
 

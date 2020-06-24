@@ -5,14 +5,14 @@ import com.esgi.group5.jeeproject.domain.repositories.OpinionRepository;
 
 import java.util.Collection;
 
-public class ReadOpinion {
+public class GetAllOpinions {
     private final OpinionRepository opinionRepository;
 
-    public ReadOpinion(OpinionRepository opinionRepository) {
+    public GetAllOpinions(OpinionRepository opinionRepository) {
         this.opinionRepository = opinionRepository;
     }
 
-    public Collection<Opinion> getAllOpinions(){
+    public Collection<Opinion> execute(){
         return this.opinionRepository.getAllOpinions();
     }
 }

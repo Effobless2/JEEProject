@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequestMapping("/trades")
 @CrossOrigin(origins = "*")
 public class TradeController {
-    private final ReadTrade readTrade;
+    private final GetAllTrades getAllTrades;
     private final CreateTrade createTrade;
     private final UpdateTrade updateTrade;
     private final DeleteTrade deleteTrade;
@@ -33,8 +33,9 @@ public class TradeController {
     private final RemoveBeerFromTradeItems removeBeerFromTradeItems;
     private final TokenProvider tokenProvider;
     private final FilterTrades filterTrades;
+    private final GetTradeById getTradeById;
 
-    public TradeController(ReadTrade readTrade,
+    public TradeController(GetAllTrades getAllTrades,
                            CreateTrade createTrade,
                            UpdateTrade updateTrade,
                            DeleteTrade deleteTrade,
@@ -42,8 +43,8 @@ public class TradeController {
                            MakeBeerSoldByTrade makeBeerSoldByTrade,
                            RemoveBeerFromTradeItems removeBeerFromTradeItems,
                            TokenProvider tokenProvider,
-                           FilterTrades filterTrades) {
-        this.readTrade = readTrade;
+                           FilterTrades filterTrades, GetTradeById tradeById) {
+        this.getAllTrades = getAllTrades;
         this.createTrade = createTrade;
         this.updateTrade = updateTrade;
         this.deleteTrade = deleteTrade;
@@ -52,11 +53,12 @@ public class TradeController {
         this.removeBeerFromTradeItems = removeBeerFromTradeItems;
         this.tokenProvider = tokenProvider;
         this.filterTrades = filterTrades;
+        this.getTradeById = tradeById;
     }
 
     @GetMapping
     public ResponseEntity<?> get(){
-        Collection<Trade> trades = readTrade.getAllTrades();
+        Collection<Trade> trades = getAllTrades.execute();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -65,7 +67,7 @@ public class TradeController {
 
     @GetMapping("/{tradeId}")
     public ResponseEntity<?> get(@PathVariable("tradeId") Long tradeId){
-        Trade trade = getTradeByIdWithTheirBeers.getTradeByIdWithTheirBeers(tradeId);
+        Trade trade = getTradeByIdWithTheirBeers.execute(tradeId);
         return trade != null ?
             ResponseEntity
                 .status(HttpStatus.OK)
@@ -85,7 +87,7 @@ public class TradeController {
                 .build();
 
         Trade trade = TradeParser.parser(editTradeDTO);
-        Trade saved = createTrade.createTrade(trade, UserParser.parse(user));
+        Trade saved = createTrade.execute(trade, UserParser.parse(user));
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -105,7 +107,7 @@ public class TradeController {
         trade.setId(tradeId);
 
         try {
-            Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user));
+            Trade updated = updateTrade.execute(trade, UserParser.parse(user));
 
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -134,14 +136,14 @@ public class TradeController {
                 .status(HttpStatus.UNAUTHORIZED)
                 .build();
 
-        Trade trade = readTrade.getTradeById(tradeId);
+        Trade trade = getTradeById.execute(tradeId);
         if(trade == null)
             return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .build();
 
         try {
-            Trade updated = updateTrade.updateTrade(trade, UserParser.parse(user), file);
+            Trade updated = updateTrade.execute(trade, UserParser.parse(user), file);
 
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -168,7 +170,7 @@ public class TradeController {
             @RequestParam("lng") Optional<Double> lng,
             @RequestParam("lat") Optional<Double> lat
     ){
-        Collection<Trade> filteredTrades = filterTrades.filter(name, types, lng, lat);
+        Collection<Trade> filteredTrades = filterTrades.execute(name, types, lng, lat);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredTrades);
@@ -184,7 +186,7 @@ public class TradeController {
                     .build();
 
         try {
-            boolean removed = deleteTrade.deleteTrade(tradeId, UserParser.parse(user));
+            boolean removed = deleteTrade.execute(tradeId, UserParser.parse(user));
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .build();
@@ -214,7 +216,7 @@ public class TradeController {
 
         try {
 
-            boolean beerAdded = makeBeerSoldByTrade.makeBeerSoldByTrade(tradeId, beerId, UserParser.parse(user));
+            boolean beerAdded = makeBeerSoldByTrade.execute(tradeId, beerId, UserParser.parse(user));
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .build();
@@ -244,7 +246,7 @@ public class TradeController {
 
         try {
 
-            boolean beerAdded = removeBeerFromTradeItems.removeBeerFromTradeItems(tradeId, beerId, UserParser.parse(user));
+            boolean beerAdded = removeBeerFromTradeItems.execute(tradeId, beerId, UserParser.parse(user));
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .build();

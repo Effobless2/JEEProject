@@ -4,22 +4,15 @@ import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class ReadBeer {
+public class GetAllBeers {
     private final BeerRepository beerRepository;
 
-    public ReadBeer(BeerRepository beerRepository) {
+    public GetAllBeers(BeerRepository beerRepository) {
         this.beerRepository = beerRepository;
     }
 
-    public Collection<Beer> getAllBeers(){
+    public Collection<Beer> execute(){
         return beerRepository.getAllBeers();
-    }
-
-    public Beer getBeerById(Long id){
-        return beerRepository.getBeerById(id).orElse(null);
     }
 }

@@ -10,7 +10,7 @@ public class DeleteOpinion {
         this.opinionRepository = opinionRepository;
     }
 
-    public void deleteOpinion(Opinion opinion){
+    public void execute(Opinion opinion){
         opinionRepository.deleteOpinionById(opinion.getId());
     }
 }

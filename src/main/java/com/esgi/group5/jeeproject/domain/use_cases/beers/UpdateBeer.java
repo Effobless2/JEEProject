@@ -2,7 +2,7 @@ package com.esgi.group5.jeeproject.domain.use_cases.beers;
 
 import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
-import com.esgi.group5.jeeproject.domain.tools.ImageUploadService;
+import com.esgi.group5.jeeproject.domain.services.ImageUploadService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
@@ -16,14 +16,14 @@ public class UpdateBeer {
         this.beerRepository = beerRepository;
     }
 
-    public Beer updateBeer(Beer beer) {
+    public Beer execute(Beer beer) {
         Optional<Beer> updated = beerRepository.updateBeer(beer);
         return updated.orElse(null);
     }
 
-    public Beer updateBeer(Beer beer, MultipartFile image) {
-        Optional<String> imageUrl = imageUploadService.uploadImageBeerImage(image, beer.getId());
+    public Beer execute(Beer beer, MultipartFile newImageOfTheBeerToUpload) {
+        Optional<String> imageUrl = imageUploadService.uploadImageBeerImage(newImageOfTheBeerToUpload, beer.getId());
         imageUrl.ifPresent(beer::setProfilePict);
-        return updateBeer(beer);
+        return execute(beer);
     }
 }

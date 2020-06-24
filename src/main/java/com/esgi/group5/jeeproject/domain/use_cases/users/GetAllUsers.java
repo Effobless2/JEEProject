@@ -5,18 +5,14 @@ import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
 
 import java.util.Collection;
 
-public class ReadUser {
+public class GetAllUsers {
     private final UserRepository userRepository;
 
-    public ReadUser(UserRepository userRepository) {
+    public GetAllUsers(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public Collection<User> getAllUsers(){
+    public Collection<User> execute(){
         return this.userRepository.getAllUsers();
-    }
-
-    public User getUserById(Long userId) {
-        return this.userRepository.getUserByIdWithMarkets(userId).orElse(null);
     }
 }

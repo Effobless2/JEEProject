@@ -20,6 +20,6 @@ public class DeleteBeerTest {
 
     @Test
     void should_delete_beer(){
-        assertTrue(deleteBeer.deleteBeer(1L));
+        assertTrue(deleteBeer.execute(1L));
     }
 }

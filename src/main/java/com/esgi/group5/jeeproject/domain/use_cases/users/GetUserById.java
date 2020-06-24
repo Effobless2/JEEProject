@@ -3,14 +3,14 @@ package com.esgi.group5.jeeproject.domain.use_cases.users;
 import com.esgi.group5.jeeproject.domain.models.User;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
 
-public class RegisterUser {
+public class GetUserById {
     private final UserRepository userRepository;
 
-    public RegisterUser(UserRepository userRepository) {
+    public GetUserById(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public User execute(User user){
-        return this.userRepository.createUser(user);
+    public User execute(Long userId) {
+        return this.userRepository.getUserByIdWithMarkets(userId).orElse(null);
     }
 }

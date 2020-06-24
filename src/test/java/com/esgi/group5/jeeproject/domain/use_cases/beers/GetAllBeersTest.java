@@ -11,21 +11,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class ReadBeerTest {
+public class GetAllBeersTest {
 
     private BeerRepository beerRepository;
-    private ReadBeer readBeer;
+    private GetAllBeers getAllBeers;
+    private GetBeerById getBeerById;
 
     @BeforeEach
     void setup(){
         beerRepository = mock(BeerRepository.class);
-        readBeer = new ReadBeer(beerRepository);
+        getAllBeers = new GetAllBeers(beerRepository);
+        getBeerById = new GetBeerById(beerRepository);
     }
 
     @Test
     void should_be_empty_after_init(){
         given(beerRepository.getAllBeers()).willReturn(new ArrayList<>());
-        assertTrue(readBeer.getAllBeers().isEmpty());
+        assertTrue(getAllBeers.execute().isEmpty());
     }
 
     @Test
@@ -37,8 +39,8 @@ public class ReadBeerTest {
         beers.add(new Beer());
 
         given(beerRepository.getAllBeers()).willReturn(beers);
-        assertFalse(readBeer.getAllBeers().isEmpty());
-        assertEquals(4, readBeer.getAllBeers().size());
+        assertFalse(getAllBeers.execute().isEmpty());
+        assertEquals(4, getAllBeers.execute().size());
     }
 
     @Test
@@ -46,6 +48,6 @@ public class ReadBeerTest {
         Beer beer = new Beer();
 
         given(beerRepository.getBeerById(1L)).willReturn(java.util.Optional.of(beer));
-        assertNotNull(readBeer.getBeerById(1L));
+        assertNotNull(getBeerById.execute(1L));
     }
 }

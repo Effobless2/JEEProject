@@ -4,23 +4,15 @@ import com.esgi.group5.jeeproject.domain.models.Trade;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class ReadTrade {
+public class GetAllTrades {
     private final TradeRepository tradeRepository;
 
-    public ReadTrade(TradeRepository tradeRepository) {
+    public GetAllTrades(TradeRepository tradeRepository) {
         this.tradeRepository = tradeRepository;
     }
 
-    public Collection<Trade> getAllTrades(){
+    public Collection<Trade> execute(){
         return tradeRepository.getAllTrades();
-    }
-
-    public Trade getTradeById(Long id){
-        return tradeRepository.getTradeById(id).orElse(null);
     }
 }

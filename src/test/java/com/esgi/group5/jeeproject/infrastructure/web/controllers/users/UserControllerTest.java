@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers.users;
 
 import com.esgi.group5.jeeproject.domain.models.User;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
+import com.esgi.group5.jeeproject.domain.use_cases.users.GetAllUsers;
 import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUser;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -28,7 +28,7 @@ public class UserControllerTest {
     private int port;
 
     @MockBean
-    private ReadUser readUser;
+    private GetAllUsers getAllUsers;
 
     @MockBean
     private RegisterUser registerUser;
@@ -58,8 +58,8 @@ public class UserControllerTest {
         test.setId((long) 1);
         List<User> mockList = new ArrayList<>();
         mockList.add(test);
-        when(registerUser.register(test)).thenReturn(test);
-        when(readUser.getAllUsers()).thenReturn(mockList);
+        when(registerUser.execute(test)).thenReturn(test);
+        when(getAllUsers.execute()).thenReturn(mockList);
 
         long testId =
             given()

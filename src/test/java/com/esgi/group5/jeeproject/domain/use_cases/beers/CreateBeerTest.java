@@ -30,7 +30,7 @@ public class CreateBeerTest {
             Beer test = new Beer();
             mockBeer.add(test);
             given(beerRepository.createBeer(test)).willReturn(test);
-            Beer beer = createBeer.createBeer(test);
+            Beer beer = createBeer.execute(test);
             assertEquals(i + 1, beerRepository.getAllBeers().size());
             assertEquals(beer, test);
         }

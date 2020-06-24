@@ -16,7 +16,7 @@ public class FilterTrades {
         this.tradeRepository = tradeRepository;
     }
 
-    public Collection<Trade> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> lng, Optional<Double> lat) {
+    public Collection<Trade> execute(Optional<String> name, Optional<List<String>> types, Optional<Double> lng, Optional<Double> lat) {
         List<Trade> matchesFilters = tradeRepository.getAllTrades()
                 .stream()
                 .filter(trade -> trade.isMatchingFilters(name, types))

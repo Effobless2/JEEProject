@@ -11,7 +11,7 @@ public class CreateTrade {
         this.tradeRepository = tradeRepository;
     }
 
-    public Trade createTrade(Trade trade, User responsible) {
+    public Trade execute(Trade trade, User responsible) {
         trade.setResponsible(responsible);
         return tradeRepository.createTrade(trade);
     }
