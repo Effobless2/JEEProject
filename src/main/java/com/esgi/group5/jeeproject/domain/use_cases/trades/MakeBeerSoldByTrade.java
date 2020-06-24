@@ -9,7 +9,6 @@ import com.esgi.group5.jeeproject.domain.models.User;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public class MakeBeerSoldByTrade {
@@ -21,7 +20,7 @@ public class MakeBeerSoldByTrade {
         this.tradeRepository = tradeRepository;
     }
 
-    public boolean makeBeerSoldByTrade(Long tradeId, Long beerId, User userWhoAddsBeer)
+    public boolean execute(Long tradeId, Long beerId, User userWhoAddsBeer)
             throws TradeDoesntExistException, UserNotAllowedToManageStocksException, BeerDoesntExistException {
         Optional<Trade> trade = tradeRepository.getTradeByIdWithBeers(tradeId);
 

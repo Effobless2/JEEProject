@@ -15,7 +15,7 @@ public class FilterBeers {
         this.beerRepository = beerRepository;
     }
 
-    public Collection<Beer> filter(Optional<String> name, Optional<List<String>> types, Optional<Double> alcoholLevel) {
+    public Collection<Beer> execute(Optional<String> name, Optional<List<String>> types, Optional<Double> alcoholLevel) {
         return beerRepository.getAllBeers()
                 .stream()
                 .filter(beer -> beer.isMatchingFilters(name, types, alcoholLevel))

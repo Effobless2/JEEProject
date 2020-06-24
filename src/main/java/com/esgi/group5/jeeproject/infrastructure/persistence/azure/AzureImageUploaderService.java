@@ -1,6 +1,6 @@
 package com.esgi.group5.jeeproject.infrastructure.persistence.azure;
 
-import com.esgi.group5.jeeproject.domain.tools.ImageUploadService;
+import com.esgi.group5.jeeproject.domain.services.ImageUploadService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;

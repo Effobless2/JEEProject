@@ -2,7 +2,7 @@ package com.esgi.group5.jeeproject.domain.use_cases.beers;
 
 import com.esgi.group5.jeeproject.domain.models.Beer;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
-import com.esgi.group5.jeeproject.domain.tools.ImageUploadService;
+import com.esgi.group5.jeeproject.domain.services.ImageUploadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +31,7 @@ public class UpdateBeerTest {
         test.setId(1L);
 
         when(beerRepository.updateBeer(test)).thenReturn(Optional.of(test));
-        Beer b = updateBeer.updateBeer(test);
+        Beer b = updateBeer.execute(test);
         assertNotNull(b);
         assertEquals(b, test);
     }

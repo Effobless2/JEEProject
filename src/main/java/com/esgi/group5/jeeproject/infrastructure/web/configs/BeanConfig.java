@@ -2,11 +2,12 @@ package com.esgi.group5.jeeproject.infrastructure.web.configs;
 
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
-import com.esgi.group5.jeeproject.domain.tools.ImageUploadService;
+import com.esgi.group5.jeeproject.domain.services.ImageUploadService;
 import com.esgi.group5.jeeproject.domain.use_cases.beers.*;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
 import com.esgi.group5.jeeproject.domain.use_cases.trades.*;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
+import com.esgi.group5.jeeproject.domain.use_cases.users.GetAllUsers;
+import com.esgi.group5.jeeproject.domain.use_cases.users.GetUserById;
 import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUser;
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.StorageException;
@@ -43,8 +44,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public ReadBeer readBeerService(BeerRepository beerRepository){
-        return new ReadBeer(beerRepository);
+    public GetAllBeers readBeerService(BeerRepository beerRepository){
+        return new GetAllBeers(beerRepository);
     }
 
     @Bean
@@ -63,8 +64,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public ReadTrade readTradeService(TradeRepository tradeRepository) {
-        return new ReadTrade(tradeRepository);
+    public GetAllTrades readTradeService(TradeRepository tradeRepository) {
+        return new GetAllTrades(tradeRepository);
     }
 
     @Bean
@@ -83,8 +84,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public ReadUser readUserService(UserRepository userRepository) {
-        return new ReadUser(userRepository);
+    public GetAllUsers readUserService(UserRepository userRepository) {
+        return new GetAllUsers(userRepository);
     }
 
     @Bean
@@ -115,5 +116,20 @@ public class BeanConfig {
     @Bean
     public FilterBeers filterBeers(BeerRepository beerRepository) {
         return new FilterBeers(beerRepository);
+    }
+
+    @Bean
+    public GetBeerById getBeerById(BeerRepository beerRepository) {
+        return new GetBeerById(beerRepository);
+    }
+
+    @Bean
+    public GetTradeById getTradeById(TradeRepository tradeRepository) {
+        return new GetTradeById(tradeRepository);
+    }
+
+    @Bean
+    public GetUserById getUserById(UserRepository userRepository) {
+        return new GetUserById(userRepository);
     }
 }

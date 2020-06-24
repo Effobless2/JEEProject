@@ -1,7 +1,7 @@
 package com.esgi.group5.jeeproject.infrastructure.web.security;
 
 import com.esgi.group5.jeeproject.domain.models.User;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
+import com.esgi.group5.jeeproject.domain.use_cases.users.GetUserById;
 import com.esgi.group5.jeeproject.domain.use_cases.users.RegisterUser;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.users.GoogleAccountDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.users.parsers.UserParser;
@@ -16,12 +16,13 @@ import java.util.Optional;
 public class AuthenticationFromGoogleService {
     private final BeererAuthenticationRepository beererAuthenticationRepository;
     private final RegisterUser registerUser;
-    private final ReadUser readUser;
+    private final GetUserById getUserById;
 
-    public AuthenticationFromGoogleService(GoogleAccountRepository beererAuthenticationRepository, RegisterUser registerUser, ReadUser readUser) {
+
+    public AuthenticationFromGoogleService(GoogleAccountRepository beererAuthenticationRepository, RegisterUser registerUser, GetUserById getUserById) {
         this.beererAuthenticationRepository = beererAuthenticationRepository;
         this.registerUser = registerUser;
-        this.readUser = readUser;
+        this.getUserById = getUserById;
     }
 
     public User authenticateUser(GoogleAccountDTO googleAccountDTO) {
@@ -37,7 +38,7 @@ public class AuthenticationFromGoogleService {
     }
 
     private User connectUser(GoogleAccountAndBeererUserRelationshipDAO relationship) {
-        User user = readUser.getUserById(relationship.getBeererId());
+        User user = getUserById.execute(relationship.getBeererId());
         return user;
     }
 
@@ -47,7 +48,7 @@ public class AuthenticationFromGoogleService {
 
     public User createAccountForGoogleAccount(GoogleAccountDTO googleAccountDTO) {
         User user = UserParser.parse(googleAccountDTO);
-        User registered = registerUser.register(user);
+        User registered = registerUser.execute(user);
         GoogleAccountAndBeererUserRelationshipDAO dao = new GoogleAccountAndBeererUserRelationshipDAO(
                 googleAccountDTO.getGoogleId(),
                 registered.getId()

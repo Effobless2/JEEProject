@@ -21,28 +21,32 @@ import java.util.Optional;
 public class BeerController {
     private final CreateBeer createBeer;
     private final UpdateBeer updateBeer;
-    private final ReadBeer readBeer;
+    private final GetAllBeers getAllBeers;
     private final DeleteBeer deleteBeer;
     private final GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers;
     private final FilterBeers filterBeers;
+    private final GetBeerById getBeerById;
 
     public BeerController(
             CreateBeer createBeer,
             UpdateBeer updateBeer,
-            ReadBeer readBeer,
+            GetAllBeers getAllBeers,
             DeleteBeer deleteBeer,
-            GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers, FilterBeers filterBeers) {
+            GetBeerByIdWithTheirSellers getBeerByIdWithTheirSellers,
+            FilterBeers filterBeers,
+            GetBeerById getBeerById) {
         this.createBeer = createBeer;
         this.updateBeer = updateBeer;
-        this.readBeer = readBeer;
+        this.getAllBeers = getAllBeers;
         this.deleteBeer = deleteBeer;
         this.getBeerByIdWithTheirSellers = getBeerByIdWithTheirSellers;
         this.filterBeers = filterBeers;
+        this.getBeerById = getBeerById;
     }
 
     @GetMapping
     public ResponseEntity<?> get(){
-        Collection<Beer> beers = readBeer.getAllBeers();
+        Collection<Beer> beers = getAllBeers.execute();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -51,7 +55,7 @@ public class BeerController {
 
     @GetMapping("/{beerId}")
     public ResponseEntity<?> get(@PathVariable("beerId") Long beerId){
-        Beer beer = getBeerByIdWithTheirSellers.getBeerByIdWithSellers(beerId);
+        Beer beer = getBeerByIdWithTheirSellers.execute(beerId);
         return beer != null ?
             ResponseEntity
                 .status(HttpStatus.OK)
@@ -65,7 +69,7 @@ public class BeerController {
     public ResponseEntity<?> post(@RequestBody @Valid EditBeerDTO beerDTO){
 
         Beer beer = BeerParser.parse(beerDTO);
-        Beer saved = createBeer.createBeer(beer);
+        Beer saved = createBeer.execute(beer);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -77,7 +81,7 @@ public class BeerController {
         Beer beer = BeerParser.parse(editBeerDTO);
         beer.setId(beerId);
 
-        Beer updated = updateBeer.updateBeer(beer);
+        Beer updated = updateBeer.execute(beer);
 
         return updated != null ?
             ResponseEntity
@@ -90,7 +94,7 @@ public class BeerController {
 
     @DeleteMapping("/{beerId}")
     public ResponseEntity<?> delete(@PathVariable("beerId") Long beerId){
-        boolean removed = deleteBeer.deleteBeer(beerId);
+        boolean removed = deleteBeer.execute(beerId);
         return ResponseEntity
             .status(removed ? HttpStatus.OK : HttpStatus.NOT_FOUND)
             .build();
@@ -98,14 +102,14 @@ public class BeerController {
 
     @PatchMapping("/image/{tradeId}")
     public ResponseEntity<?> patchImage(@PathVariable("tradeId") Long beerId, @RequestParam("file") MultipartFile file) {
-        Beer beer = readBeer.getBeerById(beerId);
+        Beer beer = getBeerById.execute(beerId);
 
         if(beer == null){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .build();
         }
-        Beer updated = updateBeer.updateBeer(beer, file);
+        Beer updated = updateBeer.execute(beer, file);
 
         return updated != null ?
             ResponseEntity
@@ -123,7 +127,7 @@ public class BeerController {
             @RequestParam("types") Optional<List<String>> types,
             @RequestParam("alcoholLevel") Optional<Double> alcoholLevel
     ){
-        Collection<Beer> filteredBeers = filterBeers.filter(name, types, alcoholLevel);
+        Collection<Beer> filteredBeers = filterBeers.execute(name, types, alcoholLevel);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

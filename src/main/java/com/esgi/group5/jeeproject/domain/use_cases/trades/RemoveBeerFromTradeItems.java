@@ -20,7 +20,7 @@ public class RemoveBeerFromTradeItems {
         this.tradeRepository = tradeRepository;
     }
 
-    public boolean removeBeerFromTradeItems(Long tradeId, Long beerId, User userWhoAddsBeer)
+    public boolean execute(Long tradeId, Long beerId, User userWhoAddsBeer)
             throws TradeDoesntExistException, UserNotAllowedToManageStocksException, BeerDoesntExistException {
         Optional<Trade> trade = tradeRepository.getTradeByIdWithBeers(tradeId);
 

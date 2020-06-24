@@ -9,7 +9,7 @@ public class DeleteBeer {
         this.beerRepository = beerRepository;
     }
 
-    public boolean deleteBeer(Long beerId){
+    public boolean execute(Long beerId){
         beerRepository.deleteBeerById(beerId);
         return true;
     }

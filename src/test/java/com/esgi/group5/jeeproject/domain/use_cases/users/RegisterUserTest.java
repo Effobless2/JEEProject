@@ -35,7 +35,7 @@ public class RegisterUserTest {
             mockUsers.add(test);
 
             given(userRepository.createUser(test)).willReturn(test);
-            User u = registerUser.register(test);
+            User u = registerUser.execute(test);
             assertNotNull(u);
         }
     }

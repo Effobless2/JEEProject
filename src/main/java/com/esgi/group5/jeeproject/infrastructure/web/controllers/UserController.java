@@ -1,7 +1,8 @@
 package com.esgi.group5.jeeproject.infrastructure.web.controllers;
 
 import com.esgi.group5.jeeproject.domain.models.User;
-import com.esgi.group5.jeeproject.domain.use_cases.users.ReadUser;
+import com.esgi.group5.jeeproject.domain.use_cases.users.GetAllUsers;
+import com.esgi.group5.jeeproject.domain.use_cases.users.GetUserById;
 import com.esgi.group5.jeeproject.infrastructure.web.dtos.users.GoogleAccountDTO;
 import com.esgi.group5.jeeproject.infrastructure.web.security.AuthenticationFromGoogleService;
 import com.esgi.group5.jeeproject.infrastructure.web.security.googleToken.JWTGoogleService;
@@ -24,13 +25,15 @@ public class UserController {
     private final JWTGoogleService jwtGoogleService;
     private final TokenProvider tokenService;
     private final AuthenticationFromGoogleService authenticationFromGoogleService;
-    private final ReadUser readUser;
+    private final GetAllUsers getAllUsers;
+    private final GetUserById getUserById;
 
-    public UserController(JWTGoogleService jwtGoogleService, TokenProvider tokenService, AuthenticationFromGoogleService authenticationFromGoogleService, ReadUser readUser) {
+    public UserController(JWTGoogleService jwtGoogleService, TokenProvider tokenService, AuthenticationFromGoogleService authenticationFromGoogleService, GetAllUsers getAllUsers, GetUserById getUserById) {
         this.jwtGoogleService = jwtGoogleService;
         this.tokenService = tokenService;
         this.authenticationFromGoogleService = authenticationFromGoogleService;
-        this.readUser = readUser;
+        this.getAllUsers = getAllUsers;
+        this.getUserById = getUserById;
     }
 
     @PostMapping("/auth")
@@ -57,7 +60,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getAllUser() {
-        Collection<User> users = readUser.getAllUsers();
+        Collection<User> users = getAllUsers.execute();
 
         if(users.isEmpty()) {
             return ResponseEntity
@@ -72,7 +75,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable("userId") Long userId) {
-        User user = readUser.getUserById(userId);
+        User user = getUserById.execute(userId);
 
         if(user == null) {
             return ResponseEntity
