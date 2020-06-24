@@ -34,6 +34,7 @@ public class TradeController {
     private final TokenProvider tokenProvider;
     private final FilterTrades filterTrades;
     private final GetTradeById getTradeById;
+    private final GetTradeByResponsibleId getTradeByResponsibleId;
 
     public TradeController(GetAllTrades getAllTrades,
                            CreateTrade createTrade,
@@ -43,7 +44,7 @@ public class TradeController {
                            MakeBeerSoldByTrade makeBeerSoldByTrade,
                            RemoveBeerFromTradeItems removeBeerFromTradeItems,
                            TokenProvider tokenProvider,
-                           FilterTrades filterTrades, GetTradeById tradeById) {
+                           FilterTrades filterTrades, GetTradeById tradeById, GetTradeByResponsibleId getTradeByResponsibleId) {
         this.getAllTrades = getAllTrades;
         this.createTrade = createTrade;
         this.updateTrade = updateTrade;
@@ -54,6 +55,7 @@ public class TradeController {
         this.tokenProvider = tokenProvider;
         this.filterTrades = filterTrades;
         this.getTradeById = tradeById;
+        this.getTradeByResponsibleId = getTradeByResponsibleId;
     }
 
     @GetMapping
@@ -262,4 +264,20 @@ public class TradeController {
         }
     }
 
+    @GetMapping("/mine")
+    public ResponseEntity<?> getAllTradesOfCallingUser(HttpServletRequest request) {
+        UserWithTokenDTO user = tokenProvider.getUser(request);
+
+        if(user == null)
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+
+        Collection<Trade> result = getTradeByResponsibleId.execute(UserParser.parse(user));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(result);
+
+    }
 }
