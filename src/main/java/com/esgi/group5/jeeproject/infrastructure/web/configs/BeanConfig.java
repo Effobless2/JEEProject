@@ -132,4 +132,9 @@ public class BeanConfig {
     public GetUserById getUserById(UserRepository userRepository) {
         return new GetUserById(userRepository);
     }
+
+    @Bean
+    public GetTradeByResponsibleId getTradeByResponsibleId(TradeRepository tradeRepository) {
+        return new GetTradeByResponsibleId(tradeRepository);
+    }
 }

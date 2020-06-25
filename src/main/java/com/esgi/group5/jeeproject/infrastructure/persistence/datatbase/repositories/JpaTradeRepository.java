@@ -74,6 +74,15 @@ public interface JpaTradeRepository extends JpaRepository<TradeDAO, Long>, Trade
     }
 
     @Override
+    default Collection<Trade> getAllTradeWithBeers() {
+        Collection<TradeDAO> daos = findAll();
+        return daos
+                .stream()
+                .map(TradeWithBeerParser::parse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     default void updateTradeItems(Trade trade) {
         TradeDAO dao = TradeWithBeerParser.parse(trade);
         save(dao);
