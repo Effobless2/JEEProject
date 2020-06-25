@@ -20,7 +20,7 @@ public class GetTradeByResponsibleId {
             return new ArrayList<>();
         }
         return tradeRepository
-                .getAllTrades()
+                .getAllTradeWithBeers()
                 .stream()
                 .filter(trade -> trade.getResponsible().getId() == responsibleUser.getId())
                 .collect(Collectors.toList());

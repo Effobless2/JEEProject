@@ -13,6 +13,6 @@ public interface TradeRepository {
     Optional<Trade> updateTrade(Trade trade);
 
     Optional<Trade> getTradeByIdWithBeers(Long tradeId);
-
+    Collection<Trade> getAllTradeWithBeers();
     void updateTradeItems(Trade trade);
 }
