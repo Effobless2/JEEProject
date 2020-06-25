@@ -13,6 +13,6 @@ public class GetAllBeers {
     }
 
     public Collection<Beer> execute(){
-        return beerRepository.getAllBeers();
+        return beerRepository.getBeerWithSellers();
     }
 }

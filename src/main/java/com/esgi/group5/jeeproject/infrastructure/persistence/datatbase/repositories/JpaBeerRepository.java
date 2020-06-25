@@ -64,6 +64,16 @@ public interface JpaBeerRepository extends JpaRepository<BeerDAO, Long>, BeerRep
 
     }
 
+    @Override
+    default Collection<Beer> getBeerWithSellers() {
+        Collection<BeerDAO> daos = findAll();
+        return daos
+                .stream()
+                .map(BeerWithSellersParser::parse)
+                .collect(Collectors.toList());
+
+    }
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE BeerDAO beer " +
