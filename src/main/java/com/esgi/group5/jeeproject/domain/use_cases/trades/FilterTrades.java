@@ -1,6 +1,9 @@
 package com.esgi.group5.jeeproject.domain.use_cases.trades;
 
+import com.esgi.group5.jeeproject.domain.models.History;
 import com.esgi.group5.jeeproject.domain.models.Trade;
+import com.esgi.group5.jeeproject.domain.models.enums.HistorySearchType;
+import com.esgi.group5.jeeproject.domain.repositories.HistoryRepository;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 
 import java.util.Collection;
@@ -11,20 +14,32 @@ import java.util.stream.Collectors;
 
 public class FilterTrades {
     private final TradeRepository tradeRepository;
+    private final HistoryRepository historyRepository;
 
-    public FilterTrades(TradeRepository tradeRepository) {
+    public FilterTrades(TradeRepository tradeRepository, HistoryRepository historyRepository) {
         this.tradeRepository = tradeRepository;
+        this.historyRepository = historyRepository;
     }
 
-    public Collection<Trade> execute(Optional<String> name, Optional<List<String>> types, Optional<Double> lng, Optional<Double> lat) {
+    public Collection<Trade> execute(
+            Optional<String> name,
+            Optional<List<String>> types,
+            Optional<Double> lng,
+            Optional<Double> lat) {
         List<Trade> matchesFilters = tradeRepository.getAllTrades()
                 .stream()
                 .filter(trade -> trade.isMatchingFilters(name, types))
                 .collect(Collectors.toList());
+
+        saveIntoSearchingHistory(name, types, lng, lat, matchesFilters.size());
+
         return sortByProximity(matchesFilters, lng, lat);
     }
 
-    private List<Trade> sortByProximity(List<Trade> source, Optional<Double> lng, Optional<Double> lat) {
+    private List<Trade> sortByProximity(
+            List<Trade> source,
+            Optional<Double> lng,
+            Optional<Double> lat) {
         if(lng.isEmpty() || lat.isEmpty()) {
             return source;
         }
@@ -35,5 +50,51 @@ public class FilterTrades {
         };
         source.sort(comparator);
         return source;
+    }
+
+    private boolean saveIntoSearchingHistory(
+            Optional<String> name,
+            Optional<List<String>> types,
+            Optional<Double> lng,
+            Optional<Double> lat,
+            int resultCount) {
+        History history = new History();
+        history.setType(HistorySearchType.Trade);
+        history.setFields(getStringFromFields(name, types, lng, lat));
+        history.setResultCount(resultCount);
+
+        History saved = historyRepository.saveResearch(history);
+
+        return saved != null;
+    }
+
+    private String getStringFromFields(
+            Optional<String> name,
+            Optional<List<String>> types,
+            Optional<Double> lng,
+            Optional<Double> lat) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("name: ");
+        stringBuilder.append(name.orElse("none"));
+        stringBuilder.append("; ");
+        stringBuilder.append("types: [");
+        if (types.isPresent()) {
+            List<String> typesList = types.get();
+            for (int i = 0; i < typesList.size(); i++) {
+                stringBuilder.append(typesList.get(i));
+                if(i < typesList.size() - 1)
+                    stringBuilder.append(", ");
+            }
+        }
+        stringBuilder.append("]; ");
+        stringBuilder.append("latitude: ");
+        stringBuilder.append(lat.isPresent() ? lat.get().toString() : "none");
+        stringBuilder.append("; ");
+        stringBuilder.append("longitude: ");
+        stringBuilder.append(lng.isPresent() ? lng.get().toString() : "none");
+        stringBuilder.append("; ");
+
+        return stringBuilder.toString();
     }
 }
