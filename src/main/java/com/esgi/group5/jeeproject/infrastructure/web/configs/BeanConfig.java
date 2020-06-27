@@ -1,10 +1,12 @@
 package com.esgi.group5.jeeproject.infrastructure.web.configs;
 
+import com.esgi.group5.jeeproject.domain.repositories.HistoryRepository;
 import com.esgi.group5.jeeproject.domain.repositories.TradeRepository;
 import com.esgi.group5.jeeproject.domain.repositories.UserRepository;
 import com.esgi.group5.jeeproject.domain.services.ImageUploadService;
 import com.esgi.group5.jeeproject.domain.use_cases.beers.*;
 import com.esgi.group5.jeeproject.domain.repositories.BeerRepository;
+import com.esgi.group5.jeeproject.domain.use_cases.history.GetHistory;
 import com.esgi.group5.jeeproject.domain.use_cases.trades.*;
 import com.esgi.group5.jeeproject.domain.use_cases.users.GetAllUsers;
 import com.esgi.group5.jeeproject.domain.use_cases.users.GetUserById;
@@ -109,13 +111,13 @@ public class BeanConfig {
     }
 
     @Bean
-    public FilterTrades filterTrades(TradeRepository tradeRepository) {
-        return new FilterTrades(tradeRepository);
+    public FilterTrades filterTrades(TradeRepository tradeRepository, HistoryRepository historyRepository) {
+        return new FilterTrades(tradeRepository, historyRepository);
     }
 
     @Bean
-    public FilterBeers filterBeers(BeerRepository beerRepository) {
-        return new FilterBeers(beerRepository);
+    public FilterBeers filterBeers(BeerRepository beerRepository, HistoryRepository historyRepository) {
+        return new FilterBeers(beerRepository, historyRepository);
     }
 
     @Bean
@@ -136,5 +138,10 @@ public class BeanConfig {
     @Bean
     public GetTradeByResponsibleId getTradeByResponsibleId(TradeRepository tradeRepository) {
         return new GetTradeByResponsibleId(tradeRepository);
+    }
+
+    @Bean
+    public GetHistory getHistory(HistoryRepository historyRepository) {
+        return new GetHistory(historyRepository);
     }
 }
