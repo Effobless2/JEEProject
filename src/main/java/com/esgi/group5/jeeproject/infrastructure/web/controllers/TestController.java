@@ -17,6 +17,6 @@ public class TestController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Hello World");
+                .body("Hello World 2");
     }
 }
