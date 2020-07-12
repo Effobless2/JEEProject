@@ -31,19 +31,6 @@ public class GetAllBeersTest {
     }
 
     @Test
-    void should_return_beers(){
-        ArrayList<Beer> beers = new ArrayList<>();
-        beers.add(new Beer());
-        beers.add(new Beer());
-        beers.add(new Beer());
-        beers.add(new Beer());
-
-        given(beerRepository.getAllBeers()).willReturn(beers);
-        assertFalse(getAllBeers.execute().isEmpty());
-        assertEquals(4, getAllBeers.execute().size());
-    }
-
-    @Test
     void should_return_beer_with_correct_id(){
         Beer beer = new Beer();
 
